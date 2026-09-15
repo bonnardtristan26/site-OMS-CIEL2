@@ -145,6 +145,32 @@ body {
 	color: white;
 }
 
+.footer-content {
+	align-items: center;
+	display: flex;
+	font-size: .8rem;
+	font-weight: 700;
+	justify-content: space-between;
+	padding-bottom: .85rem;
+	padding-top: .85rem;
+	text-align: left;
+}
+
+.footer-ball {
+	height: 2.3rem;
+	margin-left: 1rem;
+	width: 2.3rem;
+}
+
+.footer-content a {
+	color: white;
+	font-weight: 800;
+}
+
+.footer-content a:hover {
+	color: #7ae3a7;
+}
+
 @media (max-width: 991px) {
 	.site-nav .nav-link { padding: .6rem 0 !important; }
 	.site-logo { max-width: 165px; }
@@ -168,5 +194,7 @@ body {
 	.stage-body { padding: 0 .9rem 1rem; }
 	.stage-body .row { --bs-gutter-x: 1rem; }
 	.stage-info { font-size: .9rem; }
-	.site-footer { text-align: center; }
+	.footer-content { font-size: .72rem; }
+	.footer-content p { flex: 1; }
+	.footer-ball { height: 2rem; width: 2rem; }
 }
