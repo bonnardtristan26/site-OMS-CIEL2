@@ -1,0 +1,134 @@
+/* =========================================================
+   OMS - GALERIE
+   Polices : Lalezar (titres) / Ubuntu (texte courant)
+   ========================================================= */
+
+:root {
+  --oms-dark: #272F25;      /* vert très foncé (header / footer) */
+  --oms-dark-2: #2c352a;
+  --oms-pill: #dfe3d8;      /* pastille date inactive */
+  --oms-pill-active: #272F25;
+  --oms-text: #1c1c1c;
+  --oms-white: #ffffff;
+  --gutter: 10px;
+}
+
+body {
+  font-family: "Ubuntu", sans-serif;
+  color: var(--oms-text);
+  background-color: #ffffff;
+}
+
+.font-title {
+  font-family: "Lalezar", sans-serif;
+  letter-spacing: 0.5px;
+}
+
+/* ---------- HEADER ---------- */
+.oms-header {
+  background-color: var(--oms-dark);
+}
+
+.oms-header .logo img {
+  height: 60px;
+  width: auto;
+}
+
+.oms-nav {
+  display: flex;
+  gap: 60px;
+}
+
+.oms-nav a {
+  color: var(--oms-white);
+  text-decoration: none;
+  font-size: 2rem;
+  font-family: "Lalezar", sans-serif;
+}
+
+.oms-nav a:hover,
+.oms-nav a:focus {
+  color: #cfd8c8;
+}
+
+/* ---------- FILTRE ---------- */
+.oms-filtre-label {
+  font-family: "Lalezar", sans-serif;
+  font-size: 2rem;
+  color: var(--oms-text);
+}
+
+.oms-date-arrow {
+  background: none;
+  border: none;
+  font-size: 1.6rem;
+  color: var(--oms-text);
+  line-height: 1;
+  padding: 0 6px;
+}
+.oms-date-arrow:hover { color: #555; }
+
+.oms-date-pill {
+  font-family: "Lalezar", sans-serif;
+  font-size: 1.75rem;
+  padding: 10px 26px;
+  background-color: var(--oms-pill);
+  color: var(--oms-text);
+  border: none;
+  white-space: nowrap;
+}
+
+.oms-date-pill.active {
+  background-color: var(--oms-pill-active);
+  color: var(--oms-white);
+}
+
+.oms-date-pill:not(.active):hover {
+  background-color: #cfd6c6;
+}
+
+/* ---------- GALERIE (mise en page façon "mur de photos") ---------- */
+.oms-gallery {
+  column-count: 4;
+  column-gap: var(--gutter);
+}
+
+.oms-gallery figure {
+  margin: 0 0 var(--gutter) 0;
+  break-inside: avoid;
+}
+
+.oms-gallery img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+@media (max-width: 991.98px) {
+  .oms-gallery { column-count: 2; }
+  .oms-nav { gap: 30px; }
+  .oms-nav a { font-size: 1.5rem; }
+}
+
+@media (max-width: 575.98px) {
+  .oms-gallery { column-count: 1; }
+  .oms-date-pill { font-size: 1.3rem; padding: 8px 16px; }
+  .oms-filtre-label { font-size: 1.4rem; }
+}
+
+/* ---------- FOOTER ---------- */
+.oms-footer {
+  background-color: var(--oms-dark);
+  color: var(--oms-white);
+}
+
+.oms-footer p {
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 700;
+  margin: 0;
+}
+
+.oms-footer .ball-icon {
+  width: 34px;
+  height: 34px;
+}

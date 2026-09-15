@@ -1,11 +1,105 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OMS - Galerie</title>
+
+  <!-- Google Fonts : Lalezar (titres) / Ubuntu (texte) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lalezar&family=Ubuntu:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Style perso -->
+  <link href="css/style.css" rel="stylesheet">
 </head>
 <body>
-    
+
+  <!-- HEADER -->
+  <header class="oms-header">
+    <div class="container-fluid">
+      <div class="row align-items-center py-2">
+        <div class="col-auto logo">
+          <img src="assets/logo.svg" alt="Logo OMS - Office Municipal du Sport">
+        </div>
+        <div class="col d-flex justify-content-center justify-content-lg-start ps-lg-5">
+          <nav class="oms-nav">
+            <a href="#">STAGE</a>
+            <a href="#" class="active">GALERIE</a>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- FILTRE DATE -->
+  <section class="container-fluid py-4">
+    <div class="d-flex flex-wrap align-items-center gap-3">
+      <span class="oms-filtre-label">FILTRE</span>
+
+      <button type="button" class="oms-date-arrow prev" aria-label="Date précédente">&#9664;</button>
+
+      <div class="d-flex flex-wrap">
+        <button type="button" class="oms-date-pill active">01/09/2026</button>
+        <button type="button" class="oms-date-pill">05/09/2026</button>
+        <button type="button" class="oms-date-pill">11/09/2026</button>
+      </div>
+
+      <button type="button" class="oms-date-arrow next" aria-label="Date suivante">&#9654;</button>
+    </div>
+  </section>
+
+  <!-- GALERIE PHOTOS -->
+  <main class="container-fluid pb-4">
+    <div class="oms-gallery">
+
+      <figure>
+        <img src="https://images.unsplash.com/photo-1526342122811-2a9c8512023d?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Surfeuse sur une vague">
+      </figure>
+
+      <figure>
+        <img src="https://images.unsplash.com/photo-1622659097509-4d56de14539e?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Enfants jouant au football">
+      </figure>
+
+      <figure>
+        <img src="https://images.unsplash.com/photo-1723980856085-8f8e725329a7?q=80&w=735&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Jeune fille sur un court de tennis">
+      </figure>
+
+      <figure>
+        <img src="https://images.unsplash.com/photo-1509398484917-2a5b6439feef?q=80&w=1167&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Enfant faisant de l'escalade">
+      </figure>
+
+      <figure>
+        <img src="https://images.unsplash.com/photo-1779126304909-791eee072e42?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Jeune gymnaste">
+      </figure>
+
+      <figure>
+        <img src="https://images.unsplash.com/photo-1706841533824-996efd781591?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Enfant jouant au basket">
+      </figure>
+
+      <figure>
+        <img src="https://images.unsplash.com/photo-1619239514610-3a23138b0bf1?q=80&w=833&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Enfant sur la plage">
+      </figure>
+
+      <figure>
+        <img src="https://plus.unsplash.com/premium_photo-1726866100808-bcd735153294?q=80&w=1179&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Deux jeunes sportifs">
+      </figure>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="oms-footer py-3">
+    <div class="container-fluid d-flex flex-wrap justify-content-between align-items-center gap-2">
+      <p>Dernière mise à jour 07/09/2026&nbsp;&nbsp;-&nbsp;&nbsp;Adresse&nbsp;: 25 Rue de Strasbourg 44000 NANTES - FAQ</p>
+      <img src="assets\logo_ball_oms.svg" alt="" class="ball-icon" style="height:34px;width:auto;">
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/script.js"></script>
 </body>
 </html>
