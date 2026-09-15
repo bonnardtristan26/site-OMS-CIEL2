@@ -1,11 +1,292 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta name="description" content="Découvrez les stages proposés par notre établissement.">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --anthracite: #202a20;
+            --green: #009447;
+            --red: #f31519;
+            --blue: #08a9ec;
+            --ink: #172017;
+        }
+
+        body {
+            color: var(--ink);
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .site-header {
+            background: var(--anthracite);
+        }
+
+        .site-header .container {
+            min-height: 86px;
+        }
+
+        .brand-mark {
+            color: white;
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 3.25rem;
+            font-weight: 800;
+            line-height: .8;
+            letter-spacing: .08em;
+        }
+
+        .brand-subtitle {
+            color: white;
+            font-size: .48rem;
+            font-weight: 700;
+            letter-spacing: .04em;
+        }
+
+        .site-nav .nav-link {
+            color: white;
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: .04em;
+            padding: 1.6rem 1.5rem !important;
+            text-transform: uppercase;
+        }
+
+        .site-nav .nav-link:hover,
+        .site-nav .nav-link.active {
+            color: #7ae3a7;
+        }
+
+        .intro {
+            background: #f1f3ee;
+            border-bottom: 8px solid var(--green);
+        }
+
+        .intro h1,
+        .section-title,
+        .stage-title {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .intro h1 {
+            font-size: clamp(2.7rem, 6vw, 5rem);
+            letter-spacing: .03em;
+        }
+
+        .stages-list {
+            max-width: 1120px;
+        }
+
+        .stage-item {
+            border: 0;
+            margin-bottom: 1.4rem;
+            overflow: hidden;
+        }
+
+        .stage-button {
+            align-items: center;
+            border: 0 !important;
+            border-radius: 0 !important;
+            color: white !important;
+            display: flex;
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: clamp(1.7rem, 3.5vw, 3rem);
+            font-weight: 800;
+            justify-content: space-between;
+            letter-spacing: .02em;
+            padding: 1.15rem 1.5rem;
+            text-transform: uppercase;
+        }
+
+        .stage-button::after {
+            filter: brightness(0) invert(1);
+        }
+
+        .stage-button:not(.collapsed) {
+            box-shadow: none;
+        }
+
+        .stage-green .stage-button,
+        .stage-green .stage-body { background: var(--green); }
+        .stage-red .stage-button,
+        .stage-red .stage-body { background: var(--red); }
+        .stage-blue .stage-button,
+        .stage-blue .stage-body { background: var(--blue); }
+
+        .stage-body {
+            color: white;
+            padding: 0 1.5rem 1.5rem;
+        }
+
+        .stage-body img {
+            aspect-ratio: 16 / 8;
+            object-fit: cover;
+            width: 100%;
+        }
+
+        .stage-info {
+            font-size: .95rem;
+            line-height: 1.5;
+        }
+
+        .stage-info strong {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 1.25rem;
+            letter-spacing: .04em;
+            text-transform: uppercase;
+        }
+
+        .places {
+            background: white;
+            color: var(--ink);
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 800;
+            margin-left: 1rem;
+            padding: .2rem .55rem;
+            white-space: nowrap;
+        }
+
+        .site-footer {
+            background: var(--anthracite);
+            color: white;
+        }
+
+        @media (max-width: 991px) {
+            .site-nav .nav-link { padding: .6rem 0 !important; }
+            .brand-mark { font-size: 2.6rem; }
+        }
+    </style>
+    <title>Nos stages</title>
 </head>
-<body>
-    
+<body class="bg-light">
+    <header class="site-header">
+        <nav class="navbar navbar-expand-lg navbar-dark" aria-label="Navigation principale">
+            <div class="container">
+                <a class="navbar-brand d-flex flex-column me-lg-5" href="index.html">
+                    <span class="brand-mark">OMS</span>
+                    <span class="brand-subtitle">OFFICE MUNICIPAL DU SPORT</span>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navigationPrincipale" aria-controls="navigationPrincipale" aria-expanded="false" aria-label="Afficher le menu">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navigationPrincipale">
+                    <ul class="navbar-nav site-nav ms-lg-4">
+                        <li class="nav-item"><a class="nav-link" href="index.html">Accueil</a></li>
+                        <li class="nav-item"><a class="nav-link" href="galerie.html">Galerie</a></li>
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="stage.html">Stage</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="intro py-5">
+            <div class="container">
+                <p class="mb-2 fw-bold text-uppercase">Office Municipal du Sport</p>
+                <h1 class="mb-2">Les stages sportifs</h1>
+                <p class="lead mb-0">Ouvrez une activité pour découvrir sa date, sa description et le nombre de places disponibles.</p>
+            </div>
+        </section>
+
+        <section class="container stages-list py-5" aria-labelledby="liste-stages">
+            <h2 id="liste-stages" class="section-title h2 mb-4">Stages disponibles</h2>
+            <div class="accordion" id="listeStages">
+                <article class="accordion-item stage-item stage-green">
+                    <h3 class="accordion-header" id="titreStageUn">
+                        <button class="accordion-button stage-button" type="button" data-bs-toggle="collapse" data-bs-target="#stageUn" aria-expanded="true" aria-controls="stageUn">
+                            <span>Padel - le 01/05/2026 à 15h</span><span class="places">8/20</span>
+                        </button>
+                    </h3>
+                    <div id="stageUn" class="accordion-collapse collapse show" aria-labelledby="titreStageUn" data-bs-parent="#listeStages">
+                        <div class="accordion-body stage-body">
+                            <div class="row g-4 align-items-center">
+                                <div class="col-md-7 order-md-2">
+                                    <img src="https://images.unsplash.com/photo-1626224583764-f87db24ac4ea?auto=format&amp;fit=crop&amp;w=1000&amp;q=80" class="img-fluid" alt="Joueurs de padel sur un terrain">
+                                </div>
+                                <div class="col-md-5 order-md-1 stage-info">
+                                    <p><strong>Niveaux :</strong> Collège</p>
+                                    <p>Le padel est un sport de raquette ludique, accessible et dynamique qui se joue en double sur un court réduit entouré de vitres.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="accordion-item stage-item stage-red">
+                    <h3 class="accordion-header" id="titreStageDeux">
+                        <button class="accordion-button stage-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#stageDeux" aria-expanded="false" aria-controls="stageDeux">
+                            <span>Football - le 02/05/2026 à 15h</span><span class="places">5/20</span>
+                        </button>
+                    </h3>
+                    <div id="stageDeux" class="accordion-collapse collapse" aria-labelledby="titreStageDeux" data-bs-parent="#listeStages">
+                        <div class="accordion-body stage-body">
+                            <div class="row g-4 align-items-center">
+                                <div class="col-md-7 order-md-2">
+                                    <img src="https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&amp;fit=crop&amp;w=1000&amp;q=80" class="img-fluid" alt="Joueurs de football sur un terrain">
+                                </div>
+                                <div class="col-md-5 order-md-1 stage-info">
+                                    <p><strong>Niveaux :</strong> Collège</p>
+                                    <p>Le football est un sport collectif stratégique, intense et populaire qui se joue à onze sur un grand terrain herbé encadré de cages.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="accordion-item stage-item stage-blue">
+                    <h3 class="accordion-header" id="titreStageTrois">
+                        <button class="accordion-button stage-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#stageTrois" aria-expanded="false" aria-controls="stageTrois">
+                            <span>Surf - le 05/05/2026 à 15h</span><span class="places">3/20</span>
+                        </button>
+                    </h3>
+                    <div id="stageTrois" class="accordion-collapse collapse" aria-labelledby="titreStageTrois" data-bs-parent="#listeStages">
+                        <div class="accordion-body stage-body">
+                            <div class="row g-4 align-items-center">
+                                <div class="col-md-7 order-md-2">
+                                    <img src="https://images.unsplash.com/photo-1502680390469-be75c86b636f?auto=format&amp;fit=crop&amp;w=1000&amp;q=80" class="img-fluid" alt="Surfeur sur une vague">
+                                </div>
+                                <div class="col-md-5 order-md-1 stage-info">
+                                    <p><strong>Niveaux :</strong> Collège</p>
+                                    <p>Découvrez les bases du surf, les règles de sécurité et les sensations de la glisse lors d'une initiation encadrée.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer py-4 mt-4">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <h2 class="h5">OMS CIEL2</h2>
+                    <p class="text-white-50 mb-0">Remplacez ce texte par une présentation de votre établissement.</p>
+                </div>
+                <div class="col-md-3">
+                    <h2 class="h6">Contact</h2>
+                    <p class="text-white-50 mb-0">contact@exemple.fr<br>01 23 45 67 89</p>
+                </div>
+                <div class="col-md-3">
+                    <h2 class="h6">Liens utiles</h2>
+                    <a class="link-light d-block" href="index.html">Accueil</a>
+                    <a class="link-light d-block" href="galerie.html">Galerie</a>
+                </div>
+            </div>
+            <hr class="border-secondary my-4">
+            <p class="text-white-50 small mb-0">&copy; 2026 OMS CIEL2 - Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 </body>
 </html>
