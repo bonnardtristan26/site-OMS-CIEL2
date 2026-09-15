@@ -1,136 +1,120 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Découvrez les stages proposés par notre établissement.">
-    <!-- Importation de Bootstrap 5 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-    <!-- Polices -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lalezar&family=Ubuntu:wght@400;500;700&display=swap" rel="stylesheet">
-    
-    <style>
-        /* Quelques ajustements minimes impossibles avec les classes utilitaires seules */
-        body { font-family: 'Ubuntu', sans-serif; }
-        .font-lalezar { font-family: 'Lalezar', system-ui; }
-        /* Pour s'assurer que les images remplissent bien toute la hauteur de leur bloc */
-        .stage-img { object-fit: cover; height: 100%; min-height: 200px; }
-        .stage-box { border-width: 8px !important; }
-    </style>
-    <title>Nos stages</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OMS - Stage</title>
+
+  <!-- Google Fonts : Lalezar (titres) / Ubuntu (texte) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lalezar&family=Ubuntu:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Style perso -->
+  <link href="css/style.css" rel="stylesheet">
 </head>
+<body>
 
-<!-- bg-white (Bootstrap) : Applique un fond blanc global à la page -->
-<body class="bg-white">
-
-    <!-- ==================== EN-TETE ==================== -->
-    <!-- bg-dark (Fond noir), py-2 (Padding vertical en haut et bas) -->
-    <header class="bg-dark py-2 mb-4">
-        <!-- container-fluid (Prend toute la largeur), d-flex (Active flexbox), align-items-center (Centre verticalement) -->
-        <div class="container-fluid d-flex align-items-center">
-            
-            <a href="index.html" aria-label="Retour à l'accueil">
-                <!-- Logo -->
-                <img src="../Annexes/Images/logo_OMS.svg" alt="Logo OMS" height="60">
-            </a>
-
-            <!-- ms-5 (Margin-left large), d-flex (Flexbox), gap-4 (Espace entre les liens) -->
-            <nav class="ms-5 d-flex gap-4 font-lalezar fs-3" aria-label="Navigation principale">
-                <!-- text-white (Texte blanc), text-decoration-none (Supprime le soulignement du lien) -->
-                <a href="stage.html" class="text-white text-decoration-none" aria-current="page">STAGE</a>
-                <a href="galerie.html" class="text-white text-decoration-none">GALERIE</a>
-            </nav>
-            
+  <!-- HEADER -->
+  <header class="oms-header">
+    <div class="container-fluid">
+      <div class="row align-items-center py-2">
+        <div class="col-auto logo">
+          <img src="assets/logo.svg" alt="Logo OMS - Office Municipal du Sport">
         </div>
-    </header>
-
-    <!-- ==================== STAGES ==================== -->
-    <main>
-        <!-- container (Centre le contenu avec des marges latérales automatiques) -->
-        <section class="container" aria-labelledby="liste-stages">
-            
-            <!-- ==================== STAGE PADEL ==================== -->
-            <!-- row (Crée une ligne de grille), mb-4 (Margin bottom), border (Bordure standard), border-success (Bordure verte Bootstrap), stage-box (classe CSS perso pour épaissir la bordure) -->
-            <article class="row mx-0 mb-4 border border-success stage-box stage-green">
-                <!-- col-md-7 (Prend 7 colonnes sur 12 sur écran moyen), bg-success (Fond vert), text-white (Texte blanc), p-4 (Padding interne), position-relative (Pour positionner le badge absolute par rapport à cette div) -->
-                <div class="col-md-7 bg-success text-white p-4 position-relative">
-                    
-                    <!-- Badge places : position-absolute (Positionnement absolu), top-0 end-0 (Placé en haut à droite), bg-white (Fond blanc), text-success (Texte vert), fw-bold (Texte en gras), px-2 py-1 (Padding horizontal et vertical), m-3 (Marge externe) -->
-                    <div class="stage-count position-absolute top-0 end-0 bg-white text-success fw-bold px-2 py-1 fs-5 font-lalezar">
-                        11/20
-                    </div>
-
-                    <!-- text-uppercase (Met le texte en majuscule), fs-1 (Taille de police très grande), mb-3 (Marge en bas) -->
-                    <h2 class="text-uppercase font-lalezar fs-1 mb-3">Padel - le 01/05/2026 à 15h</h2>
-                    <!-- fw-bold (Texte en gras), mb-1 (Marge fine en bas) -->
-                    <p class="fw-bold text-uppercase mb-1">Nivaux:College</p>
-                    <p class="text-uppercase mb-0">Le padel est un sport de raquette ludique, accessible et ultra-dynamique qui se joue en double sur un court réduit entoure de vitres</p>
-                </div>
-                <!-- col-md-5 (Prend 5 colonnes sur 12), p-0 (Enlève les marges internes pour que l'image colle aux bords) -->
-                <div class="col-md-5 p-0 stage-image-container">
-                    <!-- w-100 (Largeur 100% du parent) -->
-                    <img src="https://images.unsplash.com/photo-1626224583764-f87db24ac4ea?auto=format&amp;fit=crop&amp;w=1000&amp;q=80" class="w-100 h-100 object-fit-cover stage-img" alt="Joueurs de padel sur un terrain">
-                </div>
-            </article>
-
-            <!-- ==================== STAGE FOOTBALL ==================== -->
-            <!-- Même logique avec border-danger (Bordure rouge) -->
-            <article class="row mx-0 mb-4 border border-danger stage-box stage-red">
-                <!-- bg-danger (Fond rouge) -->
-                <div class="col-md-7 bg-danger text-white p-4 position-relative">
-                    
-                    <!-- text-danger (Texte rouge pour le badge) -->
-                    <div class="stage-count position-absolute top-0 end-0 bg-white text-danger fw-bold px-2 py-1 fs-5 font-lalezar">
-                        20/20
-                    </div>
-
-                    <h2 class="text-uppercase font-lalezar fs-1 mb-3">Foot - le 02/05/2026 à 15h</h2>
-                    <p class="fw-bold text-uppercase mb-1">Nivaux:College</p>
-                    <p class="text-uppercase mb-0">Le football est un sport collectif stratégique, intense et populaire qui se joue à onze sur un grand terrain herbé encadré de cages.</p>
-                </div>
-                <!-- p-0 (Pas de padding) -->
-                <div class="col-md-5 p-0 stage-image-container">
-                    <!-- w-100 (Largeur 100%) -->
-                    <img src="https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&amp;fit=crop&amp;w=1000&amp;q=80" class="w-100 h-100 object-fit-cover stage-img" alt="Joueurs de football sur un terrain">
-                </div>
-            </article>
-
-            <!-- ==================== STAGE SURF ==================== -->
-            <!-- Même logique avec border-info (Bordure bleu clair) -->
-            <article class="row mx-0 mb-4 border border-info stage-box stage-blue">
-                <!-- bg-info (Fond bleu clair) -->
-                <div class="col-md-7 bg-info text-white p-4 position-relative">
-                    
-                    <!-- text-info (Texte bleu clair) -->
-                    <div class="stage-count position-absolute top-0 end-0 bg-white text-info fw-bold px-2 py-1 fs-5 font-lalezar">
-                        19/20
-                    </div>
-
-                    <h2 class="text-uppercase font-lalezar fs-1 mb-3">Surfer - le 05/05/2026 à 15h</h2>
-                    <!-- Vous n'aviez pas mis de texte de description sur l'image de référence pour le surf (coupé), je laisse la structure vide -->
-                </div>
-                <div class="col-md-5 p-0 stage-image-container">
-                    <img src="https://images.unsplash.com/photo-1502680390469-be75c86b636f?auto=format&amp;fit=crop&amp;w=1000&amp;q=80" class="w-100 h-100 object-fit-cover stage-img" alt="Surfeur sur une vague">
-                </div>
-            </article>
-
-        </section>
-    </main>
-
-    <!-- ==================== PIED DE PAGE ==================== -->
-    <!-- bg-dark (Fond noir), text-white (Texte blanc), py-3 (Padding vertical), mt-5 (Margin top pour espacer du contenu) -->
-    <footer class="bg-dark text-white py-3 mt-5 font-lalezar">
-        <!-- container-fluid, d-flex, justify-content-between (Espace au maximum les éléments), align-items-center (Centre verticalement) -->
-        <div class="container-fluid d-flex flex-wrap justify-content-between align-items-center px-4">
-            <!-- mb-0 (Supprime la marge basse par défaut du paragraphe) -->
-            <p class="mb-0 fs-5 text-uppercase">Dernière mise à jour 07/09/2026 - Adresse : 25 Rue de Strasbourg 44000 NANTES - <a href="FAQ.html" class="text-white">FAQ</a></p>
-            <img src="../Annexes/Images/logo_ball_oms.svg" alt="" height="40" class="ball-icon">
+        <div class="col d-flex justify-content-center justify-content-lg-start ps-lg-5">
+          <nav class="oms-nav">
+            <a href="stage.html" class="active">STAGE</a>
+            <a href="index.html">GALERIE</a>
+          </nav>
         </div>
-    </footer>
+      </div>
+    </div>
+  </header>
 
-    <!-- Script Bootstrap -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+  <!-- LISTE DES STAGES -->
+  <main class="container-fluid p-4">
+    <div class="stage-list">
+
+      <!-- Jeu en plein air -->
+      <article class="stage-banner stage-green">
+        <div class="stage-image">
+          <img src="https://images.unsplash.com/photo-1646649853703-7645147474ba?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Court de padel">
+        </div>
+        <div class="stage-text">
+          <span class="stage-badge">11<span>/20</span></span>
+          <h2 class="font-title">PADEL - LE 01/05/2026 A 15H</h2>
+          <p class="stage-level">Niveaux : Collège</p>
+          <p class="stage-desc">Le padel est un sport de raquette ludique, accessible et ultra-dynamique qui se joue en double sur un court réduit entouré de vitres.</p>
+        </div>
+      </article>
+
+      <!-- Jeu de balle -->
+      <article class="stage-banner stage-red">
+        <div class="stage-image">
+          <img src="https://images.unsplash.com/photo-1622659097509-4d56de14539e?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Match de football">
+        </div>
+        <div class="stage-text">
+          <span class="stage-badge">20<span>/20</span></span>
+          <h2 class="font-title">FOOT - LE 02/05/2026 A 15H</h2>
+          <p class="stage-level">Niveaux : Collège</p>
+          <p class="stage-desc">Le football est un sport collectif stratégique, intense et populaire qui se joue à onze sur un grand terrain herbé encadré de cages.</p>
+        </div>
+      </article>
+
+      <!-- Jeu en mer -->
+      <article class="stage-banner stage-blue">
+        <div class="stage-image">
+          <img src="https://plus.unsplash.com/premium_photo-1672510003630-18d2535419ef?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Surfeuse sur une vague">
+        </div>
+        <div class="stage-text">
+          <span class="stage-badge">19<span>/20</span></span>
+          <h2 class="font-title">SURFER - LE 05/05/2026 A 15H</h2>
+          <p class="stage-level">Niveaux : Collège</p>
+          <p class="stage-desc">Le surf est un sport de glisse exigeant qui se pratique sur les vagues, alliant équilibre, lecture de l'océan et sensations fortes.</p>
+        </div>
+      </article>
+
+      <!-- Jeu de balle -->
+      <article class="stage-banner stage-red">
+        <div class="stage-image">
+          <img src="https://images.unsplash.com/photo-1706841533842-3bbfafb7fdbc?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Terrain de basket">
+        </div>
+        <div class="stage-text">
+          <span class="stage-badge">15<span>/20</span></span>
+          <h2 class="font-title">BASKET - LE 08/05/2026 A 15H</h2>
+          <p class="stage-level">Niveaux : Collège</p>
+          <p class="stage-desc">Le basket-ball est un sport collectif rythmé qui se joue à cinq contre cinq, mêlant vitesse, précision et esprit d'équipe.</p>
+        </div>
+      </article>
+
+      <!-- Jeu de balle -->
+      <article class="stage-banner stage-red">
+        <div class="stage-image">
+          <img src="https://images.unsplash.com/photo-1728968916776-7aab52f5ea99?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Terrain de volley">
+        </div>
+        <div class="stage-text">
+          <span class="stage-badge">17<span>/20</span></span>
+          <h2 class="font-title">VOLLEY - LE 12/05/2026 A 15H</h2>
+          <p class="stage-level">Niveaux : Collège</p>
+          <p class="stage-desc">Le volley-ball se joue à six sur un terrain séparé par un filet, avec pour objectif de faire tomber le ballon dans le camp adverse.</p>
+        </div>
+      </article>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="oms-footer py-3">
+    <div class="container-fluid d-flex flex-wrap justify-content-between align-items-center gap-2">
+      <p>Dernière mise à jour 07/09/2026&nbsp;&nbsp;-&nbsp;&nbsp;Adresse&nbsp;: 25 Rue de Strasbourg 44000 NANTES - FAQ</p>
+      <img src="assets/logo.svg" alt="" class="ball-icon" style="height:34px;width:auto;">
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
