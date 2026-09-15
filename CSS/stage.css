@@ -1,200 +1,252 @@
+/* =========================================================
+   OMS - STAGES
+   Polices : Lalezar (titres) / Ubuntu (texte courant)
+   ========================================================= */
+ 
 :root {
-	--anthracite: #202a20;
-	--green: #009447;
-	--red: #f31519;
-	--blue: #08a9ec;
-	--ink: #172017;
+  --oms-dark: #262e21;      /* vert très foncé (header / footer) */
+  --oms-dark-2: #2c352a;
+  --oms-pill: #dfe3d8;      /* pastille date inactive */
+  --oms-pill-active: #262e21;
+  --oms-text: #1c1c1c;
+  --oms-white: #ffffff;
+  --gutter: 10px;
 }
-
+ 
 body {
-	color: var(--ink);
-	font-family: 'Montserrat', sans-serif;
-	overflow-x: hidden;
+  font-family: "Ubuntu", sans-serif;
+  color: var(--oms-text);
+  background-color: #ffffff;
 }
-
-.site-header {
-	background: var(--anthracite);
+ 
+.font-title {
+  font-family: "Lalezar", sans-serif;
+  letter-spacing: 0.5px;
 }
-
-.site-header .container {
-	min-height: 86px;
+ 
+/* ---------- HEADER ---------- */
+.oms-header {
+  background-color: var(--oms-dark);
 }
-
-.site-logo {
-	display: block;
-	height: auto;
-	max-width: 190px;
-	width: 100%;
+ 
+.oms-header .logo img {
+  height: 60px;
+  width: auto;
 }
-
-.site-nav .nav-link {
-	color: white;
-	font-family: 'Barlow Condensed', sans-serif;
-	font-size: 1.8rem;
-	font-weight: 800;
-	letter-spacing: .04em;
-	padding: 1.6rem 1.5rem !important;
-	text-transform: uppercase;
+ 
+.oms-nav {
+  display: flex;
+  gap: 60px;
 }
-
-.site-nav .nav-link:hover,
-.site-nav .nav-link.active {
-	color: #7ae3a7;
+ 
+.oms-nav a {
+  color: var(--oms-white);
+  text-decoration: none;
+  font-size: 2rem;
+  font-family: "Lalezar", sans-serif;
 }
-
-.intro {
-	background: #f1f3ee;
-	border-bottom: 8px solid var(--green);
+ 
+.oms-nav a:hover,
+.oms-nav a:focus {
+  color: #cfd8c8;
 }
-
-.intro h1,
-.section-title,
-.stage-title {
-	font-family: 'Barlow Condensed', sans-serif;
-	font-weight: 800;
-	text-transform: uppercase;
+ 
+/* ---------- FILTRE ---------- */
+.oms-filtre-label {
+  font-family: "Lalezar", sans-serif;
+  font-size: 2rem;
+  color: var(--oms-text);
 }
-
-.intro h1 {
-	font-size: clamp(2.7rem, 6vw, 5rem);
-	letter-spacing: .03em;
+ 
+.oms-date-arrow {
+  background: none;
+  border: none;
+  font-size: 1.6rem;
+  color: var(--oms-text);
+  line-height: 1;
+  padding: 0 6px;
 }
-
-.stages-list {
-	max-width: 1120px;
+.oms-date-arrow:hover { color: #555; }
+ 
+.oms-date-pill {
+  font-family: "Lalezar", sans-serif;
+  font-size: 1.75rem;
+  padding: 10px 26px;
+  background-color: var(--oms-pill);
+  color: var(--oms-text);
+  border: none;
+  white-space: nowrap;
 }
-
-.stage-item {
-	border: 0;
-	margin-bottom: 1.4rem;
-	overflow: hidden;
+ 
+.oms-date-pill.active {
+  background-color: var(--oms-pill-active);
+  color: var(--oms-white);
 }
-
-.stage-button {
-	align-items: center;
-	border: 0 !important;
-	border-radius: 0 !important;
-	color: white !important;
-	display: flex;
-	font-family: 'Barlow Condensed', sans-serif;
-	font-size: clamp(1.7rem, 3.5vw, 3rem);
-	font-weight: 800;
-	justify-content: space-between;
-	letter-spacing: .02em;
-	padding: 1.15rem 1.5rem;
-	text-transform: uppercase;
+ 
+.oms-date-pill:not(.active):hover {
+  background-color: #cfd6c6;
 }
-
-.stage-button > span:first-child {
-	min-width: 0;
-	text-align: left;
-	word-break: break-word;
+ 
+/* ---------- GALERIE (mise en page façon "mur de photos") ---------- */
+.oms-gallery {
+  column-count: 4;
+  column-gap: var(--gutter);
 }
-
-.stage-button::after {
-	filter: brightness(0) invert(1);
+ 
+.oms-gallery figure {
+  margin: 0 0 var(--gutter) 0;
+  break-inside: avoid;
 }
-
-.stage-button:not(.collapsed) {
-	box-shadow: none;
+ 
+.oms-gallery img {
+  display: block;
+  width: 100%;
+  height: auto;
 }
-
-.stage-green .stage-button,
-.stage-green .stage-body { background: var(--green); }
-.stage-red .stage-button,
-.stage-red .stage-body { background: var(--red); }
-.stage-blue .stage-button,
-.stage-blue .stage-body { background: var(--blue); }
-
-.stage-body {
-	color: white;
-	padding: 0 1.5rem 1.5rem;
+ 
+@media (max-width: 991.98px) {
+  .oms-gallery { column-count: 2; }
+  .oms-nav { gap: 30px; }
+  .oms-nav a { font-size: 1.5rem; }
 }
-
-.stage-body img {
-	aspect-ratio: 16 / 8;
-	object-fit: cover;
-	width: 100%;
+ 
+@media (max-width: 575.98px) {
+  .oms-gallery { column-count: 1; }
+  .oms-date-pill { font-size: 1.3rem; padding: 8px 16px; }
+  .oms-filtre-label { font-size: 1.4rem; }
 }
-
-.stage-info {
-	font-size: .95rem;
-	line-height: 1.5;
+ 
+/* ---------- STAGE (bannières sports) ---------- */
+.stage-list {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
 }
-
-.stage-info strong {
-	font-family: 'Barlow Condensed', sans-serif;
-	font-size: 1.25rem;
-	letter-spacing: .04em;
-	text-transform: uppercase;
+ 
+/* La card entière "penche" : le haut est décalé de 10px vers la droite
+   par rapport au bas (parallélogramme global). Tous les calques
+   (image, bandeau couleur, badge) héritent de cette découpe car ils
+   sont contenus dans cette carte. */
+.stage-banner {
+  --lean: 10px;
+  position: relative;
+  width: 100%;
+  height: 293px;
+  max-height: 293px;
+  overflow: hidden;
+  background-color: var(--accent);
+  clip-path: polygon(var(--lean) 0, 100% 0, calc(100% - var(--lean)) 100%, 0 100%);
 }
-
-.places {
-	background: white;
-	color: var(--ink);
-	font-family: 'Barlow Condensed', sans-serif;
-	font-size: 1.1rem;
-	font-weight: 800;
-	margin-left: 1rem;
-	padding: .2rem .55rem;
-	white-space: nowrap;
+ 
+/* Calque 1 (le plus bas) : la photo, avec une marge tout autour pour
+   qu'elle reste bien "dans" la card, sous le bandeau de couleur et le texte */
+.stage-image {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  bottom: 10px;
+  left: 10px;
+  z-index: 1;
+  overflow: hidden;
 }
-
-.site-footer {
-	background: var(--anthracite);
-	color: white;
+ 
+.stage-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
 }
-
-.footer-content {
-	align-items: center;
-	display: flex;
-	font-size: .8rem;
-	font-weight: 700;
-	justify-content: space-between;
-	padding-bottom: .85rem;
-	padding-top: .85rem;
-	text-align: left;
+ 
+/* Calque 2 : le bandeau de couleur + le texte, au-dessus de l'image */
+.stage-text {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 66%;
+  z-index: 2;
+  background-color: var(--accent);
+  color: var(--oms-white);
+  clip-path: polygon(0 0, 100% 0, calc(100% - 40px) 100%, 0 100%);
+  padding: 28px 70px 28px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
-
-.footer-ball {
-	height: 2.3rem;
-	margin-left: 1rem;
-	width: 2.3rem;
+ 
+.stage-text h2 {
+  font-size: 2.4rem;
+  margin: 0 0 16px 0;
+  line-height: 1;
 }
-
-.footer-content a {
-	color: white;
-	font-weight: 800;
+ 
+.stage-level {
+  font-weight: 700;
+  text-transform: uppercase;
+  margin: 0 0 4px 0;
+  font-size: 1rem;
 }
-
-.footer-content a:hover {
-	color: #7ae3a7;
+ 
+.stage-desc {
+  margin: 0;
+  font-size: 1.05rem;
+  line-height: 1.35;
 }
-
-@media (max-width: 991px) {
-	.site-nav .nav-link { padding: .6rem 0 !important; }
-	.site-logo { max-width: 165px; }
-	.site-header .container { min-height: 72px; }
+ 
+/* Calque 3 (le plus haut) : le badge de note */
+.stage-badge {
+  position: absolute;
+  top: 0;
+  left: 58%;
+  z-index: 3;
+  background-color: var(--oms-white);
+  color: var(--accent);
+  font-family: "Lalezar", sans-serif;
+  font-size: 1.7rem;
+  padding: 6px 18px 10px 14px;
+  clip-path: polygon(0 0, 100% 0, 82% 100%, 0 100%);
 }
-
-@media (max-width: 575px) {
-	.site-logo { max-width: 145px; }
-	.intro { padding-bottom: 2.25rem !important; padding-top: 2.25rem !important; }
-	.intro h1 { font-size: 2.75rem; }
-	.intro .lead { font-size: 1rem; }
-	.stages-list { padding-bottom: 2rem !important; padding-top: 2rem !important; }
-	.stage-button {
-		align-items: flex-start;
-		font-size: 1.65rem;
-		gap: .6rem;
-		padding: 1rem .9rem;
-	}
-	.stage-button::after { flex: 0 0 auto; margin-top: .35rem; }
-	.places { font-size: 1rem; margin-left: auto; }
-	.stage-body { padding: 0 .9rem 1rem; }
-	.stage-body .row { --bs-gutter-x: 1rem; }
-	.stage-info { font-size: .9rem; }
-	.footer-content { font-size: .72rem; }
-	.footer-content p { flex: 1; }
-	.footer-ball { height: 2rem; width: 2rem; }
+ 
+.stage-badge span {
+  font-size: 1rem;
+}
+ 
+/* Palette par catégorie (voir légende) */
+.stage-red   { --accent: #FF0000; } /* jeu de balle */
+.stage-blue  { --accent: #00AAFF; } /* jeu en mer */
+.stage-green { --accent: #008C3F; } /* jeu en plein air */
+ 
+@media (max-width: 767.98px) {
+  .stage-banner { height: 230px; max-height: 230px; --lean: 8px; }
+  .stage-text { width: 70%; padding: 16px 40px 16px 24px; }
+  .stage-text h2 { font-size: 1.4rem; margin-bottom: 8px; }
+  .stage-desc { font-size: 0.85rem; }
+  .stage-badge { font-size: 1.2rem; left: 62%; padding: 4px 12px 8px 10px; }
+}
+ 
+@media (max-width: 575.98px) {
+  .stage-banner { height: 190px; max-height: 190px; --lean: 6px; }
+  .stage-text { width: 66%; padding: 12px 24px 12px 18px; }
+  .stage-text h2 { font-size: 1.05rem; }
+  .stage-level { font-size: 0.75rem; }
+  .stage-desc { font-size: 0.72rem; }
+  .stage-badge { font-size: 0.95rem; left: 56%; }
+}
+ 
+/* ---------- FOOTER ---------- */
+.oms-footer {
+  background-color: var(--oms-dark);
+  color: var(--oms-white);
+}
+ 
+.oms-footer p {
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 700;
+  margin: 0;
+}
+ 
+.oms-footer .ball-icon {
+  width: 34px;
+  height: 34px;
 }

@@ -13,13 +13,17 @@
 <body>
     <!-- HEADER -->
     <header class="oms-header">
+        <!-- container-fluid : prend toute la largeur de l'écran -->
         <div class="container-fluid">
+            <!-- row : crée une ligne Bootstrap ; align-items-center : centre verticalement ; py-2 : ajoute un espace vertical -->
             <div class="row align-items-center py-2">
+                <!-- col-auto : adapte la largeur de la colonne à celle du logo -->
                 <div class="col-auto logo">
                     <a href="index.html" aria-label="Retour à l'accueil">
                         <img src="../Annexes/Images/logo_OMS.svg" alt="Logo OMS - Office Municipal du Sport">
                     </a>
                 </div>
+                <!-- col : prend l'espace restant ; d-flex : active Flexbox ; justify-content : positionne les liens ; ps-lg-5 : marge interne sur grand écran -->
                 <div class="col d-flex justify-content-center justify-content-lg-start ps-lg-5">
                     <nav class="oms-nav" aria-label="Navigation principale">
                         <a href="stage.html">STAGE</a>
@@ -31,15 +35,23 @@
     </header>
 
     <!-- FORMULAIRE DE CONTACT -->
+    <!-- container : centre le contenu et limite sa largeur ; py-5 : ajoute une grande marge verticale -->
     <main class="container py-5">
+        <!-- mx-auto : centre horizontalement le bloc personnalisé -->
         <section class="contact-box mx-auto" aria-labelledby="titre-contact">
+            <!-- mb-2 : petite marge sous le titre -->
             <h1 id="titre-contact" class="mb-2">Nous contacter</h1>
+            <!-- mb-4 : marge plus importante sous le texte d'introduction -->
             <p class="contact-intro mb-4">Remplissez le formulaire pour nous envoyer un message.</p>
 
             <form action="#" method="post">
+                <!-- row : organise les champs en ligne ; g-3 : espace régulièrement les champs -->
                 <div class="row g-3">
+                    <!-- col-md-6 : moitié de la largeur à partir de l'écran moyen, pleine largeur sur mobile -->
                     <div class="col-md-6">
+                        <!-- form-label : style Bootstrap adapté aux étiquettes -->
                         <label for="nom" class="form-label">Nom</label>
+                        <!-- form-control : donne au champ un style Bootstrap responsive -->
                         <input type="text" class="form-control" id="nom" name="nom" placeholder="Votre nom" autocomplete="family-name" required>
                     </div>
 
@@ -48,6 +60,7 @@
                         <input type="text" class="form-control" id="prenom" name="prenom" placeholder="Votre prénom" autocomplete="given-name" required>
                     </div>
 
+                    <!-- col-12 : prend toute la largeur sur tous les écrans -->
                     <div class="col-12">
                         <label for="email" class="form-label">Adresse mail</label>
                         <input type="email" class="form-control" id="email" name="email" placeholder="exemple@domaine.fr" autocomplete="email" required>
@@ -55,10 +68,12 @@
 
                     <div class="col-12">
                         <label for="message" class="form-label">Message</label>
+                        <!-- rows : définit une hauteur initiale de six lignes pour le message -->
                         <textarea class="form-control" id="message" name="message" rows="6" placeholder="Écrivez votre message ici..." required></textarea>
                     </div>
 
                     <div class="col-12">
+                        <!-- btn : style de bouton Bootstrap ; btn-success : couleur verte Bootstrap -->
                         <button type="submit" class="btn btn-success">Envoyer le message</button>
                     </div>
                 </div>
@@ -68,6 +83,8 @@
 
     <!-- FOOTER -->
     <footer class="oms-footer py-3">
+        <!-- container-fluid : pleine largeur ; d-flex : Flexbox ; flex-wrap : retour à la ligne sur petit écran -->
+        <!-- justify-content-between : éloigne le texte du logo ; align-items-center : centre verticalement ; gap-2 : espace entre les éléments -->
         <div class="container-fluid d-flex flex-wrap justify-content-between align-items-center gap-2">
             <p>Dernière mise à jour 15/09/2026&nbsp;&nbsp;-&nbsp;&nbsp;Adresse&nbsp;: 25 Rue de Strasbourg 44000 NANTES - <a href="FAQ.html">FAQ</a></p>
             <img src="../Annexes/Images/logo_ball_oms.svg" alt="" class="ball-icon">

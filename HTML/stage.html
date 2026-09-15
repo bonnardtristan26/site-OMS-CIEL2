@@ -4,111 +4,133 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Découvrez les stages proposés par notre établissement.">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <!-- Importation de Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <!-- Polices -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../CSS/stage.css">
+    <link href="https://fonts.googleapis.com/css2?family=Lalezar&family=Ubuntu:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Quelques ajustements minimes impossibles avec les classes utilitaires seules */
+        body { font-family: 'Ubuntu', sans-serif; }
+        .font-lalezar { font-family: 'Lalezar', system-ui; }
+        /* Pour s'assurer que les images remplissent bien toute la hauteur de leur bloc */
+        .stage-img { object-fit: cover; height: 100%; min-height: 200px; }
+        .stage-box { border-width: 8px !important; }
+    </style>
     <title>Nos stages</title>
 </head>
-<body class="bg-light">
-    <header class="site-header">
-        <nav class="navbar navbar-expand-lg navbar-dark" aria-label="Navigation principale">
-            <div class="container">
-                <a class="navbar-brand me-lg-5" href="index.html">
-                    <img class="site-logo" src="../Annexes/Images/logo_OMS.svg" alt="OMS - Office Municipal du Sport">
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navigationPrincipale" aria-controls="navigationPrincipale" aria-expanded="false" aria-label="Afficher le menu">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navigationPrincipale">
-                    <ul class="navbar-nav site-nav ms-lg-4">
-                        <li class="nav-item"><a class="nav-link" href="galerie.html">Galerie</a></li>
-                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="stage.html">Stage</a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
+
+<!-- bg-white (Bootstrap) : Applique un fond blanc global à la page -->
+<body class="bg-white">
+
+    <!-- ==================== EN-TETE ==================== -->
+    <!-- bg-dark (Fond noir), py-2 (Padding vertical en haut et bas) -->
+    <header class="bg-dark py-2 mb-4">
+        <!-- container-fluid (Prend toute la largeur), d-flex (Active flexbox), align-items-center (Centre verticalement) -->
+        <div class="container-fluid d-flex align-items-center">
+            
+            <a href="index.html" aria-label="Retour à l'accueil">
+                <!-- Logo -->
+                <img src="../Annexes/Images/logo_OMS.svg" alt="Logo OMS" height="60">
+            </a>
+
+            <!-- ms-5 (Margin-left large), d-flex (Flexbox), gap-4 (Espace entre les liens) -->
+            <nav class="ms-5 d-flex gap-4 font-lalezar fs-3" aria-label="Navigation principale">
+                <!-- text-white (Texte blanc), text-decoration-none (Supprime le soulignement du lien) -->
+                <a href="stage.html" class="text-white text-decoration-none" aria-current="page">STAGE</a>
+                <a href="galerie.html" class="text-white text-decoration-none">GALERIE</a>
+            </nav>
+            
+        </div>
     </header>
 
+    <!-- ==================== STAGES ==================== -->
     <main>
-
-        <section class="container stages-list py-5" aria-labelledby="liste-stages">
-            <h2 id="liste-stages" class="section-title h2 mb-4">Stages disponibles</h2>
-            <div class="accordion" id="listeStages">
-                <article class="accordion-item stage-item stage-green">
-                    <h3 class="accordion-header" id="titreStageUn">
-                        <button class="accordion-button stage-button" type="button" data-bs-toggle="collapse" data-bs-target="#stageUn" aria-expanded="true" aria-controls="stageUn">
-                            <span>Padel - le 01/05/2026 à 15h</span><span class="places">8/20</span>
-                        </button>
-                    </h3>
-                    <div id="stageUn" class="accordion-collapse collapse show" aria-labelledby="titreStageUn" data-bs-parent="#listeStages">
-                        <div class="accordion-body stage-body">
-                            <div class="row g-4 align-items-center">
-                                <div class="col-md-7 order-md-2">
-                                    <img src="https://images.unsplash.com/photo-1626224583764-f87db24ac4ea?auto=format&amp;fit=crop&amp;w=1000&amp;q=80" class="img-fluid" alt="Joueurs de padel sur un terrain">
-                                </div>
-                                <div class="col-md-5 order-md-1 stage-info">
-                                    <p><strong>Niveaux :</strong> Collège</p>
-                                    <p>Le padel est un sport de raquette ludique, accessible et dynamique qui se joue en double sur un court réduit entouré de vitres.</p>
-                                </div>
-                            </div>
-                        </div>
+        <!-- container (Centre le contenu avec des marges latérales automatiques) -->
+        <section class="container" aria-labelledby="liste-stages">
+            
+            <!-- ==================== STAGE PADEL ==================== -->
+            <!-- row (Crée une ligne de grille), mb-4 (Margin bottom), border (Bordure standard), border-success (Bordure verte Bootstrap), stage-box (classe CSS perso pour épaissir la bordure) -->
+            <article class="row mx-0 mb-4 border border-success stage-box stage-green">
+                <!-- col-md-7 (Prend 7 colonnes sur 12 sur écran moyen), bg-success (Fond vert), text-white (Texte blanc), p-4 (Padding interne), position-relative (Pour positionner le badge absolute par rapport à cette div) -->
+                <div class="col-md-7 bg-success text-white p-4 position-relative">
+                    
+                    <!-- Badge places : position-absolute (Positionnement absolu), top-0 end-0 (Placé en haut à droite), bg-white (Fond blanc), text-success (Texte vert), fw-bold (Texte en gras), px-2 py-1 (Padding horizontal et vertical), m-3 (Marge externe) -->
+                    <div class="stage-count position-absolute top-0 end-0 bg-white text-success fw-bold px-2 py-1 fs-5 font-lalezar">
+                        11/20
                     </div>
-                </article>
 
-                <article class="accordion-item stage-item stage-red">
-                    <h3 class="accordion-header" id="titreStageDeux">
-                        <button class="accordion-button stage-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#stageDeux" aria-expanded="false" aria-controls="stageDeux">
-                            <span>Football - le 02/05/2026 à 15h</span><span class="places">5/20</span>
-                        </button>
-                    </h3>
-                    <div id="stageDeux" class="accordion-collapse collapse" aria-labelledby="titreStageDeux" data-bs-parent="#listeStages">
-                        <div class="accordion-body stage-body">
-                            <div class="row g-4 align-items-center">
-                                <div class="col-md-7 order-md-2">
-                                    <img src="https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&amp;fit=crop&amp;w=1000&amp;q=80" class="img-fluid" alt="Joueurs de football sur un terrain">
-                                </div>
-                                <div class="col-md-5 order-md-1 stage-info">
-                                    <p><strong>Niveaux :</strong> Collège</p>
-                                    <p>Le football est un sport collectif stratégique, intense et populaire qui se joue à onze sur un grand terrain herbé encadré de cages.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </article>
+                    <!-- text-uppercase (Met le texte en majuscule), fs-1 (Taille de police très grande), mb-3 (Marge en bas) -->
+                    <h2 class="text-uppercase font-lalezar fs-1 mb-3">Padel - le 01/05/2026 à 15h</h2>
+                    <!-- fw-bold (Texte en gras), mb-1 (Marge fine en bas) -->
+                    <p class="fw-bold text-uppercase mb-1">Nivaux:College</p>
+                    <p class="text-uppercase mb-0">Le padel est un sport de raquette ludique, accessible et ultra-dynamique qui se joue en double sur un court réduit entoure de vitres</p>
+                </div>
+                <!-- col-md-5 (Prend 5 colonnes sur 12), p-0 (Enlève les marges internes pour que l'image colle aux bords) -->
+                <div class="col-md-5 p-0 stage-image-container">
+                    <!-- w-100 (Largeur 100% du parent) -->
+                    <img src="https://images.unsplash.com/photo-1626224583764-f87db24ac4ea?auto=format&amp;fit=crop&amp;w=1000&amp;q=80" class="w-100 h-100 object-fit-cover stage-img" alt="Joueurs de padel sur un terrain">
+                </div>
+            </article>
 
-                <article class="accordion-item stage-item stage-blue">
-                    <h3 class="accordion-header" id="titreStageTrois">
-                        <button class="accordion-button stage-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#stageTrois" aria-expanded="false" aria-controls="stageTrois">
-                            <span>Surf - le 05/05/2026 à 15h</span><span class="places">3/20</span>
-                        </button>
-                    </h3>
-                    <div id="stageTrois" class="accordion-collapse collapse" aria-labelledby="titreStageTrois" data-bs-parent="#listeStages">
-                        <div class="accordion-body stage-body">
-                            <div class="row g-4 align-items-center">
-                                <div class="col-md-7 order-md-2">
-                                    <img src="https://images.unsplash.com/photo-1502680390469-be75c86b636f?auto=format&amp;fit=crop&amp;w=1000&amp;q=80" class="img-fluid" alt="Surfeur sur une vague">
-                                </div>
-                                <div class="col-md-5 order-md-1 stage-info">
-                                    <p><strong>Niveaux :</strong> Collège</p>
-                                    <p>Découvrez les bases du surf, les règles de sécurité et les sensations de la glisse lors d'une initiation encadrée.</p>
-                                </div>
-                            </div>
-                        </div>
+            <!-- ==================== STAGE FOOTBALL ==================== -->
+            <!-- Même logique avec border-danger (Bordure rouge) -->
+            <article class="row mx-0 mb-4 border border-danger stage-box stage-red">
+                <!-- bg-danger (Fond rouge) -->
+                <div class="col-md-7 bg-danger text-white p-4 position-relative">
+                    
+                    <!-- text-danger (Texte rouge pour le badge) -->
+                    <div class="stage-count position-absolute top-0 end-0 bg-white text-danger fw-bold px-2 py-1 fs-5 font-lalezar">
+                        20/20
                     </div>
-                </article>
-            </div>
+
+                    <h2 class="text-uppercase font-lalezar fs-1 mb-3">Foot - le 02/05/2026 à 15h</h2>
+                    <p class="fw-bold text-uppercase mb-1">Nivaux:College</p>
+                    <p class="text-uppercase mb-0">Le football est un sport collectif stratégique, intense et populaire qui se joue à onze sur un grand terrain herbé encadré de cages.</p>
+                </div>
+                <!-- p-0 (Pas de padding) -->
+                <div class="col-md-5 p-0 stage-image-container">
+                    <!-- w-100 (Largeur 100%) -->
+                    <img src="https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&amp;fit=crop&amp;w=1000&amp;q=80" class="w-100 h-100 object-fit-cover stage-img" alt="Joueurs de football sur un terrain">
+                </div>
+            </article>
+
+            <!-- ==================== STAGE SURF ==================== -->
+            <!-- Même logique avec border-info (Bordure bleu clair) -->
+            <article class="row mx-0 mb-4 border border-info stage-box stage-blue">
+                <!-- bg-info (Fond bleu clair) -->
+                <div class="col-md-7 bg-info text-white p-4 position-relative">
+                    
+                    <!-- text-info (Texte bleu clair) -->
+                    <div class="stage-count position-absolute top-0 end-0 bg-white text-info fw-bold px-2 py-1 fs-5 font-lalezar">
+                        19/20
+                    </div>
+
+                    <h2 class="text-uppercase font-lalezar fs-1 mb-3">Surfer - le 05/05/2026 à 15h</h2>
+                    <!-- Vous n'aviez pas mis de texte de description sur l'image de référence pour le surf (coupé), je laisse la structure vide -->
+                </div>
+                <div class="col-md-5 p-0 stage-image-container">
+                    <img src="https://images.unsplash.com/photo-1502680390469-be75c86b636f?auto=format&amp;fit=crop&amp;w=1000&amp;q=80" class="w-100 h-100 object-fit-cover stage-img" alt="Surfeur sur une vague">
+                </div>
+            </article>
+
         </section>
     </main>
 
-    <footer class="site-footer mt-4">
-        <div class="container footer-content">
-            <p class="mb-0">Dernière mise à jour 07/09/2026 - Adresse : 25 Rue de Strasbourg 44000 NANTES - <a href="FAQ.html">FAQ</a></p>
-            <img class="footer-ball" src="../Annexes/Images/logo_ball_oms.svg" alt="">
+    <!-- ==================== PIED DE PAGE ==================== -->
+    <!-- bg-dark (Fond noir), text-white (Texte blanc), py-3 (Padding vertical), mt-5 (Margin top pour espacer du contenu) -->
+    <footer class="bg-dark text-white py-3 mt-5 font-lalezar">
+        <!-- container-fluid, d-flex, justify-content-between (Espace au maximum les éléments), align-items-center (Centre verticalement) -->
+        <div class="container-fluid d-flex flex-wrap justify-content-between align-items-center px-4">
+            <!-- mb-0 (Supprime la marge basse par défaut du paragraphe) -->
+            <p class="mb-0 fs-5 text-uppercase">Dernière mise à jour 07/09/2026 - Adresse : 25 Rue de Strasbourg 44000 NANTES - <a href="FAQ.html" class="text-white">FAQ</a></p>
+            <img src="../Annexes/Images/logo_ball_oms.svg" alt="" height="40" class="ball-icon">
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <!-- Script Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 </body>
 </html>
