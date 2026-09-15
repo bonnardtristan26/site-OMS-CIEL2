@@ -1,6 +1,171 @@
-header {
-    background-color: black;
+html {
+  height: 100%;
+  box-sizing: border-box;
+}
+
+body {
+  height: 100%;
+}
+
+.enrobage {
+  min-height: 100%;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+
+.prime-header {
+    background-color: #272F25;
     color: white;
-    font-family: "Lalezar";
-    height: 100px;
+    font-family: 'Lalezar', sans-serif;
+}
+
+.description {
+    background-color: var(--oms-green);
+    color: #ffffff;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+:root {
+	--oms-dark: #202a20;
+	--oms-text: #1c1c1c;
+	--oms-green: #009447;
+	--oms-white: #ffffff;
+}
+
+/* ---------- HEADER ---------- */
+.oms-header {
+	background-color: var(--oms-dark);
+}
+
+.oms-header .logo img {
+	height: 60px;
+	width: auto;
+}
+
+.oms-nav {
+	display: flex;
+	gap: 60px;
+}
+
+.oms-nav a {
+	color: var(--oms-white);
+	font-family: 'Lalezar', sans-serif;
+	font-size: 2rem;
+	text-decoration: none;
+}
+
+.oms-nav a:hover,
+.oms-nav a:focus {
+	color: #cfd8c8;
+}
+
+.contact-box {
+	background: var(--oms-green);
+	border: 0;
+	color: var(--oms-white);
+	max-width: 760px;
+	padding: 2rem;
+}
+
+main {
+	flex: 1;
+}
+
+.contact-box h1 {
+	color: var(--oms-white);
+	font-family: 'Lalezar', sans-serif;
+	font-size: 2.8rem;
+	text-transform: uppercase;
+}
+
+.contact-intro {
+	color: var(--oms-white);
+}
+
+.contact-box .form-label {
+	color: var(--oms-white);
+	font-weight: 700;
+}
+
+.contact-box .form-control {
+	border: 0;
+	border-radius: 0;
+}
+
+.contact-box .form-control:focus {
+	border-color: var(--oms-dark);
+	box-shadow: 0 0 0 .25rem rgba(32, 42, 32, .25);
+}
+
+.contact-box .btn-success {
+	background-color: var(--oms-dark);
+	border-color: var(--oms-dark);
+	font-family: 'Lalezar', sans-serif;
+	font-size: 1.1rem;
+}
+
+.contact-box .btn-success:hover {
+	background-color: var(--oms-green);
+	border-color: var(--oms-green);
+}
+
+/* ---------- FOOTER ---------- */
+.oms-footer {
+	background-color: var(--oms-dark);
+	color: var(--oms-white);
+}
+
+.oms-footer p {
+	font-weight: 700;
+	margin: 0;
+}
+
+.oms-footer a {
+	color: var(--oms-white);
+	font-weight: 700;
+}
+
+.oms-footer .ball-icon {
+	height: 34px;
+	width: auto;
+}
+
+@media (max-width: 991.98px) {
+	.oms-nav {
+		gap: 30px;
+	}
+
+	.oms-nav a {
+		font-size: 1.5rem;
+	}
+}
+
+@media (max-width: 575.98px) {
+	.oms-header .logo img {
+		height: 48px;
+	}
+
+	.oms-nav {
+		gap: 18px;
+	}
+
+	.oms-nav a {
+		font-size: 1.25rem;
+	}
+
+	.contact-box {
+		padding: 1.25rem;
+	}
+
+	.contact-box h1 {
+		font-size: 2.3rem;
+	}
+
+	.oms-footer p {
+		font-size: .72rem;
+	}
+
+	.oms-footer .ball-icon {
+		height: 30px;
+	}
 }
