@@ -1,0 +1,7 @@
+header{
+    background-color: black;
+    display: flex;
+    justify-content: left;
+    width: 500px;
+    height: 200px;
+}
