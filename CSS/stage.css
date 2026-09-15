@@ -158,6 +158,22 @@ body {
   object-position: center;
 }
 
+/* Calque triangulaire au-dessus de la photo, avec une marge de 10px. */
+.stage-banner::after {
+  content: "";
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  bottom: 10px;
+  width: 40px;
+  z-index: 2;
+  background-color: var(--accent);
+  clip-path: polygon(0 0, 100% 0, 100% 100%);
+  transform: scale(1, -1);
+  transform-origin: center;
+  pointer-events: none;
+}
+
 /* Calque 2 : le bandeau de couleur + le texte, au-dessus de l'image */
 .stage-text {
   position: absolute;
@@ -165,7 +181,7 @@ body {
   left: 0;
   bottom: 0;
   width: 66%;
-  z-index: 2;
+  z-index: 3;
   background-color: var(--accent);
   color: var(--oms-white);
   clip-path: polygon(0 0, 100% 0, calc(100% - 40px) 100%, 0 100%);
@@ -198,14 +214,15 @@ body {
 .stage-badge {
   position: absolute;
   top: 0;
-  left: 58%;
-  z-index: 3;
+  left: 100%;
+  z-index: 4;
   background-color: var(--oms-white);
   color: var(--accent);
   font-family: "Lalezar", sans-serif;
   font-size: 1.7rem;
   padding: 6px 18px 10px 14px;
   clip-path: polygon(0 0, 100% 0, 82% 100%, 0 100%);
+  transform: translateX(calc(-50% - 50px));
 }
 
 .stage-badge span {
@@ -222,7 +239,7 @@ body {
   .stage-text { width: 70%; padding: 16px 40px 16px 24px; }
   .stage-text h2 { font-size: 1.4rem; margin-bottom: 8px; }
   .stage-desc { font-size: 0.85rem; }
-  .stage-badge { font-size: 1.2rem; left: 62%; padding: 4px 12px 8px 10px; }
+  .stage-badge { font-size: 1.2rem; padding: 4px 12px 8px 10px; }
 }
 
 @media (max-width: 575.98px) {
@@ -231,7 +248,7 @@ body {
   .stage-text h2 { font-size: 1.05rem; }
   .stage-level { font-size: 0.75rem; }
   .stage-desc { font-size: 0.72rem; }
-  .stage-badge { font-size: 0.95rem; left: 56%; }
+  .stage-badge { font-size: 0.95rem; }
 }
 
 /* ---------- FOOTER ---------- */
