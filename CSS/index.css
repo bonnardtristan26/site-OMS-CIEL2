@@ -23,6 +23,11 @@ body {
     background-color: var(--oms-green);
     color: #ffffff;
     font-family: 'Ubuntu', sans-serif;
+	height: 20%;
+}
+
+.description .image_accueil img {
+	height: 164px;
 }
 
 :root {
@@ -33,9 +38,6 @@ body {
 }
 
 /* ---------- HEADER ---------- */
-.oms-header {
-	background-color: var(--oms-dark);
-}
 
 .oms-header .logo img {
 	height: 60px;
@@ -111,6 +113,9 @@ main {
 
 /* ---------- FOOTER ---------- */
 .oms-footer {
+    position: absolute;
+	bottom: 0;
+	width: 100%;
 	background-color: var(--oms-dark);
 	color: var(--oms-white);
 }
