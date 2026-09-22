@@ -1,0 +1,362 @@
+/* =========================================================
+   OMS - Formulaire d'inscription Padel
+   ========================================================= */
+
+:root {
+  --oms-dark: #1c1c1c;
+  --oms-green: #1c8a4d;
+  --oms-green-dark: #157a42;
+  --oms-court-blue: #2454a6;
+  --oms-court-blue-dark: #1c3f80;
+  --oms-ball: #d7e84a;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #ffffff;
+  color: var(--oms-dark);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ===================== NAVBAR ===================== */
+
+.oms-header {
+  background-color: #202a20;
+}
+
+.oms-header .logo img {
+  height: 60px;
+  width: auto;
+}
+
+.oms-nav {
+  display: flex;
+  gap: 60px;
+}
+
+.oms-nav a {
+  color: #ffffff;
+  font-family: 'Lalezar', sans-serif;
+  font-size: 2rem;
+  text-decoration: none;
+}
+
+.oms-nav a:hover,
+.oms-nav a:focus {
+  color: #cfd8c8;
+}
+
+.oms-navbar {
+  background-color: var(--oms-dark);
+  padding: 0.9rem 0;
+}
+
+.oms-brand {
+  text-decoration: none;
+}
+
+.oms-logo-circle {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 1.2rem;
+}
+
+.oms-brand-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.oms-brand-title {
+  font-weight: 800;
+  font-size: 1.6rem;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+}
+
+.oms-brand-sub {
+  font-size: 0.55rem;
+  font-weight: 700;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.oms-nav-link {
+  color: #ffffff !important;
+  font-weight: 700;
+  font-size: 1.05rem;
+  letter-spacing: 0.5px;
+}
+
+.oms-nav-link:hover {
+  color: var(--oms-ball) !important;
+}
+
+/* ===================== SECTION PRINCIPALE ===================== */
+
+.oms-main {
+  flex: 1 0 auto;
+  display: flex;
+  min-height: 0;
+}
+
+.oms-main > .container-fluid,
+.oms-main .row {
+  flex: 1;
+}
+
+.oms-main .row {
+  min-height: 100%;
+}
+
+.oms-green-panel {
+  background-color: var(--oms-green);
+  color: #ffffff;
+  padding: 2.5rem 3rem 3rem 3rem;
+  position: relative;
+  min-height: 100%;
+}
+
+.oms-badge {
+  position: absolute;
+  top: 1.75rem;
+  right: 1.75rem;
+  background-color: #ffffff;
+  color: var(--oms-dark);
+  font-weight: 800;
+  font-size: 0.95rem;
+  padding: 0.35rem 0.9rem;
+  border-radius: 0.35rem;
+}
+
+.oms-title {
+  font-weight: 800;
+  font-size: 2.4rem;
+  margin-bottom: 0.75rem;
+  letter-spacing: 0.5px;
+}
+
+.oms-description {
+  max-width: 620px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  margin-bottom: 2rem;
+  color: #eafff0;
+}
+
+.oms-section-title {
+  font-weight: 800;
+  font-size: 1.15rem;
+  text-transform: uppercase;
+  margin-bottom: 1.1rem;
+  letter-spacing: 0.3px;
+}
+
+.oms-input {
+  background-color: #ffffff;
+  border: none;
+  border-radius: 0.35rem;
+  padding: 0.7rem 1rem;
+  font-size: 0.9rem;
+  color: #6b6b6b;
+  max-width: 620px;
+}
+
+.oms-input::placeholder {
+  color: #9a9a9a;
+}
+
+.oms-input:focus {
+  box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.5);
+}
+
+/* ===================== PANNEAU IMAGE / COURT ===================== */
+
+.oms-image-panel {
+  min-height: 100%;
+  background-color: var(--oms-court-blue);
+  position: relative;
+  overflow: hidden;
+}
+
+.oms-court {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, var(--oms-court-blue) 0%, var(--oms-court-blue-dark) 100%);
+}
+
+.oms-court-line {
+  position: absolute;
+  top: 18%;
+  left: -10%;
+  width: 130%;
+  height: 6px;
+  background-color: #ffffff;
+  opacity: 0.9;
+  transform: rotate(-8deg);
+}
+
+.oms-ball {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: var(--oms-ball);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.oms-ball-1 { top: 22%; left: 12%; }
+.oms-ball-2 { top: 55%; left: 20%; width: 14px; height: 14px; }
+.oms-ball-3 { top: 68%; left: 62%; width: 18px; height: 18px; }
+
+.oms-racket {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.oms-racket-head {
+  width: 90px;
+  height: 110px;
+  border-radius: 50% 50% 45% 45%;
+  background: repeating-linear-gradient(
+      0deg, rgba(255,255,255,0.85) 0, rgba(255,255,255,0.85) 2px,
+      transparent 2px, transparent 9px),
+    repeating-linear-gradient(
+      90deg, rgba(255,255,255,0.85) 0, rgba(255,255,255,0.85) 2px,
+      transparent 2px, transparent 9px);
+  border: 6px solid #101010;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.35);
+}
+
+.oms-racket-handle {
+  width: 14px;
+  height: 55px;
+  background-color: #101010;
+  border-radius: 0 0 4px 4px;
+  margin-top: -4px;
+}
+
+.oms-racket-1 {
+  top: 8%;
+  right: 8%;
+  transform: rotate(18deg);
+}
+
+.oms-racket-2 {
+  bottom: 4%;
+  left: 22%;
+  transform: rotate(-12deg) scale(0.85);
+}
+
+/* ===================== FOOTER ===================== */
+
+.oms-footer {
+  background-color: #202a20;
+  color: #ffffff;
+}
+
+.oms-footer p {
+  font-weight: 700;
+  margin: 0;
+}
+
+.oms-footer a {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.oms-footer .ball-icon {
+  height: 34px;
+  width: auto;
+}
+
+/* ===================== RESPONSIVE ===================== */
+
+@media (max-width: 991.98px) {
+  .oms-nav {
+    gap: 30px;
+  }
+
+  .oms-nav a {
+    font-size: 1.5rem;
+  }
+
+  .oms-image-panel {
+    min-height: 320px;
+  }
+
+  .oms-main {
+    min-height: auto;
+  }
+
+  .oms-green-panel {
+    padding: 2rem;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .oms-header .logo img {
+    height: 48px;
+  }
+
+  .oms-nav {
+    gap: 18px;
+  }
+
+  .oms-nav a {
+    font-size: 1.25rem;
+  }
+
+  .oms-navbar {
+    padding: 0.7rem 0;
+  }
+
+  .navbar-nav {
+    gap: 0.75rem !important;
+  }
+
+  .oms-nav-link {
+    font-size: 0.85rem;
+  }
+
+  .oms-green-panel {
+    padding: 1.5rem 1rem 2rem;
+  }
+
+  .oms-badge {
+    top: 1rem;
+    right: 1rem;
+  }
+
+  .oms-title {
+    font-size: 2rem;
+  }
+
+  .oms-image-panel {
+    min-height: 260px;
+  }
+
+  .oms-footer {
+    font-size: 0.7rem;
+  }
+
+  .oms-footer .ball-icon {
+    height: 30px;
+  }
+}

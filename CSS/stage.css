@@ -123,6 +123,17 @@ body {
   gap: 18px;
 }
 
+.stage-link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+.stage-link:focus-visible {
+  outline: 3px solid #262e21;
+  outline-offset: 4px;
+}
+
 /* La card entière "penche" : le haut est décalé de 10px vers la droite
    par rapport au bas (parallélogramme global). Tous les calques
    (image, bandeau couleur, badge) héritent de cette découpe car ils
