@@ -7,6 +7,10 @@ body {
   height: 100%;
 }
 
+h1 {
+	font-family: 'Lalezar', sans-serif;
+}
+
 .enrobage {
   display: grid;
   grid-template-rows: auto 1fr auto;
@@ -25,7 +29,7 @@ body {
 }
 
 :root {
-	--oms-dark: #202a20;
+	--oms-sombre: #202a20;
 	--oms-text: #1c1c1c;
 	--oms-green: #009447;
 	--oms-white: #ffffff;
@@ -42,6 +46,32 @@ body {
 	display: flex;
 	gap: 60px;
 }
+/* --------- STYLE BOUTONS ---------*/
+
+.oms-btn{
+      display:inline-block;border:0;border-radius:0;cursor:pointer;
+      background:var(--oms-sombre);color:#fff;
+      font-family:'Lalezar',sans-serif;font-size:2.4rem;line-height:1.1;
+      letter-spacing:.03em;text-transform:uppercase;
+      padding:.6rem 2.3rem .45rem;transform:skewX(-14deg);
+      box-shadow:3px 4px 0 rgba(0,0,0,.28);
+    }
+    .oms-btn>span{display:inline-block;transform:skewX(14deg);}
+    .oms-btn:hover{background:#000;color:#fff;}
+    .oms-btn--blanc{
+      background:#fff;color:#111;font-family:'Ubuntu',sans-serif;font-weight:700;
+      font-size:1rem;padding:.5rem 1.4rem .4rem;letter-spacing:.02em;
+    }
+    .oms-btn--blanc:hover{background:#f2f2f2;color:#000;}
+    .oms-btn--x{
+      width:48px;height:42px;padding:0;background:#fff;color:#000;
+      font-family:'Ubuntu',sans-serif;font-weight:900;font-size:1.2rem;
+      display:inline-flex;align-items:center;justify-content:center;
+    }
+    .oms-btn--x:hover{background:#e8e8e8;color:#000;}
+
+	/* ------------------------------*/
+
 
 .oms-nav a {
 	color: var(--oms-white);
@@ -89,13 +119,13 @@ main {
 }
 
 .contact-box .form-control:focus {
-	border-color: var(--oms-dark);
+	border-color: var(--oms-sombre);
 	box-shadow: 0 0 0 .25rem rgba(32, 42, 32, .25);
 }
 
 .contact-box .btn-success {
-	background-color: var(--oms-dark);
-	border-color: var(--oms-dark);
+	background-color: var(--oms-sombre);
+	border-color: var(--oms-sombre);
 	font-family: 'Lalezar', sans-serif;
 	font-size: 1.1rem;
 }
@@ -110,7 +140,7 @@ main {
     position: absolute;
 	bottom: 0;
 	width: 100%;
-	background-color: var(--oms-dark);
+	background-color: var(--oms-sombre);
 	color: var(--oms-white);
 }
 
@@ -136,6 +166,11 @@ main {
 
 	.oms-nav a {
 		font-size: 1.5rem;
+	}
+
+	.oms-btn {
+		font-size:1.45rem;
+		padding:.5rem 1.3rem .4rem;
 	}
 }
 
