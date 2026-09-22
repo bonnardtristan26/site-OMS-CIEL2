@@ -6,7 +6,7 @@
 }
 
 body {
-	background-color: #ffffff;
+	background-color: var(--oms-green);
 	color: var(--oms-text);
 	display: flex;
 	flex-direction: column;
@@ -45,12 +45,29 @@ body {
 	background: var(--oms-green);
 	border: 0;
 	color: var(--oms-white);
-	max-width: 760px;
+	max-width: none;
+	width: 100%;
+	min-height: 100%;
 	padding: 2rem;
 }
 
 main {
 	flex: 1;
+}
+
+main.container {
+	max-width: none;
+	width: 100%;
+	display: flex;
+	padding-left: 0;
+	padding-right: 0;
+	padding-top: 0 !important;
+	padding-bottom: 0 !important;
+}
+
+main.container > .contact-box {
+	flex: 1;
+	width: 100%;
 }
 
 .contact-box h1 {
