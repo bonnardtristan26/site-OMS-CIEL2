@@ -1,19 +1,29 @@
 html {
   height: 100%;
   box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 body {
-  height: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  overflow-x: hidden;
 }
 
-h1 {
+main {
+	flex: 1;
+}
+
+.h_actu h1 {
 	font-family: 'Lalezar', sans-serif;
 }
 
 .enrobage {
-  display: grid;
-  grid-template-rows: auto 1fr auto;
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+	width: 100%;
 }
 
 .prime-header {
@@ -26,6 +36,16 @@ h1 {
     background-color: var(--oms-green);
     color: #ffffff;
     font-family: 'Ubuntu', sans-serif;
+}
+
+.description img {
+	max-width: 100%;
+	height: auto;
+	object-fit: contain;
+}
+
+.box_actu img {
+	object-fit: cover;
 }
 
 :root {
@@ -70,8 +90,22 @@ h1 {
     }
     .oms-btn--x:hover{background:#e8e8e8;color:#000;}
 
-	/* ------------------------------*/
+/* ----------------------------------*/
 
+/* --------- STYLE ARTICLES ---------*/
+
+.box_actu {
+  --panel-w: 66%; /* largeur du panneau texte, partagée avec la zone image */
+  position: relative;
+  width: 100%;
+  height: 293px;
+  max-height: 293px;
+  overflow: hidden;
+  background-color: var(--accent);
+  clip-path: polygon(var(--lean) 0, 100% 0, calc(100% - var(--lean)) 100%, 0 100%);
+}
+
+/* ----------------------------------*/
 
 .oms-nav a {
 	color: var(--oms-white);
@@ -93,9 +127,6 @@ h1 {
 	padding: 2rem;
 }
 
-main {
-	flex: 1;
-}
 
 .contact-box h1 {
 	color: var(--oms-white);
@@ -137,8 +168,6 @@ main {
 
 /* ---------- FOOTER ---------- */
 .oms-footer {
-    position: absolute;
-	bottom: 0;
 	width: 100%;
 	background-color: var(--oms-sombre);
 	color: var(--oms-white);
@@ -202,4 +231,18 @@ main {
 	.oms-footer .ball-icon {
 		height: 30px;
 	}
+	.box_actu { height: 190px; max-height: 190px; --lean: 6px; --panel-w: 66%; }
+	.box_text { padding: 12px 24px 12px 18px; }
+	.box_text h2 { font-size: 1.05rem; }
+	.box_level { font-size: 0.75rem; }
+	.box_desc { font-size: 0.72rem; }
+	.box_badge { font-size: 0.95rem; }
+}
+
+@media (max-width: 767.98px) {
+	.box_actu { height: 230px; max-height: 230px; --lean: 8px; --panel-w: 70%; }
+	.box_text { padding: 16px 40px 16px 24px; }
+	.box_text h2 { font-size: 1.4rem; margin-bottom: 8px; }
+	.box_desc { font-size: 0.85rem; }
+	.box_badge { font-size: 1.2rem; padding: 4px 12px 8px 10px; }
 }
