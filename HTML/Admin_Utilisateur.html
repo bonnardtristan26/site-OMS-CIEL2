@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>OMS | Connexion Admin</title>
+  <title>OMS | Admin – Utilisateur</title>
   <link rel="icon" type="image/svg+xml" href="../Annexes/Images/logo_ball_oms.svg">
 
   <!-- Bootstrap 5.3.8 (dernière version stable) -->
@@ -42,6 +42,11 @@
     /* ---- Bandeau rouge ---- */
     .oms-rouge{background:var(--oms-rouge);}
 
+    /* Le bandeau rouge remplit la hauteur jusqu'au pied de page */
+    .oms-main{display:flex;flex-direction:column;}
+    .oms-main>.container{display:flex;flex-direction:column;flex:1 1 auto;}
+    .oms-main>.container>section{flex:1 1 auto;display:flex;flex-direction:column;}
+
     /* ---- Onglets de navigation admin ---- */
     .oms-tabs{display:flex;align-items:stretch;}
     .oms-tab{
@@ -54,12 +59,12 @@
     .oms-tab.actif:hover{color:#fff;}
     .oms-sep{flex:0 0 3px;background:#fff;}
 
-    /* ---- Liste des stages ---- */
+    /* ---- Liste des utilisateurs ---- */
     .oms-liste{background:var(--oms-rouge-fonce);}
     .oms-ligne{display:flex;align-items:center;gap:1rem;padding:.95rem 1.5rem;}
     .oms-ligne + .oms-ligne{border-top:2px solid #fff;}
-    .oms-sport{font-family:'Lalezar',sans-serif;font-size:1.75rem;color:#fff;letter-spacing:.04em;min-width:230px;}
-    .oms-date{flex:1 1 auto;color:#fff;font-weight:700;font-size:1.45rem;}
+    .oms-nom{font-family:'Lalezar',sans-serif;font-size:1.75rem;color:#fff;letter-spacing:.04em;min-width:230px;}
+    .oms-mail{flex:1 1 auto;color:#fff;font-weight:700;font-size:1.45rem;}
 
     /* ---- Boutons "parallelogramme" ---- */
     .oms-btn{
@@ -107,10 +112,10 @@
       .oms-tab{font-size:1.5rem;}
       .oms-h1{font-size:2.9rem;}
       .oms-btn{font-size:1.45rem;padding:.5rem 1.3rem .4rem;}
-      .oms-sport{font-size:1.25rem;min-width:0;}
-      .oms-date{font-size:1.05rem;}
+      .oms-nom{font-size:1.25rem;min-width:0;}
+      .oms-mail{font-size:1.05rem;}
       .oms-ligne{flex-wrap:wrap;gap:.5rem;padding:.8rem 1rem;}
-      .oms-date{flex:1 1 100%;order:5;}
+      .oms-mail{flex:1 1 100%;order:5;}
       .oms-actu-titre{font-size:1.5rem;}
       .oms-champ{font-size:1rem;}
     }
@@ -127,32 +132,53 @@
       <nav class="d-flex align-items-center" aria-label="Navigation principale">
         <a class="nav-link" href="stage.html">Stage</a>
         <a class="nav-link" href="galerie.html">Galerie</a>
-        <a class="nav-link" href="Admin_Utilisateur.html">Utilisateur</a>
       </nav>
     </div>
   </header>
 
-  <!-- ===================== CONNEXION ===================== -->
-  <main class="py-4 py-md-5">
-    <div class="container" style="max-width:790px;">
-      <section class="oms-rouge p-4 p-lg-5 text-center">
-        <h1 class="titre oms-h1 text-white mb-4" style="font-size:4rem;">Connexion Admin</h1>
+  <!-- ===================== GESTION DES UTILISATEURS ===================== -->
+  <main class="oms-main pt-4 pb-0">
+    <div class="container">
+      <section class="oms-rouge p-4 p-lg-4">
 
-        <p class="text-white fw-bold text-uppercase mb-4" style="font-size:1.6rem;">Informations de connexion</p>
+        <nav class="oms-tabs mb-4 mb-lg-5" aria-label="Navigation administration">
+          <span class="oms-sep" aria-hidden="true"></span>
+          <a class="oms-tab" href="Admin_Stage.html">Stage</a>
+          <span class="oms-sep" aria-hidden="true"></span>
+          <a class="oms-tab" href="Admin_Galerie.html">Galerie</a>
+          <span class="oms-sep" aria-hidden="true"></span>
+          <a class="oms-tab" href="Admin_Accueil.html">Accueil</a>
+          <span class="oms-sep" aria-hidden="true"></span>
+          <a class="oms-tab actif" href="Admin_Utilisateur.html" aria-current="page">Utilisateur</a>
+          <span class="oms-sep" aria-hidden="true"></span>
 
-        <form action="#" method="post" class="row justify-content-center g-0">
-          <div class="col-12 col-md-10">
-            <div class="mb-3">
-              <label for="identifiant" class="visually-hidden">Identifiant</label>
-              <input type="text" class="form-control oms-champ" id="identifiant" name="identifiant" placeholder="Identifiant...">
-            </div>
-            <div class="mb-4">
-              <label for="motdepasse" class="visually-hidden">Mot de passe</label>
-              <input type="password" class="form-control oms-champ" id="motdepasse" name="motdepasse" placeholder="Mot de passe...">
-            </div>
-            <button type="submit" class="oms-btn"><span>Se connecter</span></button>
+        </nav>
+
+        <div class="oms-liste px-3 px-lg-4 py-2 mb-4">
+          <div class="oms-ligne">
+            <span class="oms-nom">Jean Raynal</span>
+            <span class="oms-mail">jean.raynal@nantes.fr</span>
+            <button type="button" class="oms-btn oms-btn--x" aria-label="Supprimer l'utilisateur Jean Raynal"><span>X</span></button>
           </div>
-        </form>
+          <div class="oms-ligne">
+            <span class="oms-nom">Marie Dupont</span>
+            <span class="oms-mail">marie.dupont@gmail.com</span>
+            <button type="button" class="oms-btn oms-btn--x" aria-label="Supprimer l'utilisateur Marie Dupont"><span>X</span></button>
+          </div>
+          <div class="oms-ligne">
+            <span class="oms-nom">Karim Benali</span>
+            <span class="oms-mail">karim.benali@nantes.fr</span>
+            <button type="button" class="oms-btn oms-btn--x" aria-label="Supprimer l'utilisateur Karim Benali"><span>X</span></button>
+          </div>
+          <div class="oms-ligne">
+            <span class="oms-nom">Sophie Leroy</span>
+            <span class="oms-mail">sophie.leroy@orange.fr</span>
+            <button type="button" class="oms-btn oms-btn--x" aria-label="Supprimer l'utilisateur Sophie Leroy"><span>X</span></button>
+          </div>
+        </div>
+
+        <button type="button" class="oms-btn"><span>Créer un utilisateur</span></button>
+
       </section>
     </div>
   </main>
