@@ -13,10 +13,22 @@
   --gutter: 10px;
 }
 
+html,
+body {
+  min-height: 100%;
+}
+
 body {
   font-family: "Ubuntu", sans-serif;
   color: var(--oms-text);
   background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1 0 auto;
 }
 
 .font-title {
@@ -143,8 +155,8 @@ body {
   --panel-w: 66%; /* largeur du panneau texte, partagée avec la zone image */
   position: relative;
   width: 100%;
-  height: 293px;
-  max-height: 293px;
+  height: clamp(190px, 24vw, 293px);
+  min-height: 190px;
   overflow: hidden;
   background-color: var(--accent);
   clip-path: polygon(var(--lean) 0, 100% 0, calc(100% - var(--lean)) 100%, 0 100%);
@@ -159,10 +171,10 @@ body {
    La hauteur de la bannière, elle, ne change pas. */
 .stage-image {
   position: absolute;
-  top: 10px;
-  right: 10px;
-  bottom: 10px;
-  left: calc(var(--panel-w) - 40px); /* s'aligne sur la découpe en biseau du panneau texte */
+  top: 14px;
+  right: 7px;
+  bottom: 7px;
+  left: calc(var(--panel-w) - 36px); /* s'aligne sur la découpe en biseau du panneau texte */
   z-index: 1;
   overflow: hidden;
 }
@@ -179,9 +191,9 @@ body {
 .stage-banner::after {
   content: "";
   position: absolute;
-  top: 10px;
-  right: 10px;
-  bottom: 10px;
+  top: 14px;
+  right: 6px;
+  bottom: 6px;
   width: 40px;
   z-index: 2;
   background-color: var(--accent);
@@ -209,7 +221,7 @@ body {
 }
 
 .stage-text h2 {
-  font-size: 2.4rem;
+  font-size: clamp(1.4rem, 2.5vw, 2.4rem);
   margin: 0 0 16px 0;
   line-height: 1;
 }
@@ -223,7 +235,7 @@ body {
 
 .stage-desc {
   margin: 0;
-  font-size: 1.05rem;
+  font-size: clamp(0.78rem, 1.1vw, 1.05rem);
   line-height: 1.35;
 }
 
@@ -253,25 +265,37 @@ body {
 
 @media (max-width: 767.98px) {
   .stage-banner { height: 230px; max-height: 230px; --lean: 8px; --panel-w: 70%; }
-  .stage-text { padding: 16px 40px 16px 24px; }
+  .stage-text { padding: 42px 40px 16px 24px; }
   .stage-text h2 { font-size: 1.4rem; margin-bottom: 8px; }
   .stage-desc { font-size: 0.85rem; }
-  .stage-badge { font-size: 1.2rem; padding: 4px 12px 8px 10px; }
+  .stage-badge {
+    top: 0;
+    left: auto;
+    right: 0;
+    font-size: 1.2rem;
+    padding: 4px 12px 8px 10px;
+    transform: none;
+  }
 }
 
 @media (max-width: 575.98px) {
   .stage-banner { height: 190px; max-height: 190px; --lean: 6px; --panel-w: 66%; }
-  .stage-text { padding: 12px 24px 12px 18px; }
+  .stage-text { padding: 34px 24px 12px 18px; }
   .stage-text h2 { font-size: 1.05rem; }
   .stage-level { font-size: 0.75rem; }
   .stage-desc { font-size: 0.72rem; }
-  .stage-badge { font-size: 0.95rem; }
+  .stage-badge {
+    top: 0;
+    right: 0;
+    font-size: 0.95rem;
+  }
 }
 
 /* ---------- FOOTER ---------- */
 .oms-footer {
   background-color: var(--oms-dark);
   color: var(--oms-white);
+  flex-shrink: 0;
 }
 
 .oms-footer p {
