@@ -2,6 +2,7 @@
 	--oms-dark: #202a20;
 	--oms-text: #1c1c1c;
 	--oms-green: #009447;
+	--oms-green-dark: #00753a;
 	--oms-white: #ffffff;
 }
 
@@ -42,13 +43,16 @@ body {
 }
 
 .contact-box {
-	background: var(--oms-green);
+	background: linear-gradient(135deg, var(--oms-green) 0%, var(--oms-green-dark) 100%);
 	border: 0;
 	color: var(--oms-white);
 	max-width: none;
 	width: 100%;
 	min-height: 100%;
-	padding: 2rem;
+	padding: clamp(1.5rem, 4vw, 4rem);
+	display: flex;
+	flex-direction: column;
+	box-shadow: inset 0 1px rgba(255, 255, 255, .14);
 }
 
 main {
@@ -70,42 +74,85 @@ main.container > .contact-box {
 	width: 100%;
 }
 
+.contact-box form {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+}
+
+.contact-box form > .row {
+	flex: 1;
+	align-content: space-between;
+}
+
 .contact-box h1 {
 	color: var(--oms-white);
 	font-family: 'Lalezar', sans-serif;
-	font-size: 2.8rem;
+	font-size: clamp(2.8rem, 5vw, 4.5rem);
+	line-height: .95;
+	letter-spacing: .02em;
+	margin-bottom: 1rem !important;
 	text-transform: uppercase;
 }
 
 .contact-intro {
 	color: var(--oms-white);
+	font-size: 1.05rem;
+	max-width: 600px;
+	opacity: .9;
 }
 
 .contact-box .form-label {
 	color: var(--oms-white);
 	font-weight: 700;
+	letter-spacing: .04em;
+	text-transform: uppercase;
 }
 
 .contact-box .form-control {
 	border: 0;
 	border-radius: 0;
+	padding: .85rem 1rem;
+	box-shadow: inset 0 -3px 0 rgba(32, 42, 32, .14);
+	transition: box-shadow .2s ease, transform .2s ease;
+}
+
+.contact-box textarea.form-control {
+	max-height: none;
+	resize: vertical;
 }
 
 .contact-box .form-control:focus {
 	border-color: var(--oms-dark);
-	box-shadow: 0 0 0 .25rem rgba(32, 42, 32, .25);
+	box-shadow: 0 0 0 .2rem rgba(255, 255, 255, .35), inset 0 -3px 0 var(--oms-dark);
+	transform: translateY(-1px);
+}
+
+.contact-box textarea.form-control {
+	min-height: 180px;
 }
 
 .contact-box .btn-success {
+	border: 0;
+	border-radius: 0;
 	background-color: var(--oms-dark);
-	border-color: var(--oms-dark);
 	font-family: 'Lalezar', sans-serif;
-	font-size: 1.1rem;
+	font-size: 1.5rem;
+	line-height: 1;
+	padding: .8rem 1.8rem .65rem;
+	text-transform: uppercase;
+	transform: skewX(-12deg);
+	box-shadow: 4px 4px 0 rgba(0, 0, 0, .25);
+}
+
+.contact-box .btn-success span {
+	display: inline-block;
+	transform: skewX(12deg);
 }
 
 .contact-box .btn-success:hover {
-	background-color: var(--oms-green);
-	border-color: var(--oms-green);
+	background-color: #000000;
+	transform: skewX(-12deg) translateY(-2px);
 }
 
 /* ---------- FOOTER ---------- */
