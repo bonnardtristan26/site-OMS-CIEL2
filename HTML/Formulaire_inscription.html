@@ -57,32 +57,47 @@
             <h2 class="oms-section-title">Informations concernant l'enfant</h2>
 
             <div class="mb-3">
-              <input type="text" class="form-control oms-input" placeholder="Nom et prénom...">
+              <input type="text" class="form-control oms-input" placeholder="Nom et prénom..." minlength="2" maxlength="50" required>
             </div>
             <div class="mb-3">
-              <input type="text" class="form-control oms-input" placeholder="Âge ...">
+              <input type="text" class="form-control oms-input" placeholder="Âge ..." minlength="1" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, '')" required>
             </div>
             <div class="mb-3">
-              <input type="text" class="form-control oms-input" placeholder="Sexe...">
+                <select class="form-select oms-input" required>
+                    <option value="" disabled selected>Sexe...</option>
+                    <option value="M">Homme</option>
+                    <option value="F">Femme</option>
+                </select>
             </div>
             <div class="mb-4">
-              <input type="text" class="form-control oms-input" placeholder="Niveau d'étude scolaire...">
+              <select class="form-select oms-input" required>
+                    <option value="" disabled selected>Niveau d'étude scolaire...</option>
+                    <option value="P">primaire</option>
+                    <option value="M">collège</option>
+                    <option value="A">lycée</option>
+                </select>
             </div>
 
             <h2 class="oms-section-title">Informations concernant le/les parents</h2>
 
             <div class="mb-3">
-              <input type="text" class="form-control oms-input" placeholder="Nom et prénom...">
+              <input type="text" class="form-control oms-input" placeholder="Nom et prénom..." minlength="2" maxlength="25" required>
             </div>
             <div class="mb-3">
-              <input type="text" class="form-control oms-input" placeholder="Lien de parenté...">
+                <select class="form-select oms-input" required>
+                    <option value="" disabled selected>Lien de parenté...</option>
+                    <option value="P">Père</option>
+                    <option value="M">Mère</option>
+                    <option value="A">Autre</option>
+                </select>
             </div>
             <div class="mb-3">
-              <input type="text" class="form-control oms-input" placeholder="Téléphone...">
+              <input type="text" class="form-control oms-input" inputmode="numeric" pattern="[0-9]*" title="Numéro à 10 chiffres" placeholder="Téléphone..." maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '')" required>
             </div>
             <div class="mb-3">
-              <input type="text" class="form-control oms-input" placeholder="Mail...">
+                <input type="email" class="form-control oms-input" placeholder="Mail..."id="email" maxlength="50" required />
             </div>
+            <button type="submit" class="oms-submit-button"><span>Envoyer</span></button>
           </form>
 
         </div>

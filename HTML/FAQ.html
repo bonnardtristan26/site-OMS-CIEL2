@@ -52,18 +52,18 @@
                         <!-- form-label : style Bootstrap adapté aux étiquettes -->
                         <label for="nom" class="form-label">Nom</label>
                         <!-- form-control : donne au champ un style Bootstrap responsive -->
-                        <input type="text" class="form-control" id="nom" name="nom" placeholder="Votre nom" autocomplete="family-name" required>
+                        <input type="text" class="form-control" id="nom" name="nom" placeholder="Votre nom" maxlength="20" autocomplete="family-name" required>
                     </div>
 
                     <div class="col-md-6">
                         <label for="prenom" class="form-label">Prénom</label>
-                        <input type="text" class="form-control" id="prenom" name="prenom" placeholder="Votre prénom" autocomplete="given-name" required>
+                        <input type="text" class="form-control" id="prenom" name="prenom" maxlength="20" placeholder="Votre prénom" autocomplete="given-name" required>
                     </div>
 
                     <!-- col-12 : prend toute la largeur sur tous les écrans -->
                     <div class="col-12">
                         <label for="email" class="form-label">Adresse mail</label>
-                        <input type="email" class="form-control" id="email" name="email" placeholder="exemple@domaine.fr" autocomplete="email" required>
+                        <input type="email" class="form-control oms-input" placeholder="exemple@domaine.fr"id="email" maxlength="50" required />
                     </div>
 
                     <div class="col-12">
@@ -74,7 +74,7 @@
 
                     <div class="col-12">
                         <!-- btn : style de bouton Bootstrap ; btn-success : couleur verte Bootstrap -->
-                        <button type="submit" class="btn btn-success">Envoyer le message</button>
+                        <button type="submit" class="btn btn-success"><span>Envoyer le message</span></button>
                     </div>
                 </div>
             </form>
