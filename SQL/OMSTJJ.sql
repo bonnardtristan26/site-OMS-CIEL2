@@ -49,7 +49,6 @@ INSERT INTO `actualites` (`id_actu`, `chemin_image`, `intitule`, `description`) 
 -- Structure de la table `admin`
 --
 
-<<<<<<< Updated upstream
 DROP TABLE IF EXISTS `admin`;
 CREATE TABLE IF NOT EXISTS `admin` (
   `id_utilisateur` int NOT NULL,
@@ -58,23 +57,6 @@ CREATE TABLE IF NOT EXISTS `admin` (
   `mdp` char(200) DEFAULT NULL,
   PRIMARY KEY (`id_utilisateur`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-=======
--- ----------------------------------------------------------------------------
--- Table Galerie
--- JONCTION « contenir » : Galerie (0,n) ---- (1,1) Image
--- La clé étrangère fk_galerie_image relie Galerie à Image.
--- ----------------------------------------------------------------------------
-CREATE TABLE Galerie (
-    id_dossier    INTEGER     NOT NULL,
-    id_image      INTEGER,
-    dossier_stage VARCHAR(50),
-    date          DATE,
-    heure         TIME,
-    PRIMARY KEY (id_dossier),
-    CONSTRAINT fk_gallerie_image
-        FOREIGN KEY (id_image) REFERENCES Image (id_image)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
->>>>>>> Stashed changes
 
 -- --------------------------------------------------------
 
