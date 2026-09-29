@@ -105,6 +105,10 @@ main {
   clip-path: polygon(var(--lean) 0, 100% 0, calc(100% - var(--lean)) 100%, 0 100%);
 }
 
+.font-title {
+	font-family: 'Lalezar', sans-serif;
+}
+
 /* ----------------------------------*/
 
 .oms-nav a {
@@ -201,6 +205,7 @@ main {
 		font-size:1.45rem;
 		padding:.5rem 1.3rem .4rem;
 	}
+	
 }
 
 @media (max-width: 575.98px) {
@@ -235,7 +240,7 @@ main {
 	.box_text { padding: 12px 24px 12px 18px; }
 	.box_text h2 { font-size: 1.05rem; }
 	.box_level { font-size: 0.75rem; }
-	.box_desc { font-size: 0.72rem; }
+	.box_desc { font-size: 0.72rem; font-family: 'Lalezar', sans-serif;}
 	.box_badge { font-size: 0.95rem; }
 }
 
@@ -243,6 +248,6 @@ main {
 	.box_actu { height: 230px; max-height: 230px; --lean: 8px; --panel-w: 70%; }
 	.box_text { padding: 16px 40px 16px 24px; }
 	.box_text h2 { font-size: 1.4rem; margin-bottom: 8px; }
-	.box_desc { font-size: 0.85rem; }
+	.box_desc { font-size: 0.85rem; font-family: 'Lalezar', sans-serif;}
 	.box_badge { font-size: 1.2rem; padding: 4px 12px 8px 10px; }
 }
