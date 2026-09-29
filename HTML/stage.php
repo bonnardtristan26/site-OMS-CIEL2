@@ -1,3 +1,11 @@
+<?php 
+try { 
+$pdo = new PDO('mysql:host=localhost;dbname=omstjj;charset=utf8mb4', 
+'root', '', [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]); 
+$releve = $pdo->query('SELECT * FROM stage,image WHERE stage.id_stage = image.id_image')->fetch(PDO::FETCH_ASSOC); 
+} catch (PDOException $e) { $releve = false; } 
+?> 
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -45,13 +53,13 @@
       <a class="stage-link" href="Formulaire_inscription.html" aria-label="S'inscrire au stage de padel">
         <article class="stage-banner stage-green">
           <div class="stage-image">
-            <img src="https://images.unsplash.com/photo-1646649853703-7645147474ba?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Court de padel">
+            <img src="<?= htmlspecialchars((string) $releve['chemin_image']) ?>" alt="Court de padel">
           </div>
           <div class="stage-text">
-            <span class="stage-badge">11<span>/20</span></span>
-            <h2 class="font-title">PADEL - LE 01/05/2026 A 15H</h2>
-            <p class="stage-level">Niveaux : Collège</p>
-            <p class="stage-desc">Le padel est un sport de raquette ludique, accessible et ultra-dynamique qui se joue en double sur un court réduit entouré de vitres.</p>
+            <span class="stage-badge"><?= htmlspecialchars((string) $releve['nb_inscrits']) ?><span>/<?= htmlspecialchars((string) $releve['nb_places']) ?> </span></span>
+            <h2 class="font-title"><?= htmlspecialchars((string) $releve['intitule']) ?>  - LE 01/05/2026</h2>
+            <p class="stage-level">Niveaux : <?= htmlspecialchars((string) $releve['niveau_etude']) ?> </p>
+            <p class="stage-desc"><?= htmlspecialchars((string) $releve['description']) ?> </p>
           </div>
         </article>
       </a>
@@ -115,7 +123,7 @@
   <footer class="oms-footer py-3">
     <div class="container-fluid d-flex flex-wrap justify-content-between align-items-center gap-2">
       <p>Dernière mise à jour 07/09/2026&nbsp;&nbsp;-&nbsp;&nbsp;Adresse&nbsp;: 25 Rue de Strasbourg 44000 NANTES - <a href="FAQ.html">FAQ</a></p>
-      <a href="Admin_login.html" aria-label="Accéder à la connexion administrateur">
+      <a href="Admin_login.php" aria-label="Accéder à la connexion administrateur">
         <img src="../Annexes/Images/logo_ball_oms.svg" alt="" class="ball-icon" style="height:34px;width:auto;">
       </a>
     </div>
