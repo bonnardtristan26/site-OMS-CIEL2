@@ -178,21 +178,21 @@ CREATE TABLE IF NOT EXISTS `stage` (
   `intitule` varchar(50) DEFAULT NULL,
   `type_activite` varchar(50) DEFAULT NULL,
   `niveau_etude` varchar(50) DEFAULT NULL,
-  `description` varchar(50) DEFAULT NULL,
+  `description` varchar(200) DEFAULT NULL,
   `nb_inscrits` int DEFAULT NULL,
   `nb_places` int DEFAULT NULL,
-  'image_path' varchar(200) DEFAULT NULL,
+  `image_path` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id_stage`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
-INSERT INTO `stage` (`id_stage`, `intitule`, `type_activite`, `niveau_etude`, `description`, `nb_inscrits`, `nb_places`) VALUES
-(1, 'padel', 'jeu de ballon', 'college', 'Le padel est un sport de raquette ludique, accessi', 13, 20),
-(2, 'Foot', 'jeu de ballon', 'college', 'Le football est un sport collectif stratégique, in', 20, 20),
-(3, 'surf', 'jeu en mer', 'college', 'Le surf est un sport de glisse exigeant qui se pra', 15, 20),
-(4, 'Basket', 'jeu de ballon', 'college', 'Le basket-ball est un sport collectif rythmé qui s', 6, 20),
-(5, 'Volley', 'jeu de ballon', 'college', 'Le volley-ball se joue à six sur un terrain séparé', 17, 20);
+INSERT INTO `stage` (`id_stage`, `intitule`, `type_activite`, `niveau_etude`, `description`, `nb_inscrits`, `nb_places`, `image_path`) VALUES
+(1, 'padel', 'jeu de ballon', 'college', 'Le padel est un sport de raquette ludique, accessi', 13, 20, '../Annexes/Images/padel.jpg'),
+(2, 'Foot', 'jeu de ballon', 'college', 'Le football est un sport collectif stratégique, in', 20, 20, '../Annexes/Images/football.jpg'),
+(3, 'surf', 'jeu en mer', 'college', 'Le surf est un sport de glisse exigeant qui se pra', 15, 20, '../Annexes/Images/surf.jpg'),
+(4, 'Basket', 'jeu de ballon', 'college', 'Le basket-ball est un sport collectif rythmé qui s', 6, 20, '../Annexes/Images/basket.jpg'),
+(5, 'Volley', 'jeu de ballon', 'college', 'Le volley-ball se joue à six sur un terrain séparé', 17, 20, '../Annexes/Images/volley.jpg');
 
 --
 -- Structure de la table `utilisateur`
