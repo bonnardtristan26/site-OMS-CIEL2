@@ -1,5 +1,6 @@
 <?php
 require_once 'check_auth.php';
+
 ?>
 <!doctype html>
 <html lang="fr">

@@ -1,5 +1,8 @@
 <?php
 require_once 'check_auth.php';
+$pdo = new PDO('mysql:host=localhost;dbname=omstjj;charset=utf8mb4',
+    'root', '', [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
+$stages = $pdo->query("SELECT * FROM stage")->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!doctype html>
 <html lang="fr">
@@ -68,7 +71,7 @@ require_once 'check_auth.php';
     .oms-ligne + .oms-ligne{border-top:2px solid #fff;}
     .oms-sport{font-family:'Lalezar',sans-serif;font-size:1.75rem;color:#fff;letter-spacing:.04em;min-width:230px;}
     .oms-date{flex:1 1 auto;color:#fff;font-weight:700;font-size:1.45rem;}
-
+   
     /* ---- Boutons "parallelogramme" ---- */
     .oms-btn{
       display:inline-block;border:0;border-radius:0;cursor:pointer;
@@ -159,26 +162,14 @@ require_once 'check_auth.php';
         </nav>
 
         <div class="oms-liste px-3 px-lg-4 py-2 mb-4">
-          <div class="oms-ligne">
-            <span class="oms-sport">Padel</span>
-            <span class="oms-date">Le 08/09/2026 A 15h</span>
-            <button type="button" class="oms-btn oms-btn--x" aria-label="Supprimer le stage Padel"><span>X</span></button>
-          </div>
-          <div class="oms-ligne">
-            <span class="oms-sport">Handball</span>
-            <span class="oms-date">Le 08/09/2026 A 15h</span>
-            <button type="button" class="oms-btn oms-btn--x" aria-label="Supprimer le stage Handball"><span>X</span></button>
-          </div>
-          <div class="oms-ligne">
-            <span class="oms-sport">Padel</span>
-            <span class="oms-date">Le 08/09/2026 A 15h</span>
-            <button type="button" class="oms-btn oms-btn--x" aria-label="Supprimer le stage Padel"><span>X</span></button>
-          </div>
-          <div class="oms-ligne">
-            <span class="oms-sport">Surfer</span>
-            <span class="oms-date">Le 08/09/2026 A 15h</span>
-            <button type="button" class="oms-btn oms-btn--x" aria-label="Supprimer le stage Surfer"><span>X</span></button>
-          </div>
+        <?php foreach ($stages as $stage): ?>
+        <form class="oms-ligne " action="delete_stage.php" method="post">
+            <span class="oms-sport"><?php echo htmlspecialchars($stage['intitule']); ?></span>
+            <span class="oms-date">Le <?php echo htmlspecialchars($stage['date_stage']); ?> A <?php echo htmlspecialchars($stage['heure_stage']); ?> -- Il reste <?php echo htmlspecialchars($stage['nb_places'] - $stage['nb_inscrits']); ?> place(s)</span>
+            <input type="hidden" name="stage_id" value="<?php echo htmlspecialchars($stage['id_stage']); ?>">
+            <button type="submit" class="oms-btn oms-btn--x" aria-label="Supprimer le stage <?php echo htmlspecialchars($stage['intitule']); ?>"><span>X</span></button>
+        </form>
+        <?php endforeach; ?>
         </div>
 
         <button type="button" class="oms-btn"><span>Créer un stage</span></button>

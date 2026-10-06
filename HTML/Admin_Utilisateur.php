@@ -1,5 +1,10 @@
 <?php
 require_once 'check_auth.php';
+try {
+ $pdo = new PDO('mysql:host=localhost;dbname=omstjj;charset=utf8mb4',
+ 'root', '', [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
+} catch (PDOException $e) { $releve = false; }
+$utilisateurs = $pdo->query("SELECT * FROM admin")->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!doctype html>
 <html lang="fr">
@@ -363,30 +368,18 @@ require_once 'check_auth.php';
         </nav>
 
         <div class="oms-liste px-3 px-lg-4 py-2 mb-4">
+        <?php foreach ($utilisateurs as $user): ?>
           <div class="oms-ligne">
-            <span class="oms-nom">Jean Raynal</span>
-            <span class="oms-mail">jean.raynal@nantes.fr</span>
-            <button type="button" class="oms-btn oms-btn--x"
-              aria-label="Supprimer l'utilisateur Jean Raynal"><span>X</span></button>
+            <span class="oms-nom"><?php echo htmlspecialchars($user['nom']); ?></span>
+            <form action="delete_user.php" method="post" class="d-flex align-items-center gap-3 w-100">
+              <input type="hidden" name="user_id" value="<?php echo htmlspecialchars($user['id_utilisateur']); ?>">
+              <button type="submit" class="oms-btn oms-btn--x btn-danger ms-auto" 
+                aria-label="Supprimer l'utilisateur <?php echo htmlspecialchars($user['nom']); ?>">
+                <span>X</span>
+              </button>
+            </form>
           </div>
-          <div class="oms-ligne">
-            <span class="oms-nom">Marie Dupont</span>
-            <span class="oms-mail">marie.dupont@gmail.com</span>
-            <button type="button" class="oms-btn oms-btn--x"
-              aria-label="Supprimer l'utilisateur Marie Dupont"><span>X</span></button>
-          </div>
-          <div class="oms-ligne">
-            <span class="oms-nom">Tristan Bonnard</span>
-            <span class="oms-mail">tristan.bonnard@nantes.fr</span>
-            <button type="button" class="oms-btn oms-btn--x"
-              aria-label="Supprimer l'utilisateur Tristan Bonnard"><span>X</span></button>
-          </div>
-          <div class="oms-ligne">
-            <span class="oms-nom">Julian Chedotal</span>
-            <span class="oms-mail">julian.chedotal@orange.fr</span>
-            <button type="button" class="oms-btn oms-btn--x"
-              aria-label="Supprimer l'utilisateur Julian Chedotal"><span>X</span></button>
-          </div>
+        <?php endforeach; ?>
         </div>
 
         <a href="Cree_utilisateur.php" class="oms-btn"><span>Créer un utilisateur</span></a>

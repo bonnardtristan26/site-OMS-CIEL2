@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 
 DROP TABLE IF EXISTS `actualites`;
 CREATE TABLE IF NOT EXISTS `actualites` (
-  `id_actu` int NOT NULL,
+  `id_actu` int NOT NULL AUTO_INCREMENT,
   `chemin_image` varchar(50) DEFAULT NULL,
   `intitule` varchar(50) DEFAULT NULL,
   `description` text,
@@ -51,7 +51,7 @@ INSERT INTO `actualites` (`id_actu`, `chemin_image`, `intitule`, `description`) 
 
 DROP TABLE IF EXISTS `admin`;
 CREATE TABLE IF NOT EXISTS `admin` (
-  `id_utilisateur` int NOT NULL,
+  `id_utilisateur` int NOT NULL AUTO_INCREMENT,
   `nom` varchar(50) DEFAULT NULL,
   `prenom` varchar(50) DEFAULT NULL,
   `mdp` char(200) DEFAULT NULL,
@@ -108,7 +108,7 @@ CREATE TABLE IF NOT EXISTS `creer` (
 
 DROP TABLE IF EXISTS `galerie`;
 CREATE TABLE IF NOT EXISTS `galerie` (
-  `id_dossier` int NOT NULL,
+  `id_dossier` int NOT NULL AUTO_INCREMENT,
   `id_image` int DEFAULT NULL,
   `dossier_stage` varchar(50) DEFAULT NULL,
   `date` date DEFAULT NULL,
@@ -124,7 +124,7 @@ CREATE TABLE IF NOT EXISTS `galerie` (
 
 DROP TABLE IF EXISTS `image`;
 CREATE TABLE IF NOT EXISTS `image` (
-  `id_image` int NOT NULL,
+  `id_image` int NOT NULL AUTO_INCREMENT,
   `chemin_image` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id_image`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -174,7 +174,7 @@ CREATE TABLE IF NOT EXISTS `poster` (
 
 DROP TABLE IF EXISTS `stage`;
 CREATE TABLE IF NOT EXISTS `stage` (
-  `id_stage` int NOT NULL,
+  `id_stage` int NOT NULL AUTO_INCREMENT,
   `intitule` varchar(50) DEFAULT NULL,
   `type_activite` varchar(50) DEFAULT NULL,
   `niveau_etude` varchar(50) DEFAULT NULL,
@@ -182,17 +182,19 @@ CREATE TABLE IF NOT EXISTS `stage` (
   `nb_inscrits` int DEFAULT NULL,
   `nb_places` int DEFAULT NULL,
   `image_path` varchar(200) DEFAULT NULL,
+  `date_stage` date DEFAULT NULL,
+  `heure_stage` time DEFAULT NULL,
   PRIMARY KEY (`id_stage`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
-INSERT INTO `stage` (`id_stage`, `intitule`, `type_activite`, `niveau_etude`, `description`, `nb_inscrits`, `nb_places`, `image_path`) VALUES
-(1, 'padel', 'jeu de ballon', 'college', 'Le padel est un sport de raquette ludique, accessi', 13, 20, '../Annexes/Images/padel.jpg'),
-(2, 'Foot', 'jeu de ballon', 'college', 'Le football est un sport collectif stratégique, in', 20, 20, '../Annexes/Images/football.jpg'),
-(3, 'surf', 'jeu en mer', 'college', 'Le surf est un sport de glisse exigeant qui se pra', 15, 20, '../Annexes/Images/surf.jpg'),
-(4, 'Basket', 'jeu de ballon', 'college', 'Le basket-ball est un sport collectif rythmé qui s', 6, 20, '../Annexes/Images/basket.jpg'),
-(5, 'Volley', 'jeu de ballon', 'college', 'Le volley-ball se joue à six sur un terrain séparé', 17, 20, '../Annexes/Images/volley.jpg');
+INSERT INTO `stage` (`id_stage`, `intitule`, `type_activite`, `niveau_etude`, `description`, `nb_inscrits`, `nb_places`, `image_path`, `date_stage`, `heure_stage`) VALUES
+(1, 'padel', 'jeu de ballon', 'college', 'Le padel est un sport de raquette ludique, accessi', 13, 20, '../Annexes/Images/padel.jpg', '2026-10-12', '09:00:00'),
+(2, 'Foot', 'jeu de ballon', 'college', 'Le football est un sport collectif stratégique, in', 20, 20, '../Annexes/Images/football.jpg', '2026-10-13', '10:30:00'),
+(3, 'surf', 'jeu en mer', 'college', 'Le surf est un sport de glisse exigeant qui se pra', 15, 20, '../Annexes/Images/surf.jpg', '2026-10-14', '14:00:00'),
+(4, 'Basket', 'jeu de ballon', 'college', 'Le basket-ball est un sport collectif rythmé qui s', 6, 20, '../Annexes/Images/basket.jpg', '2026-10-15', '16:00:00'),
+(5, 'Volley', 'jeu de ballon', 'college', 'Le volley-ball se joue à six sur un terrain séparé', 17, 20, '../Annexes/Images/volley.jpg', '2026-10-16', '11:00:00');
 
 --
 -- Structure de la table `utilisateur`
@@ -200,7 +202,7 @@ INSERT INTO `stage` (`id_stage`, `intitule`, `type_activite`, `niveau_etude`, `d
 
 DROP TABLE IF EXISTS `utilisateur`;
 CREATE TABLE IF NOT EXISTS `utilisateur` (
-  `id_participant` int NOT NULL,
+  `id_participant` int NOT NULL AUTO_INCREMENT,
   `age` smallint DEFAULT NULL,
   `niveau_d_etude` varchar(50) DEFAULT NULL,
   `sexe` varchar(50) DEFAULT NULL,
