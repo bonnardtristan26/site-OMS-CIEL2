@@ -1,3 +1,6 @@
+<?php
+require_once 'check_auth.php';
+?>
 <!doctype html>
 <html lang="fr">
 
@@ -331,12 +334,12 @@
     <!-- ===================== EN-TÊTE ===================== -->
     <header class="oms-header py-2">
         <div class="container-fluid px-4 px-lg-5 d-flex align-items-center" style="min-height:108px;">
-            <a href="index.html" class="d-flex align-items-center me-4" aria-label="Accueil OMS">
+            <a href="index.php" class="d-flex align-items-center me-4" aria-label="Accueil OMS">
                 <img src="../Annexes/Images/logo_OMS.svg" alt="OMS – Office Municipal du Sport" class="oms-logo">
             </a>
             <nav class="d-flex align-items-center" aria-label="Navigation principale">
-                <a class="nav-link" href="stage.html">Stage</a>
-                <a class="nav-link" href="galerie.html">Galerie</a>
+                <a class="nav-link" href="stage.php">Stage</a>
+                <a class="nav-link" href="galerie.php">Galerie</a>
             </nav>
         </div>
     </header>
@@ -348,13 +351,13 @@
 
                 <nav class="oms-tabs mb-4 mb-lg-5" aria-label="Navigation administration">
                     <span class="oms-sep" aria-hidden="true"></span>
-                    <a class="oms-tab" href="Admin_Stage.html">Stage</a>
+                    <a class="oms-tab" href="Admin_Stage.php">Stage</a>
                     <span class="oms-sep" aria-hidden="true"></span>
-                    <a class="oms-tab actif" href="Admin_Galerie.html" aria-current="page">Galerie</a>
+                    <a class="oms-tab actif" href="Admin_Galerie.php" aria-current="page">Galerie</a>
                     <span class="oms-sep" aria-hidden="true"></span>
-                    <a class="oms-tab" href="Admin_Accueil.html">Accueil</a>
+                    <a class="oms-tab" href="Admin_Accueil.php">Accueil</a>
                     <span class="oms-sep" aria-hidden="true"></span>
-                    <a class="oms-tab" href="Admin_Utilisateur.html">Utilisateur</a>
+                    <a class="oms-tab" href="Admin_Utilisateur.php">Utilisateur</a>
                     <span class="oms-sep" aria-hidden="true"></span>
 
                 </nav>

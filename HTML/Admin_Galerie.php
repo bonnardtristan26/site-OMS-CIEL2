@@ -1,10 +1,12 @@
-
+<?php
+require_once 'check_auth.php';
+?>
 <!doctype html>
 <html lang="fr">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>OMS | Admin – Accueil</title>
+  <title>OMS | Admin – Galerie</title>
   <link rel="icon" type="image/svg+xml" href="../Annexes/Images/logo_ball_oms.svg">
 
   <!-- Bootstrap 5.3.8 (dernière version stable) -->
@@ -88,7 +90,7 @@
       font-family:'Ubuntu',sans-serif;font-weight:900;font-size:1.2rem;
       display:inline-flex;align-items:center;justify-content:center;
     }
-    .oms-btn--x:hover{background:#e8e8e8;color:#b63b3b;}
+    .oms-btn--x:hover{background:#e8e8e8;color:#000;}
 
     /* ---- Champs de formulaire ---- */
     .oms-champ{
@@ -127,55 +129,80 @@
   <!-- ===================== EN-TÊTE ===================== -->
   <header class="oms-header py-2">
     <div class="container-fluid px-4 px-lg-5 d-flex align-items-center" style="min-height:108px;">
-      <a href="index.html" class="d-flex align-items-center me-4" aria-label="Accueil OMS">
+      <a href="index.php" class="d-flex align-items-center me-4" aria-label="Accueil OMS">
         <img src="../Annexes/Images/logo_OMS.svg" alt="OMS – Office Municipal du Sport" class="oms-logo">
       </a>
       <nav class="d-flex align-items-center" aria-label="Navigation principale">
-        <a class="nav-link" href="stage.html">Stage</a>
-        <a class="nav-link" href="galerie.html">Galerie</a>
+        <a class="nav-link" href="stage.php">Stage</a>
+        <a class="nav-link" href="galerie.php">Galerie</a>
       </nav>
     </div>
   </header>
 
-  <!-- ===================== ACCUEIL / ACTUALITÉS ===================== -->
+  <!-- ===================== GALERIE ===================== -->
   <main class="oms-main pt-4 pb-0">
     <div class="container">
       <section class="oms-rouge p-4 p-lg-4">
 
         <nav class="oms-tabs mb-4 mb-lg-5" aria-label="Navigation administration">
           <span class="oms-sep" aria-hidden="true"></span>
-          <a class="oms-tab" href="Admin_Stage.html">Stage</a>
+          <a class="oms-tab" href="Admin_Stage.php">Stage</a>
           <span class="oms-sep" aria-hidden="true"></span>
-          <a class="oms-tab" href="Admin_Galerie.html">Galerie</a>
+          <a class="oms-tab actif" href="Admin_Galerie.php" aria-current="page">Galerie</a>
           <span class="oms-sep" aria-hidden="true"></span>
-          <a class="oms-tab actif" href="Admin_Accueil.html" aria-current="page">Accueil</a>
+          <a class="oms-tab" href="Admin_Accueil.php">Accueil</a>
           <span class="oms-sep" aria-hidden="true"></span>
-          <a class="oms-tab" href="Admin_Utilisateur.html">Utilisateur</a>
+          <a class="oms-tab" href="Admin_Utilisateur.php">Utilisateur</a>
           <span class="oms-sep" aria-hidden="true"></span>
 
         </nav>
-        <div class="d-grid gap-5 mb-5">
-        <div>
-          <h2 class="titre oms-actu-titre text-white mb-3">Actualité 1</h2>
-          <label for="actualite1" class="visually-hidden">Actualité 1</label>
-          <textarea class="form-control oms-champ oms-champ--actu mb-4" id="actualite1" name="actualite1" rows="5" placeholder="Actualité..."></textarea>
-          <button type="button" class="oms-btn"><span>Publier actualité 1</span></button>
+
+        <div class="oms-liste px-3 px-lg-4 py-2 mb-4">
+          <div class="oms-ligne">
+            <span class="oms-sport">Padel</span>
+            <span class="oms-date">Le 08/09/2026 A 15h</span>
+            <div class="d-flex align-items-center gap-2">
+              <button type="button" class="oms-btn oms-btn--x" aria-label="Supprimer le stage Padel"><span>X</span></button>
+              <button type="button" class="oms-btn oms-btn--blanc"><span>Accéder</span></button>
+            </div>
+          </div>
+          <div class="oms-ligne">
+            <span class="oms-sport">Handball</span>
+            <span class="oms-date">Le 08/09/2026 A 15h</span>
+            <div class="d-flex align-items-center gap-2">
+              <button type="button" class="oms-btn oms-btn--x" aria-label="Supprimer le stage Handball"><span>X</span></button>
+              <button type="button" class="oms-btn oms-btn--blanc"><span>Accéder</span></button>
+            </div>
+          </div>
+          <div class="oms-ligne">
+            <span class="oms-sport">Padel</span>
+            <span class="oms-date">Le 08/09/2026 A 15h</span>
+            <div class="d-flex align-items-center gap-2">
+              <button type="button" class="oms-btn oms-btn--x" aria-label="Supprimer le stage Padel"><span>X</span></button>
+              <button type="button" class="oms-btn oms-btn--blanc"><span>Accéder</span></button>
+            </div>
+          </div>
+          <div class="oms-ligne">
+            <span class="oms-sport">Surfer</span>
+            <span class="oms-date">Le 08/09/2026 A 15h</span>
+            <div class="d-flex align-items-center gap-2">
+              <button type="button" class="oms-btn oms-btn--x" aria-label="Supprimer le stage Surfer"><span>X</span></button>
+              <button type="button" class="oms-btn oms-btn--blanc"><span>Accéder</span></button>
+            </div>
+          </div>
         </div>
 
-        <div>
-          <h2 class="titre oms-actu-titre text-white mb-3">Actualité 2</h2>
-          <label for="actualite2" class="visually-hidden">Actualité 2</label>
-          <textarea class="form-control oms-champ oms-champ--actu mb-4" id="actualite2" name="actualite2" rows="5" placeholder="Actualité..."></textarea>
-          <button type="button" class="oms-btn"><span>Publier actualité 2</span></button>
+        <div class="mb-3" style="max-width:420px;">
+          <label for="activiter" class="visually-hidden">Activiter</label>
+          <input type="text" class="form-control oms-champ" id="activiter" name="activiter" placeholder="Activiter...">
+        </div>
+        <div class="mb-4" style="max-width:420px;">
+          <label for="date" class="visually-hidden">Date</label>
+          <input type="text" class="form-control oms-champ" id="date" name="date" placeholder="Date...">
         </div>
 
-        <div>
-          <h2 class="titre oms-actu-titre text-white mb-3">Actualité 3</h2>
-          <label for="actualite3" class="visually-hidden">Actualité 3</label>
-          <textarea class="form-control oms-champ oms-champ--actu mb-4" id="actualite3" name="actualite3" rows="5" placeholder="Actualité..."></textarea>
-          <button type="button" class="oms-btn"><span>Publier actualité 3</span></button>
-        </div>
-        </div>
+        <button type="button" class="oms-btn"><span>Téléverser un dossier</span></button>
+
       </section>
     </div>
   </main>

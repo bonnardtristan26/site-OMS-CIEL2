@@ -1,4 +1,5 @@
 <?php
+session_start();
 $pdo = new PDO('mysql:host=localhost;dbname=omstjj;charset=utf8mb4',
     'root', '', [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
 
@@ -11,7 +12,8 @@ $releve = $pdo->query("SELECT * FROM admin WHERE nom = '$identifiant' AND mdp = 
 
 if ($releve) {
     // Connexion réussie, rediriger vers la page d'administration
-    header('Location: Admin_Stage.html');
+    $_SESSION['logged_in'] = true;
+    header('Location: Admin_Stage.php');
     exit();
 } else {
     header('Location: Admin_login.php?error=1');

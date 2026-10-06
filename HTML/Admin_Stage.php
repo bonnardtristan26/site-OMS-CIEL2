@@ -1,9 +1,12 @@
+<?php
+require_once 'check_auth.php';
+?>
 <!doctype html>
 <html lang="fr">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>OMS | Admin – Galerie</title>
+  <title>OMS | Admin – Stage</title>
   <link rel="icon" type="image/svg+xml" href="../Annexes/Images/logo_ball_oms.svg">
 
   <!-- Bootstrap 5.3.8 (dernière version stable) -->
@@ -126,31 +129,32 @@
   <!-- ===================== EN-TÊTE ===================== -->
   <header class="oms-header py-2">
     <div class="container-fluid px-4 px-lg-5 d-flex align-items-center" style="min-height:108px;">
-      <a href="index.html" class="d-flex align-items-center me-4" aria-label="Accueil OMS">
+      <a href="index.php" class="d-flex align-items-center me-4" aria-label="Accueil OMS">
         <img src="../Annexes/Images/logo_OMS.svg" alt="OMS – Office Municipal du Sport" class="oms-logo">
       </a>
       <nav class="d-flex align-items-center" aria-label="Navigation principale">
-        <a class="nav-link" href="stage.html">Stage</a>
-        <a class="nav-link" href="galerie.html">Galerie</a>
+        <a class="nav-link" href="stage.php">Stage</a>
+        <a class="nav-link" href="galerie.php">Galerie</a>
       </nav>
     </div>
   </header>
 
-  <!-- ===================== GALERIE ===================== -->
+  <!-- ===================== GESTION DES STAGES ===================== -->
   <main class="oms-main pt-4 pb-0">
     <div class="container">
       <section class="oms-rouge p-4 p-lg-4">
 
         <nav class="oms-tabs mb-4 mb-lg-5" aria-label="Navigation administration">
           <span class="oms-sep" aria-hidden="true"></span>
-          <a class="oms-tab" href="Admin_Stage.html">Stage</a>
+          <a class="oms-tab actif" href="Admin_Stage.php" aria-current="page">Stage</a>
           <span class="oms-sep" aria-hidden="true"></span>
-          <a class="oms-tab actif" href="Admin_Galerie.html" aria-current="page">Galerie</a>
+          <a class="oms-tab" href="Admin_Galerie.php">Galerie</a>
           <span class="oms-sep" aria-hidden="true"></span>
-          <a class="oms-tab" href="Admin_Accueil.html">Accueil</a>
+          <a class="oms-tab" href="Admin_Accueil.php">Accueil</a>
           <span class="oms-sep" aria-hidden="true"></span>
-          <a class="oms-tab" href="Admin_Utilisateur.html">Utilisateur</a>
+          <a class="oms-tab" href="Admin_Utilisateur.php">Utilisateur</a>
           <span class="oms-sep" aria-hidden="true"></span>
+
 
         </nav>
 
@@ -158,47 +162,26 @@
           <div class="oms-ligne">
             <span class="oms-sport">Padel</span>
             <span class="oms-date">Le 08/09/2026 A 15h</span>
-            <div class="d-flex align-items-center gap-2">
-              <button type="button" class="oms-btn oms-btn--x" aria-label="Supprimer le stage Padel"><span>X</span></button>
-              <button type="button" class="oms-btn oms-btn--blanc"><span>Accéder</span></button>
-            </div>
+            <button type="button" class="oms-btn oms-btn--x" aria-label="Supprimer le stage Padel"><span>X</span></button>
           </div>
           <div class="oms-ligne">
             <span class="oms-sport">Handball</span>
             <span class="oms-date">Le 08/09/2026 A 15h</span>
-            <div class="d-flex align-items-center gap-2">
-              <button type="button" class="oms-btn oms-btn--x" aria-label="Supprimer le stage Handball"><span>X</span></button>
-              <button type="button" class="oms-btn oms-btn--blanc"><span>Accéder</span></button>
-            </div>
+            <button type="button" class="oms-btn oms-btn--x" aria-label="Supprimer le stage Handball"><span>X</span></button>
           </div>
           <div class="oms-ligne">
             <span class="oms-sport">Padel</span>
             <span class="oms-date">Le 08/09/2026 A 15h</span>
-            <div class="d-flex align-items-center gap-2">
-              <button type="button" class="oms-btn oms-btn--x" aria-label="Supprimer le stage Padel"><span>X</span></button>
-              <button type="button" class="oms-btn oms-btn--blanc"><span>Accéder</span></button>
-            </div>
+            <button type="button" class="oms-btn oms-btn--x" aria-label="Supprimer le stage Padel"><span>X</span></button>
           </div>
           <div class="oms-ligne">
             <span class="oms-sport">Surfer</span>
             <span class="oms-date">Le 08/09/2026 A 15h</span>
-            <div class="d-flex align-items-center gap-2">
-              <button type="button" class="oms-btn oms-btn--x" aria-label="Supprimer le stage Surfer"><span>X</span></button>
-              <button type="button" class="oms-btn oms-btn--blanc"><span>Accéder</span></button>
-            </div>
+            <button type="button" class="oms-btn oms-btn--x" aria-label="Supprimer le stage Surfer"><span>X</span></button>
           </div>
         </div>
 
-        <div class="mb-3" style="max-width:420px;">
-          <label for="activiter" class="visually-hidden">Activiter</label>
-          <input type="text" class="form-control oms-champ" id="activiter" name="activiter" placeholder="Activiter...">
-        </div>
-        <div class="mb-4" style="max-width:420px;">
-          <label for="date" class="visually-hidden">Date</label>
-          <input type="text" class="form-control oms-champ" id="date" name="date" placeholder="Date...">
-        </div>
-
-        <button type="button" class="oms-btn"><span>Téléverser un dossier</span></button>
+        <button type="button" class="oms-btn"><span>Créer un stage</span></button>
 
       </section>
     </div>

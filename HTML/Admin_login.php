@@ -1,4 +1,5 @@
 <?php
+session_start();
 try {
  $pdo = new PDO('mysql:host=localhost;dbname=omstjj;charset=utf8mb4',
  'root', '', [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
@@ -127,12 +128,12 @@ try {
   <!-- ===================== EN-TÊTE ===================== -->
   <header class="oms-header py-2">
     <div class="container-fluid px-4 px-lg-5 d-flex align-items-center" style="min-height:108px;">
-      <a href="index.html" class="d-flex align-items-center me-4" aria-label="Accueil OMS">
+      <a href="index.php" class="d-flex align-items-center me-4" aria-label="Accueil OMS">
         <img src="../Annexes/Images/logo_OMS.svg" alt="OMS – Office Municipal du Sport" class="oms-logo">
       </a>
       <nav class="d-flex align-items-center" aria-label="Navigation principale">
-        <a class="nav-link" href="stage.html">Stage</a>
-        <a class="nav-link" href="galerie.html">Galerie</a>
+        <a class="nav-link" href="stage.php">Stage</a>
+        <a class="nav-link" href="galerie.php">Galerie</a>
       </nav>
     </div>
   </header>
