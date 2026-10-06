@@ -1,10 +1,28 @@
-<?php 
-try { 
-$pdo = new PDO('mysql:host=localhost;dbname=omstjj;charset=utf8mb4', 
-'root', '', [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]); 
-$releve = $pdo->query('SELECT * FROM stage,image WHERE stage.id_stage = image.id_image')->fetch(PDO::FETCH_ASSOC); 
-} catch (PDOException $e) { $releve = false; } 
-?> 
+<?php
+$stages = [];
+$erreurChargement = false;
+
+try {
+  $pdo = new PDO(
+    'mysql:host=localhost;dbname=omstjj;charset=utf8mb4',
+    'root',
+    '',
+    [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
+  );
+  $stages = $pdo->query('SELECT * FROM stage ORDER BY id_stage')->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+  $erreurChargement = true;
+  error_log($e->getMessage());
+}
+
+$imagesParDefaut = [
+  'padel' => '../Annexes/Images/image_accueil.png',
+  'foot' => 'https://images.unsplash.com/photo-1622659097509-4d56de14539e?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+  'surf' => 'https://plus.unsplash.com/premium_photo-1672510003630-18d2535419ef?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+  'basket' => 'https://images.unsplash.com/photo-1706841533842-3bbfafb7fdbc?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+  'volley' => 'https://images.unsplash.com/photo-1728968916776-7aab52f5ea99?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+];
+?>
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -49,72 +67,42 @@ $releve = $pdo->query('SELECT * FROM stage,image WHERE stage.id_stage = image.id
   <main class="container-fluid p-4">
     <div class="stage-list">
 
-      <!-- Jeu en plein air -->
-      <a class="stage-link" href="Formulaire_inscription.html" aria-label="S'inscrire au stage de padel">
-        <article class="stage-banner stage-green">
-          <div class="stage-image">
-            <img src="<?= htmlspecialchars((string) $releve['chemin_image']) ?>" alt="Court de padel">
-          </div>
-          <div class="stage-text">
-            <span class="stage-badge"><?= htmlspecialchars((string) $releve['nb_inscrits']) ?><span>/<?= htmlspecialchars((string) $releve['nb_places']) ?> </span></span>
-            <h2 class="font-title"><?= $releve['intitule'] ?>  - LE 01/05/2026</h2>
-            <p class="stage-level">Niveaux : <?= htmlspecialchars((string) $releve['niveau_etude']) ?> </p>
-            <p class="stage-desc"><?= htmlspecialchars((string) $releve['description']) ?> </p>
-          </div>
-        </article>
-      </a>
+      <?php if ($erreurChargement): ?>
+        <p>Impossible de charger les stages. Vérifie la connexion à la base de données.</p>
+      <?php elseif (!$stages): ?>
+        <p>Aucun stage n'est disponible pour le moment.</p>
+      <?php else: ?>
+        <?php foreach ($stages as $stage): ?>
+          <?php
+          $intitule = (string) ($stage['intitule'] ?? 'Stage');
+          $activite = strtolower((string) ($stage['type_activite'] ?? ''));
+          $classeCouleur = strtolower($intitule) === 'padel'
+            ? 'stage-green'
+            : (str_contains($activite, 'mer')
+              ? 'stage-blue'
+              : (str_contains($activite, 'plein air') ? 'stage-green' : 'stage-red'));
+          $image = (string) ($stage['image_path'] ?? '');
+          $imageEstUrl = filter_var($image, FILTER_VALIDATE_URL) !== false;
 
-      <!-- Jeu de balle -->
-      <article class="stage-banner stage-red">
-        <div class="stage-image">
-          <img src="https://images.unsplash.com/photo-1622659097509-4d56de14539e?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Match de football">
-        </div>
-        <div class="stage-text">
-          <span class="stage-badge">20<span>/20</span></span>
-          <h2 class="font-title">FOOT - LE 02/05/2026 A 15H</h2>
-          <p class="stage-level">Niveaux : Collège</p>
-          <p class="stage-desc">Le football est un sport collectif stratégique, intense et populaire qui se joue à onze sur un grand terrain herbé encadré de cages.</p>
-        </div>
-      </article>
-
-      <!-- Jeu en mer -->
-      <article class="stage-banner stage-blue">
-        <div class="stage-image">
-          <img src="https://plus.unsplash.com/premium_photo-1672510003630-18d2535419ef?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Surfeuse sur une vague">
-        </div>
-        <div class="stage-text">
-          <span class="stage-badge">19<span>/20</span></span>
-          <h2 class="font-title">SURFER - LE 05/05/2026 A 15H</h2>
-          <p class="stage-level">Niveaux : Collège</p>
-          <p class="stage-desc">Le surf est un sport de glisse exigeant qui se pratique sur les vagues, alliant équilibre, lecture de l'océan et sensations fortes.</p>
-        </div>
-      </article>
-
-      <!-- Jeu de balle -->
-      <article class="stage-banner stage-red">
-        <div class="stage-image">
-          <img src="https://images.unsplash.com/photo-1706841533842-3bbfafb7fdbc?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Terrain de basket">
-        </div>
-        <div class="stage-text">
-          <span class="stage-badge">15<span>/20</span></span>
-          <h2 class="font-title">BASKET - LE 08/05/2026 A 15H</h2>
-          <p class="stage-level">Niveaux : Collège</p>
-          <p class="stage-desc">Le basket-ball est un sport collectif rythmé qui se joue à cinq contre cinq, mêlant vitesse, précision et esprit d'équipe.</p>
-        </div>
-      </article>
-
-      <!-- Jeu de balle -->
-      <article class="stage-banner stage-red">
-        <div class="stage-image">
-          <img src="https://images.unsplash.com/photo-1728968916776-7aab52f5ea99?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Terrain de volley">
-        </div>
-        <div class="stage-text">
-          <span class="stage-badge">17<span>/20</span></span>
-          <h2 class="font-title">VOLLEY - LE 12/05/2026 A 15H</h2>
-          <p class="stage-level">Niveaux : Collège</p>
-          <p class="stage-desc">Le volley-ball se joue à six sur un terrain séparé par un filet, avec pour objectif de faire tomber le ballon dans le camp adverse.</p>
-        </div>
-      </article>
+          if (!$imageEstUrl && ($image === '' || !is_file(__DIR__ . DIRECTORY_SEPARATOR . $image))) {
+            $image = $imagesParDefaut[strtolower($intitule)] ?? '../Annexes/Images/image_accueil.png';
+          }
+          ?>
+          <a class="stage-link" href="Formulaire_inscription.html">
+            <article class="stage-banner <?= $classeCouleur ?>">
+              <div class="stage-image">
+                <img src="<?= htmlspecialchars($image, ENT_QUOTES, 'UTF-8') ?>" alt="<?= htmlspecialchars($intitule, ENT_QUOTES, 'UTF-8') ?>">
+              </div>
+              <div class="stage-text">
+                <span class="stage-badge"><?= (int) ($stage['nb_inscrits'] ?? 0) ?><span>/<?= (int) ($stage['nb_places'] ?? 0) ?></span></span>
+                <h2 class="font-title"><?= htmlspecialchars(strtoupper($intitule), ENT_QUOTES, 'UTF-8') ?></h2>
+                <p class="stage-level">Niveaux : <?= htmlspecialchars((string) ($stage['niveau_etude'] ?? ''), ENT_QUOTES, 'UTF-8') ?></p>
+                <p class="stage-desc"><?= htmlspecialchars((string) ($stage['description'] ?? ''), ENT_QUOTES, 'UTF-8') ?></p>
+              </div>
+            </article>
+          </a>
+        <?php endforeach; ?>
+      <?php endif; ?>
 
     </div>
   </main>
