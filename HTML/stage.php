@@ -57,7 +57,7 @@ $releve = $pdo->query('SELECT * FROM stage,image WHERE stage.id_stage = image.id
           </div>
           <div class="stage-text">
             <span class="stage-badge"><?= htmlspecialchars((string) $releve['nb_inscrits']) ?><span>/<?= htmlspecialchars((string) $releve['nb_places']) ?> </span></span>
-            <h2 class="font-title"><?=$releve['intitule'] ?>  - LE 01/05/2026</h2>
+            <h2 class="font-title"><?= $releve['intitule'] ?>  - LE 01/05/2026</h2>
             <p class="stage-level">Niveaux : <?= htmlspecialchars((string) $releve['niveau_etude']) ?> </p>
             <p class="stage-desc"><?= htmlspecialchars((string) $releve['description']) ?> </p>
           </div>
