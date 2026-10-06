@@ -1,6 +1,6 @@
 <?php
 try {
- $pdo = new PDO('mysql:host=localhost;dbname=meteodb;charset=utf8mb4',
+ $pdo = new PDO('mysql:host=localhost;dbname=omstjj;charset=utf8mb4',
  'root', '', [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
 } catch (PDOException $e) { $releve = false; }
 ?>
@@ -145,7 +145,8 @@ try {
 
         <p class="text-white fw-bold text-uppercase mb-4" style="font-size:1.6rem;">Informations de connexion</p>
 
-        <form action="#" method="post" class="row justify-content-center g-0">
+        <form action="login.php" method="post" class="row justify-content-center g-0">
+          <input type="hidden" name="hash" id="hash">
           <div class="col-12 col-md-10">
             <div class="mb-3">
               <label for="identifiant" class="visually-hidden">Identifiant</label>
@@ -154,14 +155,12 @@ try {
             <div class="mb-4">
               <label for="motdepasse" class="visually-hidden">Mot de passe</label>
               <input type="password" class="form-control oms-champ" id="motdepasse" name="motdepasse" placeholder="Mot de passe...">
-              <input type="hidden" name="hash" id="hash">
             </div>
-            <button onclick="hash(event)" type="submit" class="oms-btn" href="login.php"><span>Se connecter</span></button>
+              <button type="submit" class="oms-btn"><span>Se connecter</span></button>
+
           </div>
         </form>
-        <!-- Lien vers la gestion des stages à supprimer quand la connexion sera implémentée -->
-        <a href="Admin_Stage.html" class="d-inline-block mt-4 text-white fw-bold text-decoration-none">
-          Accéder à la gestion des stages
+         <p id="motdepasse-incorecrt" class="text-white fw-bold text-uppercase mt-4" style="font: size 0.6em;rem;"> </p>
         </a>
 
       </section>
@@ -179,22 +178,16 @@ try {
     </div>
   </footer>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-
   <script>
-    async function hash(event) {
-      event.preventDefault(); // empêche le rechargement de la page
+    // Vérifier si l'URL contient le paramètre "error"
+    const urlParams = new URLSearchParams(window.location.search);
+    const errorParam = urlParams.get('error');
 
-      const texte = document.getElementById("motdepasse").value;
-      const donnees = new TextEncoder().encode(texte);
-      const hashBuffer = await crypto.subtle.digest("SHA-256", donnees);
-      const hashHex = Array.from(new Uint8Array(hashBuffer))
-        .map(byte => byte.toString(16).padStart(2, "0"))
-        .join("");
-
-      document.getElementById("hash").value = hashHex;
-
+    if (errorParam === '1') {
+      // Afficher le message d'erreur
+      const errorMessage = document.getElementById('motdepasse-incorecrt');
+      errorMessage.textContent = "Nom d'utilisateur ou mot de passe incorrect.";
     }
   </script>
-
 </body>
 </html>
