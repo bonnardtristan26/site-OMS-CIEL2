@@ -168,6 +168,7 @@ $geleries = $pdo->query("SELECT * FROM galerie")->fetchAll(PDO::FETCH_ASSOC);
             <div class="d-flex align-items-center gap-2">
               <button type="button" class="oms-btn oms-btn--x" aria-label="Supprimer le stage Padel"><span>X</span></button>
               <button type="button" class="oms-btn oms-btn--blanc"><span>Accéder</span></button>
+  
             </div>
           </div>
           <div class="oms-ligne">
@@ -196,16 +197,7 @@ $geleries = $pdo->query("SELECT * FROM galerie")->fetchAll(PDO::FETCH_ASSOC);
           </div>
         </div>
 
-        <div class="mb-3" style="max-width:420px;">
-          <label for="activiter" class="visually-hidden">Activiter</label>
-          <input type="text" class="form-control oms-champ" id="activiter" name="activiter" placeholder="Activiter...">
-        </div>
-        <div class="mb-4" style="max-width:420px;">
-          <label for="date" class="visually-hidden">Date</label>
-          <input type="text" class="form-control oms-champ" id="date" name="date" placeholder="Date...">
-        </div>
-
-        <button type="button" class="oms-btn"><span>Téléverser un dossier</span></button>
+      
 
       </section>
     </div>

@@ -381,9 +381,9 @@ $utilisateurs = $pdo->query("SELECT * FROM admin")->fetchAll(PDO::FETCH_ASSOC);
           </div>
         <?php endforeach; ?>
         </div>
-
-        <a href="Cree_utilisateur.php" class="oms-btn"><span>Créer un utilisateur</span></a>
-
+        <div class="d-flex justify-content-center">    
+        <a href="Cree_utilisateur.php" class="btn oms-btn col"><span>Créer un utilisateur</span></a>
+        </div>
       </section>
     </div>
   </main>

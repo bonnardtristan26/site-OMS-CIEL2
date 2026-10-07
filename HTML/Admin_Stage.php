@@ -70,7 +70,7 @@ $stages = $pdo->query("SELECT * FROM stage")->fetchAll(PDO::FETCH_ASSOC);
     .oms-ligne{display:flex;align-items:center;gap:1rem;padding:.95rem 1.5rem;}
     .oms-ligne + .oms-ligne{border-top:2px solid #fff;}
     .oms-sport{font-family:'Lalezar',sans-serif;font-size:1.75rem;color:#fff;letter-spacing:.04em;min-width:230px;}
-    .oms-date{flex:1 1 auto;color:#fff;font-weight:700;font-size:1.45rem;}
+    .oms-date{flex:1 1 auto;color:#fff;font-weight:700;font-size:auto rem;}
    
     /* ---- Boutons "parallelogramme" ---- */
     .oms-btn{
@@ -168,6 +168,7 @@ $stages = $pdo->query("SELECT * FROM stage")->fetchAll(PDO::FETCH_ASSOC);
             <span class="oms-date">Le <?php echo htmlspecialchars($stage['date_stage']); ?> A <?php echo htmlspecialchars($stage['heure_stage']); ?> -- Il reste <?php echo htmlspecialchars($stage['nb_places'] - $stage['nb_inscrits']); ?> place(s)</span>
             <input type="hidden" name="stage_id" value="<?php echo htmlspecialchars($stage['id_stage']); ?>">
             <button type="submit" class="oms-btn oms-btn--x" aria-label="Supprimer le stage <?php echo htmlspecialchars($stage['intitule']); ?>"><span>X</span></button>
+            <button type="button" class="oms-btn oms-btn--blanc"><span>Télécharger la liste d'appelle</span></button>
         </form>
         <?php endforeach; ?>
         </div>

@@ -162,21 +162,29 @@ require_once 'check_auth.php';
           <h2 class="titre oms-actu-titre text-white mb-3">Actualité 1</h2>
           <label for="actualite1" class="visually-hidden">Actualité 1</label>
           <textarea class="form-control oms-champ oms-champ--actu mb-4" id="actualite1" name="actualite1" rows="5" placeholder="Actualité..."></textarea>
+          <div class="d-flex justify-content-between gap-3">
           <button type="button" class="oms-btn"><span>Publier actualité 1</span></button>
+          <button type="button" class="oms-btn oms-btn--blanc"><span>Importer image</span></button>
+          </div>
         </div>
 
         <div>
           <h2 class="titre oms-actu-titre text-white mb-3">Actualité 2</h2>
           <label for="actualite2" class="visually-hidden">Actualité 2</label>
           <textarea class="form-control oms-champ oms-champ--actu mb-4" id="actualite2" name="actualite2" rows="5" placeholder="Actualité..."></textarea>
+          <div class="d-flex justify-content-between gap-3">
           <button type="button" class="oms-btn"><span>Publier actualité 2</span></button>
-        </div>
+          <button type="button" class="oms-btn oms-btn--blanc"><span>Importer image</span></button>
+          </div>        </div>
 
         <div>
           <h2 class="titre oms-actu-titre text-white mb-3">Actualité 3</h2>
           <label for="actualite3" class="visually-hidden">Actualité 3</label>
           <textarea class="form-control oms-champ oms-champ--actu mb-4" id="actualite3" name="actualite3" rows="5" placeholder="Actualité..."></textarea>
+          <div class="d-flex justify-content-between gap-3">
           <button type="button" class="oms-btn"><span>Publier actualité 3</span></button>
+          <button type="button" class="oms-btn oms-btn--blanc"><span>Importer image</span></button>
+          </div>
         </div>
         </div>
       </section>
