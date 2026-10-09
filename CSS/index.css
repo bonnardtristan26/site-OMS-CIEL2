@@ -169,6 +169,76 @@ main {
 	background-color: var(--oms-green);
 	border-color: var(--oms-green);
 }
+/* ---------- ACTUS ---------- */
+
+.carousel-actu {
+    max-width: 1400px;
+    margin: 0 auto 2rem;
+}
+
+/* Flèches */
+.fleche {
+    flex: 0 0 auto;
+    width: clamp(50px, 12vw, 160px);
+    aspect-ratio: 1 / 1.15;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+}
+
+.fleche svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+    fill: #262d24; /* vert très foncé du header */
+}
+
+.fleche:hover svg,
+.fleche:focus-visible svg {
+    fill: #008f3f; /* vert OMS */
+}
+
+/* Carte verte inclinée */
+.box_actu {
+    flex: 1 1 auto;
+    max-width: 1000px;
+    background: #008f3f;
+    color: #fff;
+    padding: 1.2% 1.2% 0;
+    clip-path: polygon(2.2% 0, 100% 0, 97.8% 100%, 0 100%);
+}
+
+.actu-img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 3.4;
+    object-fit: cover;
+	clip-path: polygon(2.2% 0, 100% 0, 97.8% 100%, 0 100%);
+}
+
+.box_text {
+    padding: 1.5rem 3rem 1.5rem 5%;
+}
+
+.box_text .font-title {
+    font-family: "Lalezar", sans-serif;
+    font-size: clamp(1.3rem, 3vw, 2.2rem);
+    margin: 0;
+}
+
+.box_desc {
+    font-family: "Ubuntu", sans-serif;
+    font-size: clamp(0.9rem, 1.6vw, 1.4rem);
+    margin: 0;
+}
+
+/* Mobile : flèches plus petites */
+@media (max-width: 576px) {
+    .box_text { padding: 1rem; }
+    .fleche { width: 36px; }
+}
+
 
 /* ---------- FOOTER ---------- */
 .oms-footer {
