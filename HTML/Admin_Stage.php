@@ -173,7 +173,9 @@ $stages = $pdo->query("SELECT * FROM stage")->fetchAll(PDO::FETCH_ASSOC);
         <?php endforeach; ?>
         </div>
 
-        <button href="Admin_création_stage.php" type="button" class="oms-btn" ><span>Créer un stage</span></button>
+        <div>
+          <a href="Admin_création_stage.php" type="button" class="oms-btn" ><span>Créer un stage</span></a>
+        </div>
 
       </section>
     </div>
