@@ -83,12 +83,9 @@ $imagesParDefaut = [
               : (str_contains($activite, 'plein air') ? 'stage-green' : 'stage-red'));
           $image = (string) ($stage['image_path'] ?? '');
           $imageEstUrl = filter_var($image, FILTER_VALIDATE_URL) !== false;
-
-          if (!$imageEstUrl && ($image === '' || !is_file(__DIR__ . DIRECTORY_SEPARATOR . $image))) {
-            $image = $imagesParDefaut[strtolower($intitule)] ?? '../Annexes/Images/image_accueil.png';
-          }
+          
           ?>
-          <a class="stage-link" href="Formulaire_inscription.php">
+          <a class="stage-link" href="Formulaire_inscription.php<?= '?id_stage=' . urlencode((string) ($stage['id_stage'] ?? '')) ?>">
             <article class="stage-banner <?= $classeCouleur ?>">
               <div class="stage-image">
                 <img src="<?= htmlspecialchars($image, ENT_QUOTES, 'UTF-8') ?>" alt="<?= htmlspecialchars($intitule, ENT_QUOTES, 'UTF-8') ?>">
@@ -119,4 +116,6 @@ $imagesParDefaut = [
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a3b8607eca9f9e45',t:'MTc4OTQ4MzEyNQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+
+
 </html>

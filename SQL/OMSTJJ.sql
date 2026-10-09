@@ -39,11 +39,11 @@
 
 SET NAMES utf8mb4;
 
-CREATE DATABASE IF NOT EXISTS gestion_stages
+CREATE DATABASE IF NOT EXISTS omstjj
   CHARACTER SET utf8mb4
   COLLATE utf8mb4_unicode_ci;
 
-USE gestion_stages;
+USE omstjj;
 
 -- ----------------------------------------------------------------------------
 -- Suppression préalable (permet de ré-exécuter le script sans erreur,
@@ -72,7 +72,7 @@ DROP TABLE IF EXISTS Admin;
 -- ou hash('sha256', $motDePasse) côté PHP.
 -- ----------------------------------------------------------------------------
 CREATE TABLE Admin (
-    id_utilisateur INTEGER     NOT NULL,
+    id_utilisateur INTEGER     NOT NULL AUTO_INCREMENT,
     nom            VARCHAR(50),
     prenom         VARCHAR(50),
     mdp            VARCHAR(64) NOT NULL COMMENT 'Hash SHA-256 du mot de passe (64 cars hex)',
@@ -133,6 +133,8 @@ CREATE TABLE Stage (
     type_activite VARCHAR(100),
     niveau_etude  VARCHAR(100),
     description   VARCHAR(255),
+    date_stage    DATE,
+    heure_stage   TIME,
     nb_inscrits   INTEGER,
     nb_places     INTEGER,
     image_path    VARCHAR(255) COMMENT 'Chemin de l''image du stage (colonne simple, pas de FK)',
