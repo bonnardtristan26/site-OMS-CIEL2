@@ -29,7 +29,7 @@ DROP TABLE IF EXISTS creer;
 DROP TABLE IF EXISTS poster;
 DROP TABLE IF EXISTS consulter;
 DROP TABLE IF EXISTS alimenter;
-DROP TABLE IF EXISTS Gallerie;
+DROP TABLE IF EXISTS galerie;
 DROP TABLE IF EXISTS Actualites;
 DROP TABLE IF EXISTS Stage;
 DROP TABLE IF EXISTS Utilisateur;
@@ -129,27 +129,27 @@ CREATE TABLE Stage (
 -- ============================================================================
 
 -- ----------------------------------------------------------------------------
--- Liaison « alimenter » : Gallerie (0,n) ---- (0,n) Admin
+-- Liaison « alimenter » : galerie (0,n) ---- (0,n) Admin
 -- ----------------------------------------------------------------------------
 CREATE TABLE alimenter (
     id_dossier     INTEGER NOT NULL,
     id_utilisateur INTEGER NOT NULL,
     PRIMARY KEY (id_dossier, id_utilisateur),
-    CONSTRAINT fk_alimenter_gallerie
-        FOREIGN KEY (id_dossier) REFERENCES Gallerie (id_dossier),
+    CONSTRAINT fk_alimenter_galerie
+        FOREIGN KEY (id_dossier) REFERENCES galerie (id_dossier),
     CONSTRAINT fk_alimenter_admin
         FOREIGN KEY (id_utilisateur) REFERENCES Admin (id_utilisateur)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------------------------------------------------------
--- Liaison « consulter » : Gallerie (0,n) ---- (0,n) Utilisateur
+-- Liaison « consulter » : galerie (0,n) ---- (0,n) Utilisateur
 -- ----------------------------------------------------------------------------
 CREATE TABLE consulter (
     id_dossier     INTEGER NOT NULL,
     id_participant INTEGER NOT NULL,
     PRIMARY KEY (id_dossier, id_participant),
-    CONSTRAINT fk_consulter_gallerie
-        FOREIGN KEY (id_dossier) REFERENCES Gallerie (id_dossier),
+    CONSTRAINT fk_consulter_galerie
+        FOREIGN KEY (id_dossier) REFERENCES galerie (id_dossier),
     CONSTRAINT fk_consulter_utilisateur
         FOREIGN KEY (id_participant) REFERENCES Utilisateur (id_participant)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
