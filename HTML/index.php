@@ -32,8 +32,8 @@
 
                         <div class="col d-flex justify-content-center justify-content-lg-start ps-lg-5">
                             <nav class="oms-nav" aria-label="Navigation principale">
-                                <a href="stage.html">STAGE</a>
-                                <a href="galerie.html">GALERIE</a>
+                                <a href="stage.php">STAGE</a>
+                                <a href="galerie.php">GALERIE</a>
                             </nav>
                         </div>
 
@@ -76,18 +76,32 @@
             <h1 class="mx-3 my-3 h_actu">ACTUALITÉS</h1>
 
             <div class="container-fluid">
-                <article class="box_actu mx-3">
+                <div class="carousel-actu d-flex align-items-center justify-content-between gap-3">
 
-            <!--FOOTER-->
-            <footer class="oms-footer py-3">
-                <div class="box_text">
-                    <div class="col-12 col-md-5">
-                        <img src="../Annexes/Images/enfants_football.png" alt="" class="">
-                    </div>
-                    <h2 class="font-title">SPORT POUR TOUS</h2>
-                    <p class="box_desc">L'Office Municipal des Sports accompagne les habitants dans leur pratique sportive et contribue au développement du sport dans la commune. Que vous soyez débutant, sportif régulier ou simplement à...</p>
+                    <!-- Flèche précédente -->
+                    <button type="button" class="fleche fleche-gauche" aria-label="Actualité précédente">
+                        <svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+                            <polygon points="100,0 0,50 100,100" />
+                        </svg>
+                    </button>
+
+                    <!-- Carte actualité -->
+                    <article class="box_actu">
+                        <img src="../Annexes/Images/enfants_football.png" alt="Enfants jouant au football" class="actu-img">
+                        <div class="box_text">
+                            <h2 class="font-title">SPORT POUR TOUS</h2>
+                            <p class="box_desc">L'Office Municipal des Sports accompagne les habitants dans leur pratique sportive et contribue au développement du sport dans la commune. Que vous soyez débutant, sportif régulier ou simplement à ...</p>
+                        </div>
+                    </article>
+
+                    <!-- Flèche suivante -->
+                    <button type="button" class="fleche fleche-droite" aria-label="Actualité suivante">
+                        <svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+                            <polygon points="0,0 100,50 0,100" />
+                        </svg>
+                    </button>
+
                 </div>
-                </article>
             </div>
 
         </main>
