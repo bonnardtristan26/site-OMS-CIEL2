@@ -15,13 +15,6 @@ try {
   error_log($e->getMessage());
 }
 
-$imagesParDefaut = [
-  'padel' => '../Annexes/Images/image_accueil.png',
-  'foot' => 'https://images.unsplash.com/photo-1622659097509-4d56de14539e?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-  'surf' => 'https://plus.unsplash.com/premium_photo-1672510003630-18d2535419ef?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-  'basket' => 'https://images.unsplash.com/photo-1706841533842-3bbfafb7fdbc?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-  'volley' => 'https://images.unsplash.com/photo-1728968916776-7aab52f5ea99?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-];
 ?>
 
 <!DOCTYPE html>
@@ -83,7 +76,7 @@ $imagesParDefaut = [
               : (str_contains($activite, 'plein air') ? 'stage-green' : 'stage-red'));
           $image = (string) ($stage['image_path'] ?? '');
           $imageEstUrl = filter_var($image, FILTER_VALIDATE_URL) !== false;
-          
+
           ?>
           <a class="stage-link" href="Formulaire_inscription.php<?= '?id_stage=' . urlencode((string) ($stage['id_stage'] ?? '')) ?>">
             <article class="stage-banner <?= $classeCouleur ?>">
