@@ -19,15 +19,15 @@
             <div class="row align-items-center py-2">
                 <!-- col-auto : adapte la largeur de la colonne à celle du logo -->
                 <div class="col-auto logo">
-                    <a href="index.html" aria-label="Retour à l'accueil">
+                    <a href="index.php" aria-label="Retour à l'accueil">
                         <img src="../Annexes/Images/logo_OMS.svg" alt="Logo OMS - Office Municipal du Sport">
                     </a>
                 </div>
                 <!-- col : prend l'espace restant ; d-flex : active Flexbox ; justify-content : positionne les liens ; ps-lg-5 : marge interne sur grand écran -->
                 <div class="col d-flex justify-content-center justify-content-lg-start ps-lg-5">
                     <nav class="oms-nav" aria-label="Navigation principale">
-                        <a href="stage.html">STAGE</a>
-                        <a href="galerie.html">GALERIE</a>
+                        <a href="stage.php">STAGE</a>
+                        <a href="galerie.php">GALERIE</a>
                     </nav>
                 </div>
             </div>
@@ -86,7 +86,7 @@
         <!-- container-fluid : pleine largeur ; d-flex : Flexbox ; flex-wrap : retour à la ligne sur petit écran -->
         <!-- justify-content-between : éloigne le texte du logo ; align-items-center : centre verticalement ; gap-2 : espace entre les éléments -->
         <div class="container-fluid d-flex flex-wrap justify-content-between align-items-center gap-2">
-            <p>Dernière mise à jour 15/09/2026&nbsp;&nbsp;-&nbsp;&nbsp;Adresse&nbsp;: 25 Rue de Strasbourg 44000 NANTES - <a href="FAQ.html">FAQ</a></p>
+            <p>Dernière mise à jour 15/09/2026&nbsp;&nbsp;-&nbsp;&nbsp;Adresse&nbsp;: 25 Rue de Strasbourg 44000 NANTES - <a href="FAQ.php">FAQ</a></p>
             <img src="../Annexes/Images/logo_ball_oms.svg" alt="" class="ball-icon">
         </div>
     </footer>

@@ -49,14 +49,14 @@ $imagesParDefaut = [
     <div class="container-fluid">
       <div class="row align-items-center py-2">
         <div class="col-auto logo">
-          <a href="index.html" aria-label="Retour à l'accueil">
+          <a href="index.php" aria-label="Retour à l'accueil">
             <img src="../Annexes/Images/logo_OMS.svg" alt="Logo OMS - Office Municipal du Sport">
           </a>
         </div>
         <div class="col d-flex justify-content-center justify-content-lg-start ps-lg-5">
           <nav class="oms-nav">
-            <a href="stage.html" class="active">STAGE</a>
-            <a href="galerie.html">GALERIE</a>
+            <a href="stage.php" class="active">STAGE</a>
+            <a href="galerie.php">GALERIE</a>
           </nav>
         </div>
       </div>
@@ -88,7 +88,7 @@ $imagesParDefaut = [
             $image = $imagesParDefaut[strtolower($intitule)] ?? '../Annexes/Images/image_accueil.png';
           }
           ?>
-          <a class="stage-link" href="Formulaire_inscription.html">
+          <a class="stage-link" href="Formulaire_inscription.php">
             <article class="stage-banner <?= $classeCouleur ?>">
               <div class="stage-image">
                 <img src="<?= htmlspecialchars($image, ENT_QUOTES, 'UTF-8') ?>" alt="<?= htmlspecialchars($intitule, ENT_QUOTES, 'UTF-8') ?>">
@@ -110,7 +110,7 @@ $imagesParDefaut = [
   <!-- FOOTER -->
   <footer class="oms-footer py-3">
     <div class="container-fluid d-flex flex-wrap justify-content-between align-items-center gap-2">
-      <p>Dernière mise à jour 07/09/2026&nbsp;&nbsp;-&nbsp;&nbsp;Adresse&nbsp;: 25 Rue de Strasbourg 44000 NANTES - <a href="FAQ.html">FAQ</a></p>
+      <p>Dernière mise à jour 07/09/2026&nbsp;&nbsp;-&nbsp;&nbsp;Adresse&nbsp;: 25 Rue de Strasbourg 44000 NANTES - <a href="FAQ.php">FAQ</a></p>
       <a href="Admin_login.php" aria-label="Accéder à la connexion administrateur">
         <img src="../Annexes/Images/logo_ball_oms.svg" alt="" class="ball-icon" style="height:34px;width:auto;">
       </a>
