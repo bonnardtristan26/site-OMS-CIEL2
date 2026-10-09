@@ -17,10 +17,17 @@ DROP TABLE IF EXISTS creer;
 DROP TABLE IF EXISTS poster;
 DROP TABLE IF EXISTS consulter;
 DROP TABLE IF EXISTS alimenter;
+<<<<<<< Updated upstream
 DROP TABLE IF EXISTS Image;
 DROP TABLE IF EXISTS Galerie;
 DROP TABLE IF EXISTS Actualites;
 DROP TABLE IF EXISTS Stage;
+=======
+DROP TABLE IF EXISTS Stage;
+DROP TABLE IF EXISTS Image;
+DROP TABLE IF EXISTS Galerie;
+DROP TABLE IF EXISTS Actualites;
+>>>>>>> Stashed changes
 DROP TABLE IF EXISTS Utilisateur;
 DROP TABLE IF EXISTS Admin;
 SET FOREIGN_KEY_CHECKS = 1;
@@ -50,6 +57,7 @@ CREATE TABLE Utilisateur (
     PRIMARY KEY (id_participant)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+<<<<<<< Updated upstream
 CREATE TABLE Stage (
     id_stage INT NOT NULL AUTO_INCREMENT,
     intitule VARCHAR(50),
@@ -59,6 +67,61 @@ CREATE TABLE Stage (
     nb_inscrits INT DEFAULT 0,
     nb_places INT,
     PRIMARY KEY (id_stage)
+=======
+-- ----------------------------------------------------------------------------
+-- Table Image
+-- ----------------------------------------------------------------------------
+CREATE TABLE Image (
+    id_image     INTEGER     NOT NULL,
+    chemin_image VARCHAR(50),
+    id_dossier   INTEGER     NOT NULL,
+    PRIMARY KEY (id_image),
+    CONSTRAINT fk_image_galerie
+        FOREIGN KEY (id_dossier) REFERENCES Galerie (id_dossier)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------------------------------------------------------
+-- Table Galerie
+-- JONCTION « contenir » : Galerie (0,n) ---- (1,1) Image
+-- ----------------------------------------------------------------------------
+CREATE TABLE Galerie (
+    id_dossier    INTEGER     NOT NULL,
+    id_stage      INTEGER,
+    dossier_stage VARCHAR(50),
+    date          DATE,
+    heure         TIME,
+    PRIMARY KEY (id_dossier),
+    CONSTRAINT fk_galerie_stage
+        FOREIGN KEY (id_stage) REFERENCES Stage (id_stage)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------------------------------------------------------
+-- Table Actualites  (« Actualités » sur le schéma)
+-- ----------------------------------------------------------------------------
+CREATE TABLE Actualites (
+    id_actu      INTEGER     NOT NULL,
+    chemin_image VARCHAR(50),
+    intitule     VARCHAR(50),
+    description  VARCHAR(50),
+    PRIMARY KEY (id_actu)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------------------------------------------------------
+-- Table Stage
+-- ----------------------------------------------------------------------------
+CREATE TABLE Stage (
+    id_stage      INTEGER     NOT NULL,
+    intitule      VARCHAR(100),
+    type_activite VARCHAR(100),
+    niveau_etude  VARCHAR(100),
+    description   VARCHAR(250),
+    nb_inscrits   INTEGER,
+    nb_places     INTEGER,
+    PRIMARY KEY (id_stage),
+    id_image     INTEGER,
+    CONSTRAINT fk_stage_image   
+        FOREIGN KEY (id_image) REFERENCES Image (id_image)
+>>>>>>> Stashed changes
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
