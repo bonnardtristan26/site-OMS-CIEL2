@@ -1,270 +1,199 @@
--- phpMyAdmin SQL Dump
--- version 5.2.1
--- https://www.phpmyadmin.net/
+-- ============================================================================
+--  SCRIPT DE CREATION DE LA BASE DE DONNEES
+--  Généré d'après le schéma (MCD) fourni : toutes les tables et toutes les
+--  liaisons (associations) du schéma sont reprises ci-dessous.
 --
--- Hôte : 127.0.0.1:3306
--- Généré le : mar. 29 sep. 2026 à 14:16
--- Version du serveur : 9.1.0
--- Version de PHP : 8.1.31
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
-SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
+--  SGBD cible : MySQL / MariaDB
+--  IMPORTANT : ENGINE=InnoDB est imposé sur chaque table, car c'est le seul
+--  moteur qui crée réellement les clés étrangères (les jonctions). Avec le
+--  moteur MyISAM, les FOREIGN KEY seraient ignorées silencieusement et les
+--  tables resteraient indépendantes.
 --
--- Base de données : `omstjj`
---
+--  Remarque : les accents et apostrophes ont été retirés des identifiants
+--  pour garantir la compatibilité (prénom -> prenom, intitulé -> intitule,
+--  niveau_d'étude -> niveau_d_etude, lien_parenté -> lien_parente, ...).
+-- ============================================================================
 
--- --------------------------------------------------------
+CREATE DATABASE IF NOT EXISTS gestion_stages
+  CHARACTER SET utf8mb4
+  COLLATE utf8mb4_unicode_ci;
 
---
--- Structure de la table `actualites`
---
+USE gestion_stages;
 
-DROP TABLE IF EXISTS `actualites`;
-CREATE TABLE IF NOT EXISTS `actualites` (
-  `id_actu` int NOT NULL AUTO_INCREMENT,
-  `chemin_image` varchar(50) DEFAULT NULL,
-  `intitule` varchar(50) DEFAULT NULL,
-  `description` text,
-  PRIMARY KEY (`id_actu`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+-- ----------------------------------------------------------------------------
+-- Suppression préalable (permet de ré-exécuter le script sans erreur,
+-- et de remplacer d'anciennes tables créées sans les jonctions)
+-- ----------------------------------------------------------------------------
+DROP TABLE IF EXISTS participer;
+DROP TABLE IF EXISTS creer;
+DROP TABLE IF EXISTS poster;
+DROP TABLE IF EXISTS consulter;
+DROP TABLE IF EXISTS alimenter;
+DROP TABLE IF EXISTS Gallerie;
+DROP TABLE IF EXISTS Actualites;
+DROP TABLE IF EXISTS Stage;
+DROP TABLE IF EXISTS Utilisateur;
+DROP TABLE IF EXISTS Image;
+DROP TABLE IF EXISTS Admin;
 
---
--- Déchargement des données de la table `actualites`
---
+-- ============================================================================
+-- 1) TABLES DES ENTITES
+-- ============================================================================
 
-INSERT INTO `actualites` (`id_actu`, `chemin_image`, `intitule`, `description`) VALUES
-(1, '../Annexes/Images/enfants_football.png', 'SPORT POUR TOUS', 'L\'Office Municipal des Sports accompagne les habitants dans leur pratique sportive et contribue au développement du sport dans la commune. Que vous soyez débutant, sportif régulier ou simplement à');
+-- ----------------------------------------------------------------------------
+-- Table Admin
+-- ----------------------------------------------------------------------------
+CREATE TABLE Admin (
+    id_utilisateur INTEGER     NOT NULL,
+    nom            VARCHAR(50),
+    prenom         VARCHAR(50),
+    PRIMARY KEY (id_utilisateur)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- --------------------------------------------------------
+-- ----------------------------------------------------------------------------
+-- Table Utilisateur  (entité encadrée en rouge sur le schéma)
+-- ----------------------------------------------------------------------------
+CREATE TABLE Utilisateur (
+    id_participant        INTEGER     NOT NULL,
+    age                   SMALLINT,
+    niveau_d_etude        VARCHAR(50),
+    sexe                  VARCHAR(50),
+    nom_enfant            VARCHAR(50),
+    prenom_enfant         VARCHAR(50),
+    nom_parent            VARCHAR(50),
+    prenom_parent         VARCHAR(50),
+    lien_parente          VARCHAR(50),
+    num_tel               INTEGER,
+    num_tel_secours       INTEGER,
+    mail                  VARCHAR(50),
+    mail_secours          VARCHAR(50),
+    justificatif_domicile TEXT,
+    PRIMARY KEY (id_participant)
+    
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Structure de la table `admin`
---
+-- ----------------------------------------------------------------------------
+-- Table Image
+-- ----------------------------------------------------------------------------
+CREATE TABLE Image (
+    id_image     INTEGER     NOT NULL,
+    chemin_image VARCHAR(50),
+    PRIMARY KEY (id_image)
+    CONSTRAINT fk_galerie_image
+        FOREIGN KEY (id_dossier) REFERENCES Galerie (id_dossier)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-DROP TABLE IF EXISTS `admin`;
-CREATE TABLE IF NOT EXISTS `admin` (
-  `id_utilisateur` int NOT NULL AUTO_INCREMENT,
-  `nom` varchar(50) DEFAULT NULL,
-  `prenom` varchar(50) DEFAULT NULL,
-  `mdp` char(200) DEFAULT NULL,
-  PRIMARY KEY (`id_utilisateur`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+-- ----------------------------------------------------------------------------
+-- Table Galerie
+-- JONCTION « contenir » : Galerie (0,n) ---- (1,1) Image
+-- ----------------------------------------------------------------------------
+CREATE TABLE Galerie (
+    id_dossier    INTEGER     NOT NULL,
+    id_image      INTEGER,
+    dossier_stage VARCHAR(50),
+    date          DATE,
+    heure         TIME,
+    PRIMARY KEY (id_dossier),
+    CONSTRAINT fk_galerie_stage
+        FOREIGN KEY (id_stage) REFERENCES Stage (id_stage)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- --------------------------------------------------------
+-- ----------------------------------------------------------------------------
+-- Table Actualites  (« Actualités » sur le schéma)
+-- ----------------------------------------------------------------------------
+CREATE TABLE Actualites (
+    id_actu      INTEGER     NOT NULL,
+    chemin_image VARCHAR(50),
+    intitule     VARCHAR(50),
+    description  VARCHAR(50),
+    PRIMARY KEY (id_actu)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Structure de la table `alimenter`
---
+-- ----------------------------------------------------------------------------
+-- Table Stage
+-- ----------------------------------------------------------------------------
+CREATE TABLE Stage (
+    id_stage      INTEGER     NOT NULL,
+    intitule      VARCHAR(50),
+    type_activite VARCHAR(50),
+    niveau_etude  VARCHAR(50),
+    description   VARCHAR(50),
+    nb_inscrits   INTEGER,
+    nb_places     INTEGER,
+    PRIMARY KEY (id_stage)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-DROP TABLE IF EXISTS `alimenter`;
-CREATE TABLE IF NOT EXISTS `alimenter` (
-  `id_dossier` int NOT NULL,
-  `id_utilisateur` int NOT NULL,
-  PRIMARY KEY (`id_dossier`,`id_utilisateur`),
-  KEY `fk_alimenter_admin` (`id_utilisateur`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+-- ============================================================================
+-- 2) LIAISONS (ASSOCIATIONS) DU SCHEMA : TABLES DE JOINTURE AVEC CLES
+--    ETRANGERES NOMMEES (les jonctions entre les tables)
+-- ============================================================================
 
--- --------------------------------------------------------
+-- ----------------------------------------------------------------------------
+-- Liaison « alimenter » : Gallerie (0,n) ---- (0,n) Admin
+-- ----------------------------------------------------------------------------
+CREATE TABLE alimenter (
+    id_dossier     INTEGER NOT NULL,
+    id_utilisateur INTEGER NOT NULL,
+    PRIMARY KEY (id_dossier, id_utilisateur),
+    CONSTRAINT fk_alimenter_gallerie
+        FOREIGN KEY (id_dossier) REFERENCES Gallerie (id_dossier),
+    CONSTRAINT fk_alimenter_admin
+        FOREIGN KEY (id_utilisateur) REFERENCES Admin (id_utilisateur)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Structure de la table `consulter`
---
+-- ----------------------------------------------------------------------------
+-- Liaison « consulter » : Gallerie (0,n) ---- (0,n) Utilisateur
+-- ----------------------------------------------------------------------------
+CREATE TABLE consulter (
+    id_dossier     INTEGER NOT NULL,
+    id_participant INTEGER NOT NULL,
+    PRIMARY KEY (id_dossier, id_participant),
+    CONSTRAINT fk_consulter_gallerie
+        FOREIGN KEY (id_dossier) REFERENCES Gallerie (id_dossier),
+    CONSTRAINT fk_consulter_utilisateur
+        FOREIGN KEY (id_participant) REFERENCES Utilisateur (id_participant)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-DROP TABLE IF EXISTS `consulter`;
-CREATE TABLE IF NOT EXISTS `consulter` (
-  `id_dossier` int NOT NULL,
-  `id_participant` int NOT NULL,
-  PRIMARY KEY (`id_dossier`,`id_participant`),
-  KEY `fk_consulter_utilisateur` (`id_participant`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+-- ----------------------------------------------------------------------------
+-- Liaison « poster » : Admin (0,n) ---- (0,n) Actualites
+-- ----------------------------------------------------------------------------
+CREATE TABLE poster (
+    id_utilisateur INTEGER NOT NULL,
+    id_actu        INTEGER NOT NULL,
+    PRIMARY KEY (id_utilisateur, id_actu),
+    CONSTRAINT fk_poster_admin
+        FOREIGN KEY (id_utilisateur) REFERENCES Admin (id_utilisateur),
+    CONSTRAINT fk_poster_actu
+        FOREIGN KEY (id_actu) REFERENCES Actualites (id_actu)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- --------------------------------------------------------
+-- ----------------------------------------------------------------------------
+-- Liaison « creer » : Admin (0,n) ---- (0,n) Stage
+-- ----------------------------------------------------------------------------
+CREATE TABLE creer (
+    id_utilisateur INTEGER NOT NULL,
+    id_stage       INTEGER NOT NULL,
+    PRIMARY KEY (id_utilisateur, id_stage),
+    CONSTRAINT fk_creer_admin
+        FOREIGN KEY (id_utilisateur) REFERENCES Admin (id_utilisateur),
+    CONSTRAINT fk_creer_stage
+        FOREIGN KEY (id_stage) REFERENCES Stage (id_stage)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Structure de la table `creer`
---
+-- ----------------------------------------------------------------------------
+-- Liaison « participer » : Utilisateur (0,n) ---- (0,n) Stage
+-- ----------------------------------------------------------------------------
+CREATE TABLE participer (
+    id_participant INTEGER NOT NULL,
+    id_stage       INTEGER NOT NULL,
+    PRIMARY KEY (id_participant, id_stage),
+    CONSTRAINT fk_participer_utilisateur
+        FOREIGN KEY (id_participant) REFERENCES Utilisateur (id_participant),
+    CONSTRAINT fk_participer_stage
+        FOREIGN KEY (id_stage) REFERENCES Stage (id_stage)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-DROP TABLE IF EXISTS `creer`;
-CREATE TABLE IF NOT EXISTS `creer` (
-  `id_utilisateur` int NOT NULL,
-  `id_stage` int NOT NULL,
-  PRIMARY KEY (`id_utilisateur`,`id_stage`),
-  KEY `fk_creer_stage` (`id_stage`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `galerie`
---
-
-DROP TABLE IF EXISTS `galerie`;
-CREATE TABLE IF NOT EXISTS `galerie` (
-  `id_dossier` int NOT NULL AUTO_INCREMENT,
-  `id_image` int DEFAULT NULL,
-  `dossier_stage` varchar(50) DEFAULT NULL,
-  `date` date DEFAULT NULL,
-  PRIMARY KEY (`id_dossier`),
-  KEY `fk_gallerie_image` (`id_image`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `image`
---
-
-DROP TABLE IF EXISTS `image`;
-CREATE TABLE IF NOT EXISTS `image` (
-  `id_image` int NOT NULL AUTO_INCREMENT,
-  `chemin_image` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`id_image`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Déchargement des données de la table `image`
---
-
-INSERT INTO `image` (`id_image`, `chemin_image`) VALUES
-(1, '../Annexes/Images/image_accueil.png'),
-(2, '../Annexes/Images/logo_ball_oms.svg'),
-(3, '../Annexes/Images/logo_OMS.svg');
-
--- --------------------------------------------------------
-
---
--- Structure de la table `participer`
---
-
-DROP TABLE IF EXISTS `participer`;
-CREATE TABLE IF NOT EXISTS `participer` (
-  `id_participant` int NOT NULL,
-  `id_stage` int NOT NULL,
-  PRIMARY KEY (`id_participant`,`id_stage`),
-  KEY `fk_participer_stage` (`id_stage`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `poster`
---
-
-DROP TABLE IF EXISTS `poster`;
-CREATE TABLE IF NOT EXISTS `poster` (
-  `id_utilisateur` int NOT NULL,
-  `id_actu` int NOT NULL,
-  PRIMARY KEY (`id_utilisateur`,`id_actu`),
-  KEY `fk_poster_actu` (`id_actu`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `stage`
---
-
-DROP TABLE IF EXISTS `stage`;
-CREATE TABLE IF NOT EXISTS `stage` (
-  `id_stage` int NOT NULL AUTO_INCREMENT,
-  `intitule` varchar(50) DEFAULT NULL,
-  `type_activite` varchar(50) DEFAULT NULL,
-  `niveau_etude` varchar(50) DEFAULT NULL,
-  `description` varchar(200) DEFAULT NULL,
-  `nb_inscrits` int DEFAULT NULL,
-  `nb_places` int DEFAULT NULL,
-  `image_path` varchar(200) DEFAULT NULL,
-  `date_stage` date DEFAULT NULL,
-  `heure_stage` time DEFAULT NULL,
-  PRIMARY KEY (`id_stage`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- --------------------------------------------------------
-
-INSERT INTO `stage` (`id_stage`, `intitule`, `type_activite`, `niveau_etude`, `description`, `nb_inscrits`, `nb_places`, `image_path`, `date_stage`, `heure_stage`) VALUES
-(1, 'padel', 'jeu de ballon', 'college', 'Le padel est un sport de raquette ludique, accessi', 13, 20, '../Annexes/Images/padel.jpg', '2026-10-12', '09:00:00'),
-(2, 'Foot', 'jeu de ballon', 'college', 'Le football est un sport collectif stratégique, in', 20, 20, '../Annexes/Images/football.jpg', '2026-10-13', '10:30:00'),
-(3, 'surf', 'jeu en mer', 'college', 'Le surf est un sport de glisse exigeant qui se pra', 15, 20, '../Annexes/Images/surf.jpg', '2026-10-14', '14:00:00'),
-(4, 'Basket', 'jeu de ballon', 'college', 'Le basket-ball est un sport collectif rythmé qui s', 6, 20, '../Annexes/Images/basket.jpg', '2026-10-15', '16:00:00'),
-(5, 'Volley', 'jeu de ballon', 'college', 'Le volley-ball se joue à six sur un terrain séparé', 17, 20, '../Annexes/Images/volley.jpg', '2026-10-16', '11:00:00');
-
---
--- Structure de la table `utilisateur`
---
-
-DROP TABLE IF EXISTS `utilisateur`;
-CREATE TABLE IF NOT EXISTS `utilisateur` (
-  `id_participant` int NOT NULL AUTO_INCREMENT,
-  `age` smallint DEFAULT NULL,
-  `niveau_d_etude` varchar(50) DEFAULT NULL,
-  `sexe` varchar(50) DEFAULT NULL,
-  `nom_enfant` varchar(50) DEFAULT NULL,
-  `prenom_enfant` varchar(50) DEFAULT NULL,
-  `nom_parent` varchar(50) DEFAULT NULL,
-  `prenom_parent` varchar(50) DEFAULT NULL,
-  `lien_parente` varchar(50) DEFAULT NULL,
-  `num_tel` int DEFAULT NULL,
-  `num_tel_secours` int DEFAULT NULL,
-  `mail` varchar(50) DEFAULT NULL,
-  `mail_secours` varchar(50) DEFAULT NULL,
-  `justificatif_domicile` text,
-  PRIMARY KEY (`id_participant`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Contraintes pour les tables déchargées
---
-
---
--- Contraintes pour la table `alimenter`
---
-ALTER TABLE `alimenter`
-  ADD CONSTRAINT `fk_alimenter_admin` FOREIGN KEY (`id_utilisateur`) REFERENCES `admin` (`id_utilisateur`),
-  ADD CONSTRAINT `fk_alimenter_gallerie` FOREIGN KEY (`id_dossier`) REFERENCES `galerie` (`id_dossier`);
-
---
--- Contraintes pour la table `consulter`
---
-ALTER TABLE `consulter`
-  ADD CONSTRAINT `fk_consulter_gallerie` FOREIGN KEY (`id_dossier`) REFERENCES `galerie` (`id_dossier`),
-  ADD CONSTRAINT `fk_consulter_utilisateur` FOREIGN KEY (`id_participant`) REFERENCES `utilisateur` (`id_participant`);
-
---
--- Contraintes pour la table `creer`
---
-ALTER TABLE `creer`
-  ADD CONSTRAINT `fk_creer_admin` FOREIGN KEY (`id_utilisateur`) REFERENCES `admin` (`id_utilisateur`),
-  ADD CONSTRAINT `fk_creer_stage` FOREIGN KEY (`id_stage`) REFERENCES `stage` (`id_stage`);
-
---
--- Contraintes pour la table `galerie`
---
-ALTER TABLE `galerie`
-  ADD CONSTRAINT `fk_gallerie_image` FOREIGN KEY (`id_image`) REFERENCES `image` (`id_image`);
-
---
--- Contraintes pour la table `participer`
---
-ALTER TABLE `participer`
-  ADD CONSTRAINT `fk_participer_stage` FOREIGN KEY (`id_stage`) REFERENCES `stage` (`id_stage`),
-  ADD CONSTRAINT `fk_participer_utilisateur` FOREIGN KEY (`id_participant`) REFERENCES `utilisateur` (`id_participant`);
-
---
--- Contraintes pour la table `poster`
---
-ALTER TABLE `poster`
-  ADD CONSTRAINT `fk_poster_actu` FOREIGN KEY (`id_actu`) REFERENCES `actualites` (`id_actu`),
-  ADD CONSTRAINT `fk_poster_admin` FOREIGN KEY (`id_utilisateur`) REFERENCES `admin` (`id_utilisateur`);
-COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+-- ============================================================================
+-- Fin du script : 11 tables, 11 clés étrangères nommées = les 6 liaisons
+-- du schéma (contenir, alimenter, consulter, poster, creer, participer)
+-- ============================================================================

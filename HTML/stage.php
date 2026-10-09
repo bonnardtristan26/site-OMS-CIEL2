@@ -1,4 +1,3 @@
-<<<<<<< Updated upstream
 <?php
 $stages = [];
 $erreurChargement = false;
@@ -24,15 +23,6 @@ $imagesParDefaut = [
   'volley' => 'https://images.unsplash.com/photo-1728968916776-7aab52f5ea99?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
 ];
 ?>
-=======
-<?php 
-try { 
-$pdo = new PDO('mysql:host=localhost;dbname=omstjj;charset=utf8mb4', 
-'root', '', [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]); 
-$releve = $pdo->query('SELECT * FROM stage, image WHERE stage.id_stage = image.id_stage')->fetch(PDO::FETCH_ASSOC); 
-} catch (PDOException $e) { $releve = false; } 
-?> 
->>>>>>> Stashed changes
 
 <!DOCTYPE html>
 <html lang="fr">
