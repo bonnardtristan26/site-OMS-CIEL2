@@ -274,6 +274,12 @@ require_once 'check_auth.php';
             display: block;
         }
 
+        .check_test {
+            background-image: url(not_checked.png);
+            background-repeat: no-repeat;
+            background-position: 50% 50%;
+        }
+
         /* ---- Responsive ---- */
         @media (max-width: 991.98px) {
             .oms-logo {
@@ -351,9 +357,9 @@ require_once 'check_auth.php';
 
                 <nav class="oms-tabs mb-4 mb-lg-5" aria-label="Navigation administration">
                     <span class="oms-sep" aria-hidden="true"></span>
-                    <a class="oms-tab" href="Admin_Stage.php">Stage</a>
+                    <a class="oms-tab actif" href="Admin_Stage.php" aria-current="page">Stage</a>
                     <span class="oms-sep" aria-hidden="true"></span>
-                    <a class="oms-tab actif" href="Admin_Galerie.php" aria-current="page">Galerie</a>
+                    <a class="oms-tab" href="Admin_Galerie.php">Galerie</a>
                     <span class="oms-sep" aria-hidden="true"></span>
                     <a class="oms-tab" href="Admin_Accueil.php">Accueil</a>
                     <span class="oms-sep" aria-hidden="true"></span>
@@ -364,18 +370,14 @@ require_once 'check_auth.php';
 
                 <div class="mb-3" style="max-width:420px;">
                     <label for="activiter" class="visually-hidden">Activité... </label>
-                    <input type="text" class="form-control oms-champ" id="activiter" name="activiter"
-                        placeholder="Activiter...">
+                    <input type="text" class="form-control oms-champ" id="activiter" name="activité"
+                        placeholder="Activité...">
                 </div>
 
                 <div class="btn-group conti">
-                    <button type="button" class="oms-btn oms-btn--x"
-                        aria-label="chekbox jeux de balle"><span>X</span></button>
 
-                    <button type="button" class="oms-btn oms-btn--x"
-                        aria-label="chekbox jeux en mer"><span>X</span></button>
-                    <button type="button" class="oms-btn oms-btn--x"
-                        aria-label="chekbox jeux de boules"><span>X</span></button>
+                    <input type="checkbox" class="check_test">
+                    
                 </div>
                 a fix ici
             <div class="d-flex flex-wrap">
