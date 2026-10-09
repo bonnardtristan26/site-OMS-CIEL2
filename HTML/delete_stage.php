@@ -12,7 +12,7 @@ if ($releve) {
     if ($stat) {
         $_SESSION['logged_in'] = true;
         header('Location: Admin_Stage.php?error=0');
-        exit();
+        exit(); 
     } else {
         header('Location: Admin_Stage.php?error=1');
     
