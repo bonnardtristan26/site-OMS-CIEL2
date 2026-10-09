@@ -239,12 +239,12 @@ CREATE TABLE participer (
 -- Stages : `image_path` est renseigné directement dans la table Stage
 -- (colonne simple, aucune jointure avec la table Image)
 -- ----------------------------------------------------------------------------
-INSERT INTO `stage` (`id_stage`, `intitule`, `type_activite`, `niveau_etude`, `description`, `nb_inscrits`, `nb_places`, `image_path`) VALUES
-(1, 'padel', 'jeu de ballon', 'college', 'Le padel est un sport de raquette ludique, accessible et ultra-dynamique qui se joue en double sur un court réduit entouré de vitres.', 13, 20, '../Annexes/Images/padel.jpg'),
-(2, 'Foot', 'jeu de ballon', 'college', 'Le football est un sport collectif stratégique, intense et populaire qui se joue à onze sur un grand terrain herbé encadré de cages.', 20, 20, '../Annexes/Images/football.jpg'),
-(3, 'surf', 'jeu en mer', 'college', 'Le surf est un sport de glisse exigeant qui se pratique sur les vagues, alliant équilibre, lecture de l\'océan et sensations fortes.', 15, 20, '../Annexes/Images/surf.jpg'),
-(4, 'Basket', 'jeu de ballon','college', 'Le basket-ball est un sport collectif rythmé qui se joue à cinq contre cinq, mêlant vitesse, précision et esprit d\'équipe.', 6, 20, '../Annexes/Images/basket.jpg'),
-(5, 'Volley', 'jeu de ballon', 'college', 'Le volley-ball se joue à six sur un terrain séparé par un filet, avec pour objectif de faire tomber le ballon dans le camp adverse.', 17, 20, '../Annexes/Images/volley.jpg');
+INSERT INTO `stage` (`id_stage`, `intitule`, `type_activite`, `niveau_etude`, `description`, `date_debut`, `heure_debut`, `nb_inscrits`, `nb_places`, `image_path`) VALUES
+(1, 'padel', 'jeu de ballon', 'college', 'Le padel est un sport de raquette ludique, accessible et ultra-dynamique qui se joue en double sur un court réduit entouré de vitres.', '2026-05-13', '15:00:00', 13, 20, '../Annexes/Images/padel.jpg'),
+(2, 'Foot', 'jeu de ballon', 'college', 'Le football est un sport collectif stratégique, intense et populaire qui se joue à onze sur un grand terrain herbé encadré de cages.', '2026-05-22', '15:00:00', 20, 20, '../Annexes/Images/football.jpg'),
+(3, 'surf', 'jeu en mer', 'college', 'Le surf est un sport de glisse exigeant qui se pratique sur les vagues, alliant équilibre, lecture de l\'océan et sensations fortes.', '2026-06-17', '15:00:00', 15, 20, '../Annexes/Images/surf.jpg'),
+(4, 'Basket', 'jeu de ballon','college', 'Le basket-ball est un sport collectif rythmé qui se joue à cinq contre cinq, mêlant vitesse, précision et esprit d\'équipe.', '2026-06-19', '15:00:00', 6, 20, '../Annexes/Images/basket.jpg'),
+(5, 'Volley', 'jeu de ballon', 'college', 'Le volley-ball se joue à six sur un terrain séparé par un filet, avec pour objectif de faire tomber le ballon dans le camp adverse.', '2026-07-14', '15:00:00', 17, 20, '../Annexes/Images/volley.jpg');
 -- ----------------------------------------------------------------------------
 -- Compte administrateur exemple
 --   Mot de passe en clair : admin123
