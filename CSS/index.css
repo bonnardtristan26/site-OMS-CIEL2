@@ -15,7 +15,7 @@ main {
 	flex: 1;
 }
 
-.h_actu h1 {
+.h_actu {
 	font-family: 'Lalezar', sans-serif;
 }
 
@@ -93,17 +93,6 @@ main {
 /* ----------------------------------*/
 
 /* --------- STYLE ARTICLES ---------*/
-
-.box_actu {
-  --panel-w: 66%; /* largeur du panneau texte, partagée avec la zone image */
-  position: relative;
-  width: 100%;
-  height: 293px;
-  max-height: 293px;
-  overflow: hidden;
-  background-color: var(--accent);
-  clip-path: polygon(var(--lean) 0, 100% 0, calc(100% - var(--lean)) 100%, 0 100%);
-}
 
 .font-title {
 	font-family: 'Lalezar', sans-serif;
@@ -224,7 +213,6 @@ main {
 .box_text .font-title {
     font-family: "Lalezar", sans-serif;
     font-size: clamp(1.3rem, 3vw, 2.2rem);
-    margin: 0;
 }
 
 .box_desc {
@@ -306,7 +294,6 @@ main {
 	.oms-footer .ball-icon {
 		height: 30px;
 	}
-	.box_actu { height: 190px; max-height: 190px; --lean: 6px; --panel-w: 66%; }
 	.box_text { padding: 12px 24px 12px 18px; }
 	.box_text h2 { font-size: 1.05rem; }
 	.box_level { font-size: 0.75rem; }
@@ -315,7 +302,6 @@ main {
 }
 
 @media (max-width: 767.98px) {
-	.box_actu { height: 230px; max-height: 230px; --lean: 8px; --panel-w: 70%; }
 	.box_text { padding: 16px 40px 16px 24px; }
 	.box_text h2 { font-size: 1.4rem; margin-bottom: 8px; }
 	.box_desc { font-size: 0.85rem; font-family: 'Lalezar', sans-serif;}

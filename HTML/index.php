@@ -32,8 +32,8 @@
 
                         <div class="col d-flex justify-content-center justify-content-lg-start ps-lg-5">
                             <nav class="oms-nav" aria-label="Navigation principale">
-                                <a href="stage.php">STAGE</a>
-                                <a href="galerie.php">GALERIE</a>
+                                <a href="stage.html">STAGE</a>
+                                <a href="galerie.html">GALERIE</a>
                             </nav>
                         </div>
 
