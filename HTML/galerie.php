@@ -23,14 +23,14 @@
     <div class="container-fluid">
       <div class="row align-items-center py-2">
         <div class="col-auto logo ">
-          <a href="index.html" aria-label="Retour à l'accueil">
+          <a href="index.php" aria-label="Retour à l'accueil">
             <img src="../Annexes/Images/logo_OMS.svg" alt="Logo OMS - Office Municipal du Sport">
           </a>
         </div>
         <div class="col d-flex justify-content-center justify-content-lg-start ps-lg-5">
           <nav class="oms-nav">
             <a href="stage.php">STAGE</a>
-            <a href="galerie.html" class="active" aria-current="page">GALERIE</a>
+            <a href="galerie.php" class="active" aria-current="page">GALERIE</a>
           </nav>
         </div>
       </div>

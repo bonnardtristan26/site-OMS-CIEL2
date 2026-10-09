@@ -22,14 +22,14 @@
     <div class="container-fluid">
       <div class="row align-items-center py-2">
         <div class="col-auto logo">
-          <a href="index.html" aria-label="Retour à l'accueil">
+          <a href="index.php" aria-label="Retour à l'accueil">
             <img src="../Annexes/Images/logo_OMS.svg" alt="Logo OMS - Office Municipal du Sport">
           </a>
         </div>
         <div class="col d-flex justify-content-center justify-content-lg-start ps-lg-5">
           <nav class="oms-nav" aria-label="Navigation principale">
-            <a href="stage.html">STAGE</a>
-            <a href="galerie.html">GALERIE</a>
+            <a href="stage.php">STAGE</a>
+            <a href="galerie.php">GALERIE</a>
           </nav>
         </div>
       </div>
@@ -117,7 +117,7 @@
   <!-- FOOTER -->
   <footer class="oms-footer py-3">
     <div class="container-fluid d-flex flex-wrap justify-content-between align-items-center gap-2">
-      <p>Dernière mise à jour 15/09/2026&nbsp;&nbsp;-&nbsp;&nbsp;Adresse&nbsp;: 25 Rue de Strasbourg 44000 NANTES - <a href="FAQ.html">FAQ</a></p>
+      <p>Dernière mise à jour 15/09/2026&nbsp;&nbsp;-&nbsp;&nbsp;Adresse&nbsp;: 25 Rue de Strasbourg 44000 NANTES - <a href="FAQ.php">FAQ</a></p>
       <img src="../Annexes/Images/logo_ball_oms.svg" alt="" class="ball-icon">
     </div>
   </footer>
