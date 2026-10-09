@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 <?php
 $stages = [];
 $erreurChargement = false;
@@ -23,6 +24,15 @@ $imagesParDefaut = [
   'volley' => 'https://images.unsplash.com/photo-1728968916776-7aab52f5ea99?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
 ];
 ?>
+=======
+<?php 
+try { 
+$pdo = new PDO('mysql:host=localhost;dbname=omstjj;charset=utf8mb4', 
+'root', '', [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]); 
+$releve = $pdo->query('SELECT * FROM stage, image WHERE stage.id_stage = image.id_stage')->fetch(PDO::FETCH_ASSOC); 
+} catch (PDOException $e) { $releve = false; } 
+?> 
+>>>>>>> Stashed changes
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -67,6 +77,7 @@ $imagesParDefaut = [
   <main class="container-fluid p-4">
     <div class="stage-list">
 
+<<<<<<< Updated upstream
       <?php if ($erreurChargement): ?>
         <p>Impossible de charger les stages. Vérifie la connexion à la base de données.</p>
       <?php elseif (!$stages): ?>
@@ -83,6 +94,22 @@ $imagesParDefaut = [
               : (str_contains($activite, 'plein air') ? 'stage-green' : 'stage-red'));
           $image = (string) ($stage['image_path'] ?? '');
           $imageEstUrl = filter_var($image, FILTER_VALIDATE_URL) !== false;
+=======
+      <!-- Jeu en plein air -->
+      <a class="stage-link" href="Formulaire_inscription.html" aria-label="S'inscrire au stage de padel">
+        <article class="stage-banner stage-green">
+          <div class="stage-image">
+            <img src="<?= htmlspecialchars((string) $releve['chemin_image']) ?>" alt="Court de padel">
+          </div>
+          <div class="stage-text">
+            <span class="stage-badge"><?= htmlspecialchars((int) $releve['nb_inscrits']) ?><span>/<?= htmlspecialchars((int) $releve['nb_places']) ?> </span></span>
+            <h2 class="font-title"><?= htmlspecialchars((string) $releve['intitule']) ?>  - LE 01/05/2026</h2>
+            <p class="stage-level">Niveaux : <?= htmlspecialchars((string) $releve['niveau_etude']) ?> </p>
+            <p class="stage-desc"><?= htmlspecialchars((string) $releve['description']) ?> </p>
+          </div>
+        </article>
+      </a>
+>>>>>>> Stashed changes
 
           if (!$imageEstUrl && ($image === '' || !is_file(__DIR__ . DIRECTORY_SEPARATOR . $image))) {
             $image = $imagesParDefaut[strtolower($intitule)] ?? '../Annexes/Images/image_accueil.png';
