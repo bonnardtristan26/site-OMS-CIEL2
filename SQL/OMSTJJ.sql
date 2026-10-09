@@ -254,7 +254,7 @@ INSERT INTO `stage` (`id_stage`, `intitule`, `type_activite`, `niveau_etude`, `d
 --   hash('sha256', $_POST['mdp'])  avec la colonne `mdp`.
 -- ----------------------------------------------------------------------------
 INSERT INTO Admin (id_utilisateur, nom, prenom, mdp) VALUES
-(1, 'Dupont', 'Jean', SHA2('admin123', 256));
+(1, 'Jean', '123', SHA2('OMS', 256));
 
 -- ============================================================================
 -- Fin du script corrigé : 11 tables, 12 clés étrangères nommées

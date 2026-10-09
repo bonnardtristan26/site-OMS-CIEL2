@@ -1,4 +1,21 @@
 <!DOCTYPE html>
+<?php
+$stages = [];
+$erreurChargement = false;
+
+try {
+  $pdo = new PDO(
+    'mysql:host=localhost;dbname=omstjj;charset=utf8mb4',
+    'root',
+    '',
+    [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
+  );
+  $stages = $pdo->query('SELECT * FROM utilisateur ORDER BY id_participant')->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+  $erreurChargement = true;
+  error_log($e->getMessage());
+}
+?>
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
@@ -123,5 +140,15 @@
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>     // Vérifier si l'URL contient le paramètre "error"
+    const urlParams = new URLSearchParams(window.location.search);
+    const errorParam = urlParams.get('error');
+
+    if (errorParam === '1') {
+      // Afficher le message d'erreur
+      const errorMessage = document.getElementById('motdepasse-incorecrt');
+      errorMessage.textContent = "Nom d'utilisateur ou mot de passe incorrect.";
+    }
+  </script>
 </body>
 </html>

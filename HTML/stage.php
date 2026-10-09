@@ -75,8 +75,7 @@ try {
               ? 'stage-blue'
               : (str_contains($activite, 'plein air') ? 'stage-green' : 'stage-red'));
           $image = (string) ($stage['image_path'] ?? '');
-          $imageEstUrl = filter_var($image, FILTER_VALIDATE_URL) !== false;
-
+          
           ?>
           <a class="stage-link" href="Formulaire_inscription.php<?= '?id_stage=' . urlencode((string) ($stage['id_stage'] ?? '')) ?>">
             <article class="stage-banner <?= $classeCouleur ?>">
