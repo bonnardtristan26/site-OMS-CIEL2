@@ -81,7 +81,9 @@
             <!--FOOTER-->
             <footer class="oms-footer py-3">
                 <div class="box_text">
-                    <img src="../Annexes/Images/enfants_football.png" alt="" class="ball-icon">
+                    <div class="col-12 col-md-5">
+                        <img src="../Annexes/Images/enfants_football.png" alt="" class="">
+                    </div>
                     <h2 class="font-title">SPORT POUR TOUS</h2>
                     <p class="box_desc">L'Office Municipal des Sports accompagne les habitants dans leur pratique sportive et contribue au développement du sport dans la commune. Que vous soyez débutant, sportif régulier ou simplement à...</p>
                 </div>
