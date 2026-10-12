@@ -163,7 +163,6 @@ try {
         </form>
          <p id="motdepasse-incorecrt" class="text-white fw-bold text-uppercase mt-4" style="font: size 0.6em;rem;"> </p>
         </a>
-
       </section>
     </div>
   </main>

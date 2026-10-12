@@ -2,6 +2,7 @@
 <?php
 $stages = [];
 $erreurChargement = false;
+$idStage = filter_input(INPUT_GET, 'id_stage', FILTER_VALIDATE_INT);
 
 try {
   $pdo = new PDO(
@@ -10,7 +11,7 @@ try {
     '',
     [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
   );
-  $stages = $pdo->query('SELECT * FROM utilisateur ORDER BY id_participant')->fetchAll(PDO::FETCH_ASSOC);
+  $stages = $pdo->query('SELECT * FROM utilisateur,stages WHERE utilisateur.id_participant = stages.id_participant ORDER BY utilisateur.id_participant')->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
   $erreurChargement = true;
   error_log($e->getMessage());
@@ -70,24 +71,27 @@ try {
             qui se joue en double sur un court réduit entouré de vitres.
           </p>
 
-          <form>
+          <form action="inscription.php"  method="post" class="oms-form">
             <h2 class="oms-section-title">Informations concernant l'enfant</h2>
 
             <div class="mb-3">
-              <input type="text" class="form-control oms-input" placeholder="Nom et prénom..." minlength="2" maxlength="50" required>
+              <input type="text" class="form-control oms-input" name = "nom_enfant" placeholder="Nom..." minlength="2" maxlength="50" required>
             </div>
             <div class="mb-3">
-              <input type="text" class="form-control oms-input" placeholder="Âge ..." minlength="1" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, '')" required>
+              <input type="text" class="form-control oms-input" name = "prenom_enfant" placeholder="Prénom..." minlength="2" maxlength="50" required>
             </div>
             <div class="mb-3">
-                <select class="form-select oms-input" required>
+              <input type="text" class="form-control oms-input" name = "age" placeholder="Âge ..." minlength="1" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, '')" required>
+            </div>
+            <div class="mb-3">
+                <select class="form-select oms-input" name = "sexe" required>
                     <option value="" disabled selected>Sexe...</option>
                     <option value="M">Homme</option>
                     <option value="F">Femme</option>
                 </select>
             </div>
             <div class="mb-4">
-              <select class="form-select oms-input" required>
+              <select class="form-select oms-input" name = "niveau_d_etude" required>
                     <option value="" disabled selected>Niveau d'étude scolaire...</option>
                     <option value="P">primaire</option>
                     <option value="M">collège</option>
@@ -98,10 +102,13 @@ try {
             <h2 class="oms-section-title">Informations concernant le/les parents</h2>
 
             <div class="mb-3">
-              <input type="text" class="form-control oms-input" placeholder="Nom et prénom..." minlength="2" maxlength="25" required>
+              <input type="text" class="form-control oms-input" name = "nom_parent" placeholder="Nom..." minlength="2" maxlength="25" required>
+            </div>
+             <div class="mb-3">
+              <input type="text" class="form-control oms-input" name = "prenom_parent" placeholder="prénom..." minlength="2" maxlength="25" required>
             </div>
             <div class="mb-3">
-                <select class="form-select oms-input" required>
+                <select class="form-select oms-input" name = "lien_parente" required>
                     <option value="" disabled selected>Lien de parenté...</option>
                     <option value="P">Père</option>
                     <option value="M">Mère</option>
@@ -109,12 +116,13 @@ try {
                 </select>
             </div>
             <div class="mb-3">
-              <input type="text" class="form-control oms-input" inputmode="numeric" pattern="[0-9]*" title="Numéro à 10 chiffres" placeholder="Téléphone..." maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '')" required>
+              <input type="text" name = "num_tel" class="form-control oms-input" inputmode="numeric" pattern="[0-9]*" title="Numéro à 10 chiffres" placeholder="Téléphone..." maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '')" required>
             </div>
             <div class="mb-3">
-                <input type="email" class="form-control oms-input" placeholder="Mail..."id="email" maxlength="50" required />
+                <input type="email" class="form-control oms-input" placeholder="Mail..." name = "mail" maxlength="50" required />
             </div>
             <button type="submit" class="oms-submit-button"><span>Envoyer</span></button>
+            <input type="hidden" name="id_stage" value="<?= (int) $stage['id_stage'] ?>">
           </form>
 
         </div>
