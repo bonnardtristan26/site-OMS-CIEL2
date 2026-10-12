@@ -274,18 +274,54 @@ require_once 'check_auth.php';
             display: block;
         }
 
-        .check_test {
-            background-image: url(Annexes/Images/checkbox/not_checked.png);
-            background-repeat: no-repeat;
-            background-position: 50% 50%;
-            /* put the height and width of your image here */
-            height: 50px;
-            width: 200px;
-            border: none;
-            }
+        .div_check {
+            display : inline-flex;
+            text-align : center;
+            align-items : center;
+        }
 
-        .check_test span {
-            display: none;
+        .label_check  {
+            width: 40px;
+            height: 40px;
+            margin : 0px 10px 10px 40px; /* top, bottom, left, right */
+            background-size : contain;
+            background-repeat : no-repeat;
+            background-image: url(../Annexes/Images/checkbox/not_checked.png);
+            cursor: pointer;
+        }
+
+        p {
+            color: #fff;
+            font-family: 'Lalezar', sans-serif;
+            font-size : 1.2rem;
+        }
+
+        input[type="checkbox"] {
+            display : none;
+        }
+
+        input:checked + .label_check_1 {
+            background-image: url(../Annexes/Images/checkbox/checked.png);
+        }
+
+        .etude_pres {
+            margin-bottom : 50px;
+        }
+
+        #places_restantes {
+            width : 40px;
+        }
+
+        /* Pour Chrome, Safari, Edge et Opera */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        /* Pour Firefox */
+        input[type="number"] {
+            -moz-appearance: textfield;
         }
 
         /* ---- Responsive ---- */
@@ -377,23 +413,34 @@ require_once 'check_auth.php';
                 </nav>
 
                 <div class="mb-3" style="max-width:420px;">
-                    <label for="activiter" class="visually-hidden">Activité... </label>
-                    <input type="text" class="form-control oms-champ" id="activiter" name="activité"
+                    <label for="activité" class="visually-hidden">Activité... </label>
+                    <input type="text" class="form-control oms-champ" id="activité" name="activité"
                         placeholder="Activité...">
                 </div>
 
-                <button type="reset" class="check_test"></button>
+                <div class="div_check">
+                    <input type="checkbox" id="check">
+                    <label class="label_check" for="check"></label><p>JEU DE BALLE</p>
 
-            <div class="d-flex flex-wrap">
-                <div class="mb-4 " style="max-width:420px;">
-                    <label for="date" class="visually-hidden">Date</label>
-                    <input type="text" class="form-control oms-champ" id="date" name="date" placeholder="Date...">
+                    <input type="checkbox" id="check">
+                    <label class="label_check" for="check"></label><p>JEU EN MER</p>
 
-                    <label for="date" class="visually-hidden">Date</label>
-                    <input type="text" class="form-control oms-champ" id="date" name="date" placeholder="Date...">
+                    <input type="checkbox" id="check">
+                    <label class="label_check" for="check"></label><p>JEU EN PLEIN-AIR</p>
                 </div>
-            </div>
-        
+
+                <div class="mb-4 etude_pres" style="max-width:420px;">
+                    <label for="date" class="visually-hidden">Niveau d'étude scolaire</label>
+                    <input type="text" class="form-control oms-champ" id="niv_etude" name="niv_etude" placeholder="Niveau d'étude scolaire...">
+                </div>
+
+                <div class="mb-4 etude_pres" style="max-width:420px;">
+                    <label for="date" class="visually-hidden">Présentation</label>
+                    <input type="text" class="form-control oms-champ" id="presentation" name="presentation" placeholder="Présentation...">
+                </div>
+
+                <input type="number" id="places_restantes" value="0"/>
+
                 <button type="button" class="oms-btn"><span>Téléverser un dossier</span></button>
 
             </section>
