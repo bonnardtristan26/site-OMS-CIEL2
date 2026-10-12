@@ -275,9 +275,17 @@ require_once 'check_auth.php';
         }
 
         .check_test {
-            background-image: url(not_checked.png);
+            background-image: url(Annexes/Images/checkbox/not_checked.png);
             background-repeat: no-repeat;
             background-position: 50% 50%;
+            /* put the height and width of your image here */
+            height: 50px;
+            width: 200px;
+            border: none;
+            }
+
+        .check_test span {
+            display: none;
         }
 
         /* ---- Responsive ---- */
@@ -374,12 +382,8 @@ require_once 'check_auth.php';
                         placeholder="Activité...">
                 </div>
 
-                <div class="btn-group conti">
+                <button type="reset" class="check_test"></button>
 
-                    <input type="checkbox" class="check_test">
-                    
-                </div>
-                a fix ici
             <div class="d-flex flex-wrap">
                 <div class="mb-4 " style="max-width:420px;">
                     <label for="date" class="visually-hidden">Date</label>
