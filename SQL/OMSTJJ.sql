@@ -83,7 +83,7 @@ CREATE TABLE Admin (
 -- Table Utilisateur  (entité encadrée en rouge sur le schéma)
 -- ----------------------------------------------------------------------------
 CREATE TABLE Utilisateur (
-    id_participant        INTEGER     NOT NULL,
+    id_participant        INTEGER     NOT NULL  AUTO_INCREMENT,
     age                   SMALLINT,
     niveau_d_etude        VARCHAR(100),
     sexe                  VARCHAR(100),
