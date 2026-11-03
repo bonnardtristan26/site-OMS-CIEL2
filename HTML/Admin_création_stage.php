@@ -280,7 +280,27 @@ require_once 'check_auth.php';
             align-items : center;
         }
 
-        .label_check  {
+        .label_check_1  {
+            width: 40px;
+            height: 40px;
+            margin : 0px 10px 10px 40px; /* top, bottom, left, right */
+            background-size : contain;
+            background-repeat : no-repeat;
+            background-image: url(../Annexes/Images/checkbox/not_checked.png);
+            cursor: pointer;
+        }
+
+        .label_check_2  {
+            width: 40px;
+            height: 40px;
+            margin : 0px 10px 10px 40px; /* top, bottom, left, right */
+            background-size : contain;
+            background-repeat : no-repeat;
+            background-image: url(../Annexes/Images/checkbox/not_checked.png);
+            cursor: pointer;
+        }
+
+        .label_check_3  {
             width: 40px;
             height: 40px;
             margin : 0px 10px 10px 40px; /* top, bottom, left, right */
@@ -300,7 +320,15 @@ require_once 'check_auth.php';
             display : none;
         }
 
-        input:checked + .label_check_1 {
+        #check_1:checked + .label_check_1 {
+            background-image: url(../Annexes/Images/checkbox/checked.png);
+        }
+
+        #check_2:checked + .label_check_2 {
+            background-image: url(../Annexes/Images/checkbox/checked.png);
+        }
+
+        #check_3:checked + .label_check_3 {
             background-image: url(../Annexes/Images/checkbox/checked.png);
         }
 
@@ -322,6 +350,35 @@ require_once 'check_auth.php';
         /* Pour Firefox */
         input[type="number"] {
             -moz-appearance: textfield;
+        }
+
+        /* Flèches */
+        .fleche {
+            flex: 0 0 auto;
+            width: clamp(20px, 12vw, 20px);
+            aspect-ratio: 1 / 1.15;
+            padding: 0;
+            border: 0;
+            background: none;
+            cursor: pointer;
+        }
+
+        .fleche svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+            fill: #262d24; /* vert très foncé du header */
+        }
+
+        .fleche:hover svg,
+        .fleche:focus-visible svg {
+            fill: #008f3f; /* vert OMS */
+        }
+
+        
+        /* Mobile : flèches plus petites */
+        @media (max-width: 576px) {
+            .fleche { width: 10px; }
         }
 
         /* ---- Responsive ---- */
@@ -419,14 +476,14 @@ require_once 'check_auth.php';
                 </div>
 
                 <div class="div_check">
-                    <input type="checkbox" id="check">
-                    <label class="label_check" for="check"></label><p>JEU DE BALLE</p>
+                    <input type="checkbox" id="check_1">
+                    <label class="label_check_1" for="check_1"></label><p>JEU DE BALLE</p>
 
-                    <input type="checkbox" id="check">
-                    <label class="label_check" for="check"></label><p>JEU EN MER</p>
+                    <input type="checkbox" id="check_2">
+                    <label class="label_check_2" for="check_2"></label><p>JEU EN MER</p>
 
-                    <input type="checkbox" id="check">
-                    <label class="label_check" for="check"></label><p>JEU EN PLEIN-AIR</p>
+                    <input type="checkbox" id="check_3">
+                    <label class="label_check_3" for="check_3"></label><p>JEU EN PLEIN-AIR</p>
                 </div>
 
                 <div class="mb-4 etude_pres" style="max-width:420px;">
@@ -439,7 +496,23 @@ require_once 'check_auth.php';
                     <input type="text" class="form-control oms-champ" id="presentation" name="presentation" placeholder="Présentation...">
                 </div>
 
-                <input type="number" id="places_restantes" value="0"/>
+                <div class="justify-content-between">
+                    <!-- Flèche précédente -->
+                    <button type="button" class="fleche fleche-gauche" aria-label="Actualité précédente">
+                        <svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+                            <polygon points="100,0 0,50 100,100" />
+                        </svg>
+                    </button>
+
+                    <input type="text" id="places_restantes" value="0" style="text-align: center"/>
+
+                    <!-- Flèche suivante -->
+                    <button type="button" class="fleche fleche-droite" aria-label="Actualité suivante">
+                        <svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+                            <polygon points="0,0 100,50 0,100" />
+                        </svg>
+                    </button>
+                </div>
 
                 <button type="button" class="oms-btn"><span>Téléverser un dossier</span></button>
 
