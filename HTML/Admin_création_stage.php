@@ -504,7 +504,7 @@ require_once 'check_auth.php';
                         </svg>
                     </button>
 
-                    <input type="text" id="places_restantes" value="0" style="text-align: center"/>
+                    <input type="text" id="places_restantes" value="0" style="text-align: center" class="mb-3"/>
 
                     <!-- Flèche suivante -->
                     <button type="button" class="fleche fleche-droite" aria-label="Actualité suivante">
@@ -513,6 +513,8 @@ require_once 'check_auth.php';
                         </svg>
                     </button>
                 </div>
+
+                <button type="button" class="oms-btn mb-4"><span>Importer ue photo</span></button>
 
                 <button type="button" class="oms-btn"><span>Téléverser un dossier</span></button>
 
