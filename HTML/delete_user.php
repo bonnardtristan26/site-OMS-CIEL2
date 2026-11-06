@@ -1,4 +1,6 @@
 <?php
+require_once 'check_auth.php';
+
 session_start();
 $pdo = new PDO('mysql:host=localhost;dbname=omstjj;charset=utf8mb4',
     'root', '', [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);

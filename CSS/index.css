@@ -165,6 +165,31 @@ main {
     margin: 0 auto 2rem;
 }
 
+.actu-viewport {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.box_actu[hidden] {
+    display: none;
+}
+
+.actu-message {
+    margin: 0;
+    padding: 2rem;
+    color: var(--oms-text);
+    font-family: "Ubuntu", sans-serif;
+    text-align: center;
+}
+
+.actu-compteur {
+    margin: -1rem auto 2rem;
+    color: var(--oms-sombre);
+    font-family: "Ubuntu", sans-serif;
+    font-weight: 700;
+    text-align: center;
+}
+
 /* Flèches */
 .fleche {
     flex: 0 0 auto;
@@ -188,6 +213,15 @@ main {
     fill: #008f3f; /* vert OMS */
 }
 
+.fleche:disabled {
+    cursor: default;
+    opacity: .4;
+}
+
+.fleche:disabled:hover svg {
+    fill: #262d24;
+}
+
 /* Carte verte inclinée */
 .box_actu {
     flex: 1 1 auto;
@@ -201,8 +235,9 @@ main {
 .actu-img {
     display: block;
     width: 100%;
-    aspect-ratio: 16 / 3.4;
-    object-fit: cover;
+    height: clamp(180px, 30vw, 360px);
+    object-fit: contain;
+    background-color: #f5f5f5;
 	clip-path: polygon(2.2% 0, 100% 0, 97.8% 100%, 0 100%);
 }
 

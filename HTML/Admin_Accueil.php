@@ -4,6 +4,7 @@ require_once 'check_auth.php';
 ?>
 <!doctype html>
 <html lang="fr">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -20,111 +21,319 @@ require_once 'check_auth.php';
 
   <style>
     /* ============ OMS – Thème administration ============ */
-    :root{
-      --oms-rouge:#ff0000;
-      --oms-rouge-fonce:#b00000;
-      --oms-sombre:#101b17;
+    :root {
+      --oms-rouge: #ff0000;
+      --oms-rouge-fonce: #b00000;
+      --oms-sombre: #101b17;
     }
-    body{
-      display:flex;flex-direction:column;min-height:100vh;
-      font-family:'Ubuntu',Arial,Helvetica,sans-serif;
-      background:#fff;
+
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      font-family: 'Ubuntu', Arial, Helvetica, sans-serif;
+      background: #fff;
     }
-    main{flex:1 0 auto;}
-    .titre{font-family:'Lalezar','Arial Black',sans-serif;font-weight:400;letter-spacing:.02em;}
+
+    main {
+      flex: 1 0 auto;
+    }
+
+    .titre {
+      font-family: 'Lalezar', 'Arial Black', sans-serif;
+      font-weight: 400;
+      letter-spacing: .02em;
+    }
 
     /* ---- En-tête ---- */
-    .oms-header{background:var(--oms-sombre);}
-    .oms-logo{display:block;height:84px;width:auto;}
-    .oms-header .nav-link{
-      color:#fff;text-decoration:none;text-transform:uppercase;
-      font-family:'Lalezar',sans-serif;font-size:2.5rem;line-height:1;
-      letter-spacing:.03em;padding:.3rem 1.6rem;
+    .oms-header {
+      background: var(--oms-sombre);
     }
-    .oms-header .nav-link:hover{color:#ff4d4d;}
+
+    .oms-logo {
+      display: block;
+      height: 84px;
+      width: auto;
+    }
+
+    .oms-header .nav-link {
+      color: #fff;
+      text-decoration: none;
+      text-transform: uppercase;
+      font-family: 'Lalezar', sans-serif;
+      font-size: 2.5rem;
+      line-height: 1;
+      letter-spacing: .03em;
+      padding: .3rem 1.6rem;
+    }
+
+    .oms-header .nav-link:hover {
+      color: #ff4d4d;
+    }
 
     /* ---- Bandeau rouge ---- */
-    .oms-rouge{background:var(--oms-rouge);}
+    .oms-rouge {
+      background: var(--oms-rouge);
+    }
 
     /* Le bandeau rouge remplit la hauteur jusqu'au pied de page */
-    .oms-main{display:flex;flex-direction:column;}
-    .oms-main>.container{display:flex;flex-direction:column;flex:1 1 auto;}
-    .oms-main>.container>section{flex:1 1 auto;display:flex;flex-direction:column;}
+    .oms-main {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .oms-main>.container {
+      display: flex;
+      flex-direction: column;
+      flex: 1 1 auto;
+    }
+
+    .oms-main>.container>section {
+      flex: 1 1 auto;
+      display: flex;
+      flex-direction: column;
+    }
 
     /* ---- Onglets de navigation admin ---- */
-    .oms-tabs{display:flex;align-items:stretch;}
-    .oms-tab{
-      flex:1 1 0;display:flex;align-items:center;justify-content:center;
-      padding:1.1rem 0;color:#fff;text-decoration:none;text-transform:uppercase;
-      font-family:'Lalezar',sans-serif;font-size:2.4rem;line-height:1;letter-spacing:.02em;
+    .oms-tabs {
+      display: flex;
+      align-items: stretch;
     }
-    .oms-tab:hover{color:#ffe1e1;}
-    .oms-tab.actif{background:var(--oms-rouge-fonce);}
-    .oms-tab.actif:hover{color:#fff;}
-    .oms-sep{flex:0 0 3px;background:#fff;}
+
+    .oms-tab {
+      flex: 1 1 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.1rem 0;
+      color: #fff;
+      text-decoration: none;
+      text-transform: uppercase;
+      font-family: 'Lalezar', sans-serif;
+      font-size: 2.4rem;
+      line-height: 1;
+      letter-spacing: .02em;
+    }
+
+    .oms-tab:hover {
+      color: #ffe1e1;
+    }
+
+    .oms-tab.actif {
+      background: var(--oms-rouge-fonce);
+    }
+
+    .oms-tab.actif:hover {
+      color: #fff;
+    }
+
+    .oms-sep {
+      flex: 0 0 3px;
+      background: #fff;
+    }
 
     /* ---- Liste des stages ---- */
-    .oms-liste{background:var(--oms-rouge-fonce);}
-    .oms-ligne{display:flex;align-items:center;gap:1rem;padding:.95rem 1.5rem;}
-    .oms-ligne + .oms-ligne{border-top:2px solid #fff;}
-    .oms-sport{font-family:'Lalezar',sans-serif;font-size:1.75rem;color:#fff;letter-spacing:.04em;min-width:230px;}
-    .oms-date{flex:1 1 auto;color:#fff;font-weight:700;font-size:1.45rem;}
+    .oms-liste {
+      background: var(--oms-rouge-fonce);
+    }
+
+    .oms-ligne {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: .95rem 1.5rem;
+    }
+
+    .oms-ligne+.oms-ligne {
+      border-top: 2px solid #fff;
+    }
+
+    .oms-sport {
+      font-family: 'Lalezar', sans-serif;
+      font-size: 1.75rem;
+      color: #fff;
+      letter-spacing: .04em;
+      min-width: 230px;
+    }
+
+    .oms-date {
+      flex: 1 1 auto;
+      color: #fff;
+      font-weight: 700;
+      font-size: 1.45rem;
+    }
 
     /* ---- Boutons "parallelogramme" ---- */
-    .oms-btn{
-      display:inline-block;border:0;border-radius:0;cursor:pointer;
-      background:var(--oms-sombre);color:#fff;
-      font-family:'Lalezar',sans-serif;font-size:2.4rem;line-height:1.1;
-      letter-spacing:.03em;text-transform:uppercase;
-      padding:.6rem 2.3rem .45rem;transform:skewX(-14deg);
-      box-shadow:3px 4px 0 rgba(0,0,0,.28);
+    .oms-btn {
+      display: inline-block;
+      border: 0;
+      border-radius: 0;
+      cursor: pointer;
+      background: var(--oms-sombre);
+      color: #fff;
+      font-family: 'Lalezar', sans-serif;
+      font-size: 2.4rem;
+      line-height: 1.1;
+      letter-spacing: .03em;
+      text-transform: uppercase;
+      padding: .6rem 2.3rem .45rem;
+      transform: skewX(-14deg);
+      box-shadow: 3px 4px 0 rgba(0, 0, 0, .28);
     }
-    .oms-btn>span{display:inline-block;transform:skewX(14deg);}
-    .oms-btn:hover{background:#000;color:#fff;}
-    .oms-btn--blanc{
-      background:#fff;color:#111;font-family:'Ubuntu',sans-serif;font-weight:700;
-      font-size:1rem;padding:.5rem 1.4rem .4rem;letter-spacing:.02em;
+
+    .oms-btn>span {
+      display: inline-block;
+      transform: skewX(14deg);
     }
-    .oms-btn--blanc:hover{background:#f2f2f2;color:#000;}
-    .oms-btn--x{
-      width:48px;height:42px;padding:0;background:#fff;color:#000;
-      font-family:'Ubuntu',sans-serif;font-weight:900;font-size:1.2rem;
-      display:inline-flex;align-items:center;justify-content:center;
+
+    .oms-btn:hover {
+      background: #000;
+      color: #fff;
     }
-    .oms-btn--x:hover{background:#e8e8e8;color:#b63b3b;}
+
+    .oms-btn--blanc {
+      background: #fff;
+      color: #111;
+      font-family: 'Ubuntu', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      padding: .5rem 1.4rem .4rem;
+      letter-spacing: .02em;
+    }
+
+    .oms-btn--blanc:hover {
+      background: #f2f2f2;
+      color: #000;
+    }
+
+    .oms-btn--x {
+      width: 48px;
+      height: 42px;
+      padding: 0;
+      background: #fff;
+      color: #000;
+      font-family: 'Ubuntu', sans-serif;
+      font-weight: 900;
+      font-size: 1.2rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .oms-btn--x:hover {
+      background: #e8e8e8;
+      color: #b63b3b;
+    }
 
     /* ---- Champs de formulaire ---- */
-    .oms-champ{
-      border:0;border-radius:0;background:#fff;color:#111;
-      font-size:1.25rem;padding:.75rem 1rem;box-shadow:none;
+    .oms-champ {
+      border: 0;
+      border-radius: 0;
+      background: #fff;
+      color: #111;
+      font-size: 1.25rem;
+      padding: .75rem 1rem;
+      box-shadow: none;
     }
-    .oms-champ::placeholder{color:#8c8c8c;text-transform:uppercase;letter-spacing:.02em;}
-    .oms-champ:focus{border-color:transparent;outline:0;box-shadow:none;background:#fff;color:#111;}
-    .oms-champ--actu{min-height:235px;}
+
+    .oms-champ::placeholder {
+      color: #8c8c8c;
+      text-transform: uppercase;
+      letter-spacing: .02em;
+    }
+
+    .oms-champ:focus {
+      border-color: transparent;
+      outline: 0;
+      box-shadow: none;
+      background: #fff;
+      color: #111;
+    }
+
+    .oms-champ--actu {
+      min-height: 235px;
+    }
 
     /* ---- Accueil / actualités ---- */
-    .oms-actu-titre{color:#fff;font-size:2rem;}
+    .oms-actu-titre {
+      color: #fff;
+      font-size: 2rem;
+    }
 
     /* ---- Pied de page ---- */
-    .oms-footer{background:var(--oms-sombre);color:#fff;flex-shrink:0;}
-    .oms-footer .ballon{width:46px;height:46px;display:block;}
+    .oms-footer {
+      background: var(--oms-sombre);
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    .oms-footer .ballon {
+      width: 46px;
+      height: 46px;
+      display: block;
+    }
 
     /* ---- Responsive ---- */
-    @media (max-width: 991.98px){
-      .oms-logo{height:58px;}
-      .oms-header .nav-link{font-size:1.5rem;padding:.3rem .8rem;}
-      .oms-tab{font-size:1.5rem;}
-      .oms-h1{font-size:2.9rem;}
-      .oms-btn{font-size:1.45rem;padding:.5rem 1.3rem .4rem;}
-      .oms-sport{font-size:1.25rem;min-width:0;}
-      .oms-date{font-size:1.05rem;}
-      .oms-ligne{flex-wrap:wrap;gap:.5rem;padding:.8rem 1rem;}
-      .oms-date{flex:1 1 100%;order:5;}
-      .oms-actu-titre{font-size:1.5rem;}
-      .oms-champ{font-size:1rem;}
+    @media (max-width: 991.98px) {
+      .oms-logo {
+        height: 58px;
+      }
+
+      .oms-header .nav-link {
+        font-size: 1.5rem;
+        padding: .3rem .8rem;
+      }
+
+      .oms-tab {
+        font-size: 1.5rem;
+      }
+
+      .oms-h1 {
+        font-size: 2.9rem;
+      }
+
+      .oms-btn {
+        font-size: 1.45rem;
+        padding: .5rem 1.3rem .4rem;
+      }
+
+      .oms-sport {
+        font-size: 1.25rem;
+        min-width: 0;
+      }
+
+      .oms-date {
+        font-size: 1.05rem;
+      }
+
+      .oms-ligne {
+        flex-wrap: wrap;
+        gap: .5rem;
+        padding: .8rem 1rem;
+      }
+
+      .oms-date {
+        flex: 1 1 100%;
+        order: 5;
+      }
+
+      .oms-actu-titre {
+        font-size: 1.5rem;
+      }
+
+      .oms-champ {
+        font-size: 1rem;
+      }
+
+      .conteneur {
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+      }
     }
   </style>
 </head>
+
 <body>
 
   <!-- ===================== EN-TÊTE ===================== -->
@@ -157,35 +366,58 @@ require_once 'check_auth.php';
           <span class="oms-sep" aria-hidden="true"></span>
 
         </nav>
-        <div class="d-grid gap-5 mb-5">
-        <div>
-          <h2 class="titre oms-actu-titre text-white mb-3">Actualité 1</h2>
-          <label for="actualite1" class="visually-hidden">Actualité 1</label>
-          <textarea class="form-control oms-champ oms-champ--actu mb-4" id="actualite1" name="actualite1" rows="5" placeholder="Actualité..."></textarea>
-          <div class="d-flex justify-content-between gap-3">
-          <button type="button" class="oms-btn"><span>Publier actualité 1</span></button>
-          <button type="button" class="oms-btn oms-btn--blanc"><span>Importer image</span></button>
-          </div>
-        </div>
+        <div class="d-flex flex-column gap-7 mb-7">
+        
+          <form action="add_actualite.php?actu=1" method="post" enctype="multipart/form-data">
+            <div>
+              <input type="file" id="explorateur1" name="monImage" accept="image/*" style="display: none;">
+              <h2 class="titre oms-actu-titre text-white mb-3">Actualité 1</h2>
+              <label for="actualite1" class="visually-hidden">Actualité 1</label>
+              <div class = " " >
+                <input class="form-control  oms-champ  mb-4" name="titre" placeholder="Titre...">
+                <textarea class="form-control oms-champ oms-champ--actu mb-4" id="actualite1" name="actualite" rows="5" placeholder="Actualité..."></textarea>
+              <div class="d-flex justify-content-between gap-3 mb-5">
+                <button type="submit" class="oms-btn"><span>Publier actualité 1</span></button>
+                <p class="nom-fichier text-white fw-bold text-uppercase mb-0" style="font-size: 1rem;">Aucune image sélectionnée</p>
+                <button type="button" class="oms-btn oms-btn--blanc" data-image-picker><span>Importer image</span></button>
+              </div>
+            </div>
+          </form>
 
-        <div>
-          <h2 class="titre oms-actu-titre text-white mb-3">Actualité 2</h2>
-          <label for="actualite2" class="visually-hidden">Actualité 2</label>
-          <textarea class="form-control oms-champ oms-champ--actu mb-4" id="actualite2" name="actualite2" rows="5" placeholder="Actualité..."></textarea>
-          <div class="d-flex justify-content-between gap-3">
-          <button type="button" class="oms-btn"><span>Publier actualité 2</span></button>
-          <button type="button" class="oms-btn oms-btn--blanc"><span>Importer image</span></button>
-          </div>        </div>
+           <form action="add_actualite.php?actu=2" method="post" enctype="multipart/form-data">
+            <div>
+              <input type="file" id="explorateur2" name="monImage" accept="image/*" style="display: none;">
+              <h2 class="titre oms-actu-titre text-white mb-3">Actualité 2</h2>
+              <label for="actualite2" class="visually-hidden">Actualité 2 </label>
+              <div class = " " >
+                <input class="form-control  oms-champ  mb-4" name="titre" placeholder="Titre...">
+                <textarea class="form-control oms-champ oms-champ--actu mb-4" id="actualite2" name="actualite" rows="5" placeholder="Actualité..."></textarea>
+              <div class="d-flex justify-content-between gap-3 mb-5">
+                <button type="submit" class="oms-btn"><span>Publier actualité 2</span></button>
+                <p class="nom-fichier text-white fw-bold text-uppercase mb-0" style="font-size: 1rem;">Aucune image sélectionnée</p>
+                <button type="button" class="oms-btn oms-btn--blanc" data-image-picker><span>Importer image</span></button>
+              </div>
+            </div>
+          </form>
 
-        <div>
-          <h2 class="titre oms-actu-titre text-white mb-3">Actualité 3</h2>
-          <label for="actualite3" class="visually-hidden">Actualité 3</label>
-          <textarea class="form-control oms-champ oms-champ--actu mb-4" id="actualite3" name="actualite3" rows="5" placeholder="Actualité..."></textarea>
-          <div class="d-flex justify-content-between gap-3">
-          <button type="button" class="oms-btn"><span>Publier actualité 3</span></button>
-          <button type="button" class="oms-btn oms-btn--blanc"><span>Importer image</span></button>
-          </div>
-        </div>
+           <form action="add_actualite.php?actu=3" method="post" enctype="multipart/form-data">
+            <div>
+              <input type="file" id="explorateur3" name="monImage" accept="image/*" style="display: none;">
+              <h2 class="titre oms-actu-titre text-white mb-3">Actualité 3</h2>
+              <label for="actualite3" class="visually-hidden">Actualité 3</label>
+              <div class = " " >
+                <input class="form-control  oms-champ  mb-4" name="titre" placeholder="Titre...">
+                <textarea class="form-control oms-champ oms-champ--actu mb-4" id="actualite3" name="actualite" rows="5" placeholder="Actualité..."></textarea>
+              <div class="d-flex justify-content-between gap-3 mb-5">
+                <button type="submit" class="oms-btn"><span>Publier actualité 3</span></button>
+                <p class="nom-fichier text-white fw-bold text-uppercase mb-0" style="font-size: 1rem;">Aucune image sélectionnée</p>
+                <button type="button" class="oms-btn oms-btn--blanc" data-image-picker><span>Importer image</span></button>
+              </div>
+            </div>
+          </form>
+          
+
+
         </div>
       </section>
     </div>
@@ -201,7 +433,25 @@ require_once 'check_auth.php';
       <img src="../Annexes/Images/logo_ball_oms.svg" alt="" class="ballon" aria-hidden="true">
     </div>
   </footer>
+  <script>
+    document.querySelectorAll('form[action^="add_actualite.php"]').forEach(function (form) {
+      const fileInput = form.querySelector('input[name="monImage"]');
+      const fileName = form.querySelector('.nom-fichier');
+      const pickerButton = form.querySelector('[data-image-picker]');
+
+      pickerButton.addEventListener('click', function () {
+        fileInput.click();
+      });
+
+      fileInput.addEventListener('change', function () {
+        fileName.textContent = fileInput.files.length
+          ? fileInput.files[0].name
+          : 'Aucune image sélectionnée';
+      });
+    });
+  </script>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

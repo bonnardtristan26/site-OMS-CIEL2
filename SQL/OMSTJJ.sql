@@ -1,5 +1,6 @@
 -- ============================================================================
---  SCRIPT DE CREATION DE LA BASE DE DONNEES — VERSION CORRIGEE
+--  SCRIPT DE CREATION DE LA BASE DE DONNEES — VERSION CORRIGEE ET FUSIONNEE
+--  (corrections du script original + modifications du client conservées)
 --  Généré d'après le schéma (MCD) fourni : toutes les tables et toutes
 --  liaisons (associations) du schéma sont reprises ci-dessous.
 --
@@ -27,7 +28,7 @@
 --      avec Image est désormais portée par la colonne `id_image` de Galerie
 --      (FK Galerie.id_image -> Image.id_image).
 --   5. Ordre de création réorganisé : les tables référencées (Admin,
---      Utilisateur, Image, Actualites, Stage) sont créées AVANT Galerie et
+--      Image, Actualites, Stage, Utilisateur) sont créées AVANT Galerie et
 --      les tables de jonction, sinon MySQL refuse les FOREIGN KEY.
 --   6. Faute de frappe `Gallerie` corrigée en `Galerie` partout (DROP et
 --      clés étrangères des tables alimenter / consulter).
@@ -35,6 +36,28 @@
 --   8. Ajout de `SET NAMES utf8mb4;` en en-tête : sans cette ligne, un client
 --      configuré en latin1 interprète mal les accents à l'import (le `é`
 --      compte double -> erreur « Data too long for column 'description' »).
+--   9. Table Stage : ajout des colonnes `date_stage` (DATE) et
+--      `heure_stage` (TIME), utilisées par l'affichage PHP
+--      (« Le {date_stage} A {heure_stage} »), avec des valeurs dans les INSERT.
+--
+--  MODIFICATIONS DU CLIENT (conservées telles quelles) :
+--   10. Élargissement des colonnes VARCHAR pour stocker les textes complets :
+--       - Utilisateur : niveau_d_etude, sexe, nom_enfant, prenom_enfant,
+--         nom_parent, prenom_parent, lien_parente -> VARCHAR(100),
+--         mail, mail_secours -> VARCHAR(200)
+--       - Actualites : intitule -> VARCHAR(100)
+--       - Stage : intitule, type_activite, niveau_etude -> VARCHAR(100),
+--         description -> VARCHAR(255)
+--       - Galerie : dossier_stage -> VARCHAR(100)
+--   11. Descriptions des 5 stages en texte intégral dans les INSERT
+--       (apostrophes échappées : l\'océan, l\'équipe).
+--
+--  AJOUT SUPPLÉMENTAIRE (demande du client) :
+--   12. Table Utilisateur : ajout de la colonne `id_stage` (nullable) avec
+--       la clé étrangère nommée `fk_utilisateur_stage` vers Stage(id_stage),
+--       pour indiquer à quel stage l'utilisateur est inscrit
+--       (NULL = pas encore inscrit). À noter : la table de jonction
+--       `participer` (0,n)----(0,n) modélise déjà ce lien en version N:N.
 -- ============================================================================
 
 SET NAMES utf8mb4;
@@ -55,9 +78,9 @@ DROP TABLE IF EXISTS poster;
 DROP TABLE IF EXISTS consulter;
 DROP TABLE IF EXISTS alimenter;
 DROP TABLE IF EXISTS Galerie;
-DROP TABLE IF EXISTS Actualites;
-DROP TABLE IF EXISTS Stage;
 DROP TABLE IF EXISTS Utilisateur;
+DROP TABLE IF EXISTS Stage;
+DROP TABLE IF EXISTS Actualites;
 DROP TABLE IF EXISTS Image;
 DROP TABLE IF EXISTS Admin;
 
@@ -80,7 +103,56 @@ CREATE TABLE Admin (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------------------------------------------------------
+-- Table Image
+-- (corrigée : la FOREIGN KEY cassée vers Galerie a été retirée ; la liaison
+-- « contenir » est portée par Galerie.id_image, voir table Galerie)
+-- ----------------------------------------------------------------------------
+CREATE TABLE Image (
+    id_image     INTEGER     NOT NULL,
+    chemin_image VARCHAR(255),
+    PRIMARY KEY (id_image)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------------------------------------------------------
+-- Table Actualites  (« Actualités » sur le schéma)
+-- (intitule élargi — modif client)
+-- ----------------------------------------------------------------------------
+CREATE TABLE Actualites (
+    id_actu      INTEGER     NOT NULL,
+    chemin_image VARCHAR(255),
+    intitule     VARCHAR(100),
+    description  VARCHAR(255),
+    PRIMARY KEY (id_actu)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------------------------------------------------------
+-- Table Stage
+-- `image_path` est une colonne simple (chemin de l'image du stage),
+-- PAS une clé étrangère vers la table Image.
+-- `date_stage` / `heure_stage` : affichées par le PHP
+-- (« Le {date_stage} A {heure_stage} -- Il reste X place(s) »)
+-- (colonnes VARCHAR élargies — modif client)
+-- ----------------------------------------------------------------------------
+CREATE TABLE Stage (
+    id_stage      INTEGER     NOT NULL,
+    intitule      VARCHAR(100),
+    type_activite VARCHAR(100),
+    niveau_etude  VARCHAR(100),
+    description   VARCHAR(255),
+    nb_inscrits   INTEGER,
+    nb_places     INTEGER,
+    image_path    VARCHAR(255) COMMENT 'Chemin de l''image du stage (colonne simple, pas de FK)',
+    date_stage    DATE            COMMENT 'Date du stage (affichée par le PHP)',
+    heure_stage   TIME            COMMENT 'Heure du stage (affichée par le PHP)',
+    PRIMARY KEY (id_stage)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------------------------------------------------------
 -- Table Utilisateur  (entité encadrée en rouge sur le schéma)
+-- (VARCHAR élargies — modif client)
+-- `id_stage` : clé étrangère vers Stage = stage auquel l'utilisateur est
+-- inscrit (NULL = pas encore inscrit). La jonction N:N `participer`
+-- permet en outre d'inscrire un utilisateur à plusieurs stages.
 -- ----------------------------------------------------------------------------
 CREATE TABLE Utilisateur (
     id_participant        INTEGER     NOT NULL  AUTO_INCREMENT,
@@ -97,55 +169,18 @@ CREATE TABLE Utilisateur (
     mail                  VARCHAR(200),
     mail_secours          VARCHAR(200),
     justificatif_domicile TEXT,
-    PRIMARY KEY (id_participant)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- ----------------------------------------------------------------------------
--- Table Image
--- (corrigée : la FOREIGN KEY cassée vers Galerie a été retirée ; la liaison
--- « contenir » est portée par Galerie.id_image, voir table Galerie)
--- ----------------------------------------------------------------------------
-CREATE TABLE Image (
-    id_image     INTEGER     NOT NULL,
-    chemin_image VARCHAR(255),
-    PRIMARY KEY (id_image)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- ----------------------------------------------------------------------------
--- Table Actualites  (« Actualités » sur le schéma)
--- ----------------------------------------------------------------------------
-CREATE TABLE Actualites (
-    id_actu      INTEGER     NOT NULL,
-    chemin_image VARCHAR(255),
-    intitule     VARCHAR(100),
-    description  VARCHAR(255),
-    PRIMARY KEY (id_actu)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- ----------------------------------------------------------------------------
--- Table Stage
--- `image_path` est une colonne simple (chemin de l'image du stage),
--- PAS une clé étrangère vers la table Image.
--- ----------------------------------------------------------------------------
-CREATE TABLE Stage (
-    id_stage      INTEGER     NOT NULL,
-    intitule      VARCHAR(100),
-    type_activite VARCHAR(100),
-    niveau_etude  VARCHAR(100),
-    description   VARCHAR(255),
-    date_stage    DATE,
-    heure_stage   TIME,
-    nb_inscrits   INTEGER,
-    nb_places     INTEGER,
-    image_path    VARCHAR(255) COMMENT 'Chemin de l''image du stage (colonne simple, pas de FK)',
-    PRIMARY KEY (id_stage)
+    id_stage              INTEGER COMMENT 'Stage de l''inscription (NULL = pas encore inscrit)',
+    PRIMARY KEY (id_participant),
+    CONSTRAINT fk_utilisateur_stage
+        FOREIGN KEY (id_stage) REFERENCES Stage (id_stage)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------------------------------------------------------
 -- Table Galerie
 -- JONCTION « contenir » : Galerie (0,n) ---- (1,1) Image
 -- (corrigée : colonne `id_stage` ajoutée pour la FK vers Stage, et la FK
--- vers Image porte sur la colonne `id_image` existante)
+-- vers Image porte sur la colonne `id_image` existante ;
+-- `dossier_stage` élargi — modif client)
 -- ----------------------------------------------------------------------------
 CREATE TABLE Galerie (
     id_dossier    INTEGER     NOT NULL,
@@ -237,14 +272,21 @@ CREATE TABLE participer (
 
 -- ----------------------------------------------------------------------------
 -- Stages : `image_path` est renseigné directement dans la table Stage
--- (colonne simple, aucune jointure avec la table Image)
+-- (colonne simple, aucune jointure avec la table Image), ainsi que
+-- `date_stage` et `heure_stage` (affichage PHP).
+-- Semaine de stages : lundi 19/10/2026 -> vendredi 23/10/2026
+-- (vacances de la Toussaint) — modifie les dates/heures selon tes besoins.
+-- ATTENTION : la table s'appelle `Stage` (S majuscule). Sous Windows/XAMPP
+-- et macOS, `stage` et `Stage` sont équivalents ; sous Linux (casse
+-- sensible), il faut écrire `Stage` dans l'INSERT ci-dessous.
 -- ----------------------------------------------------------------------------
-INSERT INTO `stage` (`id_stage`, `intitule`, `type_activite`, `niveau_etude`, `description`, `nb_inscrits`, `nb_places`, `image_path`) VALUES
-(1, 'padel', 'jeu de ballon', 'college', 'Le padel est un sport de raquette ludique, accessible et ultra-dynamique qui se joue en double sur un court réduit entouré de vitres.', 13, 20, '../Annexes/Images/padel.jpg'),
-(2, 'Foot', 'jeu de ballon', 'college', 'Le football est un sport collectif stratégique, intense et populaire qui se joue à onze sur un grand terrain herbé encadré de cages.', 20, 20, '../Annexes/Images/football.jpg'),
-(3, 'surf', 'jeu en mer', 'college', 'Le surf est un sport de glisse exigeant qui se pratique sur les vagues, alliant équilibre, lecture de l\'océan et sensations fortes.', 15, 20, '../Annexes/Images/surf.jpg'),
-(4, 'Basket', 'jeu de ballon','college', 'Le basket-ball est un sport collectif rythmé qui se joue à cinq contre cinq, mêlant vitesse, précision et esprit d\'équipe.', 6, 20, '../Annexes/Images/basket.jpg'),
-(5, 'Volley', 'jeu de ballon', 'college', 'Le volley-ball se joue à six sur un terrain séparé par un filet, avec pour objectif de faire tomber le ballon dans le camp adverse.', 17, 20, '../Annexes/Images/volley.jpg');
+INSERT INTO `stage` (`id_stage`, `intitule`, `type_activite`, `niveau_etude`, `description`, `nb_inscrits`, `nb_places`, `image_path`, `date_stage`, `heure_stage`) VALUES
+(1, 'padel', 'jeu de ballon', 'college', 'Le padel est un sport de raquette ludique, accessible et ultra-dynamique qui se joue en double sur un court réduit entouré de vitres.', 13, 20, '../Annexes/Images/padel.jpg', '2026-10-19', '09:00:00'),
+(2, 'Foot', 'jeu de ballon', 'college', 'Le football est un sport collectif stratégique, intense et populaire qui se joue à onze sur un grand terrain herbé encadré de cages.', 20, 20, '../Annexes/Images/football.jpg', '2026-10-20', '14:00:00'),
+(3, 'surf', 'jeu en mer', 'college', 'Le surf est un sport de glisse exigeant qui se pratique sur les vagues, alliant équilibre, lecture de l\'océan et sensations fortes.', 15, 20, '../Annexes/Images/surf.jpg', '2026-10-21', '09:30:00'),
+(4, 'Basket', 'jeu de ballon', 'college', 'Le basket-ball est un sport collectif rythmé qui se joue à cinq contre cinq, mêlant vitesse, précision et esprit d\'équipe.', 6, 20, '../Annexes/Images/basket.jpg', '2026-10-22', '14:00:00'),
+(5, 'Volley', 'jeu de ballon', 'college', 'Le volley-ball se joue à six sur un terrain séparé par un filet, avec pour objectif de faire tomber le ballon dans le camp adverse.', 17, 20, '../Annexes/Images/volley.jpg', '2026-10-23', '10:00:00');
+
 -- ----------------------------------------------------------------------------
 -- Compte administrateur exemple
 --   Mot de passe en clair : admin123
@@ -255,8 +297,19 @@ INSERT INTO `stage` (`id_stage`, `intitule`, `type_activite`, `niveau_etude`, `d
 -- ----------------------------------------------------------------------------
 INSERT INTO Admin (id_utilisateur, nom, prenom, mdp) VALUES
 (1, 'Dupont', 'Jean', SHA2('admin123', 256));
+(2, 'admin', 'admin', SHA2('admin', 256));
+
+-- ----------------------------------------------------------------------------
+-- Exemple d'utilisation (commenté — à adapter) : inscrire un utilisateur
+-- à un stage via la clé étrangère ajoutée :
+--   UPDATE Utilisateur SET id_stage = 1 WHERE id_participant = 1;
+-- Pour un lien N:N (un utilisateur à plusieurs stages), utiliser plutôt
+-- la table de jonction :
+--   INSERT INTO participer (id_participant, id_stage) VALUES (1, 1);
+-- ----------------------------------------------------------------------------
 
 -- ============================================================================
--- Fin du script corrigé : 11 tables, 12 clés étrangères nommées
--- (10 dans les 5 tables de jonction + 2 dans Galerie : image et stage)
+-- Fin du script corrigé et fusionné : 11 tables, 13 clés étrangères nommées
+-- (10 dans les 5 tables de jonction + 2 dans Galerie : image et stage
+--  + 1 dans Utilisateur : inscription à un stage)
 -- ============================================================================

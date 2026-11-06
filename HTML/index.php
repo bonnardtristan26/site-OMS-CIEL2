@@ -1,3 +1,24 @@
+<?php
+$actualites = [];
+$erreurActualites = false;
+
+try {
+    $pdo = new PDO(
+        'mysql:host=localhost;dbname=omstjj;charset=utf8mb4',
+        'root',
+        '',
+        [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
+    );
+    $actualites = $pdo->query(
+        'SELECT id_actu, intitule, description, chemin_image FROM Actualites ORDER BY id_actu DESC'
+    )->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    $erreurActualites = true;
+    error_log($e->getMessage());
+}
+
+$nombreActualites = count($actualites);
+?>
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -59,7 +80,7 @@
                                 événements sportifs. Associés aux clubs de la ville, nous aidons à rendre l'activité
                                 physique accessible aux jeunes.
                             </p>
-                            <a href="stage.html" class="btn btn-dark px-4 py-2 oms-btn">STAGE</a>
+                            <a href="stage.php" class="btn btn-dark px-4 py-2 oms-btn">STAGE</a>
                         </div>
 
                         <div class="col-12 col-md-5">
@@ -76,32 +97,56 @@
             <h1 class="mx-3 my-3 h_actu">ACTUALITÉS</h1>
 
             <div class="container-fluid">
-                <div class="carousel-actu d-flex align-items-center justify-content-between gap-3">
+                <div class="carousel-actu d-flex align-items-center justify-content-between gap-3" data-carousel tabindex="0" aria-label="Actualités">
 
-                    <!-- Flèche précédente -->
-                    <button type="button" class="fleche fleche-gauche" aria-label="Actualité précédente">
+                    <button type="button" class="fleche fleche-gauche" data-carousel-prev aria-label="Actualité précédente" aria-controls="actu-liste" <?= $nombreActualites <= 1 ? 'disabled' : '' ?>>
                         <svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
                             <polygon points="100,0 0,50 100,100" />
                         </svg>
                     </button>
 
-                    <!-- Carte actualité -->
-                    <article class="box_actu">
-                        <img src="../Annexes/Images/enfants_football.png" alt="Enfants jouant au football" class="actu-img">
-                        <div class="box_text">
-                            <h2 class="font-title">SPORT POUR TOUS</h2>
-                            <p class="box_desc">L'Office Municipal des Sports accompagne les habitants dans leur pratique sportive et contribue au développement du sport dans la commune. Que vous soyez débutant, sportif régulier ou simplement à ...</p>
-                        </div>
-                    </article>
+                    <div class="actu-viewport" id="actu-liste" aria-live="polite">
+                        <?php if ($erreurActualites): ?>
+                            <p class="actu-message" role="alert">Impossible de charger les actualités pour le moment.</p>
+                        <?php elseif (!$actualites): ?>
+                            <p class="actu-message">Aucune actualité n'est disponible pour le moment.</p>
+                        <?php else: ?>
+                            <?php foreach ($actualites as $index => $actualite): ?>
+                                <?php
+                                $intitule = trim((string) ($actualite['intitule'] ?? ''));
+                                $description = trim((string) ($actualite['description'] ?? ''));
+                                $image = trim((string) ($actualite['chemin_image'] ?? ''));
+                                if ($intitule === '') {
+                                    $intitule = 'Actualité';
+                                }
+                                if ($description === '') {
+                                    $description = 'Aucune description disponible.';
+                                }
+                                if ($image === '') {
+                                    $image = '../Annexes/Images/enfants_football.png';
+                                }
+                                ?>
+                                <article class="box_actu" data-carousel-slide <?= $index === 0 ? 'aria-hidden="false"' : 'aria-hidden="true" hidden' ?>>
+                                    <img src="<?= htmlspecialchars($image, ENT_QUOTES, 'UTF-8') ?>" alt="<?= htmlspecialchars($intitule, ENT_QUOTES, 'UTF-8') ?>" class="actu-img">
+                                    <div class="box_text">
+                                        <h2 class="font-title"><?= htmlspecialchars($intitule, ENT_QUOTES, 'UTF-8') ?></h2>
+                                        <p class="box_desc"><?= htmlspecialchars($description, ENT_QUOTES, 'UTF-8') ?></p>
+                                    </div>
+                                </article>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                    </div>
 
-                    <!-- Flèche suivante -->
-                    <button type="button" class="fleche fleche-droite" aria-label="Actualité suivante">
+                    <button type="button" class="fleche fleche-droite" data-carousel-next aria-label="Actualité suivante" aria-controls="actu-liste" <?= $nombreActualites <= 1 ? 'disabled' : '' ?>>
                         <svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
                             <polygon points="0,0 100,50 0,100" />
                         </svg>
                     </button>
 
                 </div>
+                <?php if ($nombreActualites > 0): ?>
+                    <p class="actu-compteur" data-carousel-status aria-live="polite">1 / <?= $nombreActualites ?></p>
+                <?php endif; ?>
             </div>
 
         </main>
@@ -120,7 +165,7 @@
         </footer>
     </div>
 
-
+    <script src="../Javascript/index.js"></script>
 </body>
 
 </html>
