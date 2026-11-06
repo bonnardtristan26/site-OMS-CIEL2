@@ -375,6 +375,22 @@ require_once 'check_auth.php';
             fill: #008f3f; /* vert OMS */
         }
 
+        .form__input {
+            font-family: 'Roboto', sans-serif;
+            color: #333;
+            font-size: 1.2rem;
+            padding: 1.5rem 1rem;
+            border-radius: 0.2rem;
+            background-color: rgb(255, 255, 255);
+            border: none;
+            width: 70px;
+            height: 10px;
+            display: block;
+            border-bottom: 0.3rem solid transparent;
+            transition: all 0.3s;
+        }
+
+
         
         /* Mobile : flèches plus petites */
         @media (max-width: 576px) {
@@ -496,7 +512,7 @@ require_once 'check_auth.php';
                     <input type="text" class="form-control oms-champ" id="presentation" name="presentation" placeholder="Présentation...">
                 </div>
 
-                <div class="justify-content-between">
+                <div class="d-flex align-items-center">
                     <!-- Flèche précédente -->
                     <button type="button" class="fleche fleche-gauche" aria-label="Actualité précédente">
                         <svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
@@ -504,7 +520,7 @@ require_once 'check_auth.php';
                         </svg>
                     </button>
 
-                    <input type="text" id="places_restantes" value="0" style="text-align: center" class="mb-3"/>
+                    <input type="text" class="form__input" id="placesrestantes" placeholder="0-25" required="" />
 
                     <!-- Flèche suivante -->
                     <button type="button" class="fleche fleche-droite" aria-label="Actualité suivante">
@@ -514,7 +530,7 @@ require_once 'check_auth.php';
                     </button>
                 </div>
 
-                <button type="button" class="oms-btn mb-4"><span>Importer ue photo</span></button>
+                <button type="button" class="oms-btn mb-4"><span>Importer une photo</span></button>
 
                 <button type="button" class="oms-btn"><span>Téléverser un dossier</span></button>
 
@@ -525,7 +541,7 @@ require_once 'check_auth.php';
     <!-- ===================== PIED DE PAGE ===================== -->
     <footer class="oms-footer">
         <div class="container-fluid px-4 px-lg-5 d-flex align-items-center justify-content-between py-3">
-            <p class="mb-0 fw-bold" style="font-size:1rem;">
+            <p class="mb-0 fw" style="font-size:1rem;">
                 Dernière mise à jour 07/09/2026 - Adresse : 25 Rue de Strasbourg 44000 NANTES -
                 <a href="#" class="text-white text-decoration-none">FAQ</a>
             </p>
