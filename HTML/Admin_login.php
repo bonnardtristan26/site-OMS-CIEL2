@@ -161,7 +161,7 @@ try {
 
           </div>
         </form>
-         <p id="motdepasse-incorecrt" class="text-white fw-bold text-uppercase mt-4" style="font: size 0.6em;rem;"> </p>
+         <p id="motdepasse-incorecrt" class="text-white fw-bold text-uppercase mt-4" style="font-size: 0.6em;"> </p>
         </a>
 
       </section>
