@@ -61,11 +61,8 @@
 
 SET NAMES utf8mb4;
 
-CREATE DATABASE IF NOT EXISTS omstjj
-  CHARACTER SET utf8mb4
-  COLLATE utf8mb4_unicode_ci;
 
-USE omstjj;
+
 
 -- ----------------------------------------------------------------------------
 -- Suppression préalable (permet de ré-exécuter le script sans erreur,
