@@ -375,6 +375,22 @@ require_once 'check_auth.php';
             fill: #008f3f; /* vert OMS */
         }
 
+        .form__input {
+            font-family: 'Roboto', sans-serif;
+            color: #333;
+            font-size: 1.2rem;
+            padding: 1.5rem 1rem;
+            border-radius: 0.2rem;
+            background-color: rgb(255, 255, 255);
+            border: none;
+            width: 70px;
+            height: 10px;
+            display: block;
+            border-bottom: 0.3rem solid transparent;
+            transition: all 0.3s;
+        }
+
+
         
         /* Mobile : flèches plus petites */
         @media (max-width: 576px) {
@@ -570,7 +586,7 @@ require_once 'check_auth.php';
                         </svg>
                     </button>
 
-                    <input type="number" id="places_restantes" name="nb_places" value="20" min="1" style="text-align: center"/>
+                    <input type="text" id="places_restantes" value="0" style="text-align: center" class="mb-3"/>
 
                     <!-- Flèche suivante -->
                     <button type="button" class="fleche fleche-droite" aria-label="Ajouter une place" data-places="1">
@@ -580,24 +596,9 @@ require_once 'check_auth.php';
                     </button>
                 </div>
 
-                <input type="file" id="photo_stage" name="photo" accept="image/jpeg,image/png,image/gif,image/webp" hidden>
-                <div class="d-flex flex-wrap align-items-center gap-3 mb-4">
-                    <button type="button" class="oms-btn" data-ouvrir="photo_stage"><span>Importer une photo</span></button>
-                    <span class="oms-info" id="nom_photo">Aucune photo sélectionnée</span>
-                </div>
+                <button type="button" class="oms-btn mb-4"><span>Importer ue photo</span></button>
 
-                <!-- Galerie du stage : créée automatiquement, on peut y déposer un dossier d'images -->
-                <input type="file" id="dossier_galerie" accept="image/*" multiple webkitdirectory hidden>
-                <div class="oms-depot mb-4" id="zone_depot">
-                    <button type="button" class="oms-btn" data-ouvrir="dossier_galerie"><span>Téléverser un dossier</span></button>
-                    <span class="oms-info" id="info_dossier">ou glissez-déposez un dossier d'images ici (galerie du stage)</span>
-                </div>
-
-                <div class="oms-statut mb-4" id="statut" role="status" aria-live="polite" hidden></div>
-
-                <button type="submit" class="oms-btn oms-btn--valider" id="btn_creer"><span>Créer le stage</span></button>
-
-                </form>
+                <button type="button" class="oms-btn"><span>Téléverser un dossier</span></button>
 
             </section>
         </div>
@@ -606,7 +607,7 @@ require_once 'check_auth.php';
     <!-- ===================== PIED DE PAGE ===================== -->
     <footer class="oms-footer">
         <div class="container-fluid px-4 px-lg-5 d-flex align-items-center justify-content-between py-3">
-            <p class="mb-0 fw-bold" style="font-size:1rem;">
+            <p class="mb-0 fw" style="font-size:1rem;">
                 Dernière mise à jour 07/09/2026 - Adresse : 25 Rue de Strasbourg 44000 NANTES -
                 <a href="#" class="text-white text-decoration-none">FAQ</a>
             </p>
