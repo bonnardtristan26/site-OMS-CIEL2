@@ -112,6 +112,38 @@ body {
   flex: 1 0 auto;
   display: flex;
   min-height: 0;
+  background-color: var(--oms-form-accent);
+  --oms-form-accent: var(--oms-green);
+}
+
+.oms-main.oms-theme-blue,
+.oms-green-panel.oms-theme-blue {
+  --oms-form-accent: #00aaff;
+  background-color: #00aaff;
+}
+
+.oms-main.oms-theme-green,
+.oms-green-panel.oms-theme-green {
+  --oms-form-accent: #008c3f;
+  background-color: #008c3f;
+}
+
+.oms-main.oms-theme-red,
+.oms-green-panel.oms-theme-red {
+  --oms-form-accent: #ff0000;
+  background-color: #ff0000;
+}
+
+.oms-main.oms-theme-blue .oms-image-panel::after {
+  border-color: #00aaff;
+}
+
+.oms-main.oms-theme-green .oms-image-panel::after {
+  border-color: #008c3f;
+}
+
+.oms-main.oms-theme-red .oms-image-panel::after {
+  border-color: #ff0000;
 }
 
 .oms-main > .container-fluid,
@@ -124,7 +156,7 @@ body {
 }
 
 .oms-green-panel {
-  background-color: var(--oms-green);
+  background-color: var(--oms-form-accent);
   color: #ffffff;
   padding: 2.5rem 3rem 3rem 3rem;
   position: relative;
@@ -234,7 +266,7 @@ body {
   content: "";
   position: absolute;
   inset: 0px;
-  border: 12px solid var(--oms-green);
+  border: 12px solid var(--oms-form-accent);
   pointer-events: none;
   z-index: 2;
 }

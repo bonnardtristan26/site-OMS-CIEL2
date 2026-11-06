@@ -1,9 +1,52 @@
 <!DOCTYPE html>
+<?php
+$stage = null;
+$erreurChargement = '';
+$idStage = filter_input(INPUT_GET, 'id_stage', FILTER_VALIDATE_INT);
+
+if ($idStage === false || $idStage === null || $idStage < 1) {
+  http_response_code(400);
+  $erreurChargement = 'Identifiant de stage invalide.';
+} else {
+  try {
+    $pdo = new PDO(
+      'mysql:host=localhost;dbname=omstjj;charset=utf8mb4',
+      'root',
+      '',
+      [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
+    );
+    $requete = $pdo->prepare('SELECT * FROM stage WHERE id_stage = ?');
+    $requete->execute([$idStage]);
+    $stage = $requete->fetch(PDO::FETCH_ASSOC) ?: null;
+
+    if ($stage === null) {
+      http_response_code(404);
+      $erreurChargement = 'Ce stage n’existe pas ou n’est plus disponible.';
+    }
+  } catch (PDOException $e) {
+    http_response_code(500);
+    $erreurChargement = 'Impossible de charger les informations du stage.';
+    error_log($e->getMessage());
+  }
+}
+
+$intitule = (string) ($stage['intitule'] ?? 'Stage');
+$description = (string) ($stage['description'] ?? '');
+$image = (string) ($stage['image_path'] ?? '');
+$nbInscrits = max(0, (int) ($stage['nb_inscrits'] ?? 0));
+$nbPlaces = max(0, (int) ($stage['nb_places'] ?? 0));
+$typeActivite = strtolower((string) ($stage['type_activite'] ?? ''));
+$classeCouleur = strtolower($intitule) === 'padel'
+  ? 'oms-theme-green'
+  : (str_contains($typeActivite, 'mer')
+    ? 'oms-theme-blue'
+    : (str_contains($typeActivite, 'plein air') ? 'oms-theme-green' : 'oms-theme-red'));
+?>
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>OMS - Inscription Padel</title>
+  <title>OMS - Inscription <?= htmlspecialchars($intitule, ENT_QUOTES, 'UTF-8') ?></title>
 
   <!-- Bootstrap 5 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -13,7 +56,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Lalezar&family=Poppins:wght@400;600;700;800&family=Ubuntu:wght@400;500;700&display=swap" rel="stylesheet">
 
   <!-- Notre feuille de style -->
-  <link rel="stylesheet" href="../CSS/formulaire_inscription.css">
+  <link rel="stylesheet" href="../CSS/formulaire_inscription.css?v=<?= filemtime(__DIR__ . '/../CSS/formulaire_inscription.css') ?>">
 </head>
 <body>
 
@@ -37,40 +80,47 @@
   </header>
 
   <!-- ===== SECTION PRINCIPALE ===== -->
+  <?php if ($stage === null): ?>
   <main class="oms-main position-relative">
+    <div class="container py-5">
+      <p role="alert"><?= htmlspecialchars($erreurChargement, ENT_QUOTES, 'UTF-8') ?></p>
+      <a href="stage.php">Retour à la liste des stages</a>
+    </div>
+  </main>
+  <?php else: ?>
+  <main class="oms-main position-relative <?= $classeCouleur ?>">
     <div class="container-fluid px-0">
       <div class="row g-0">
 
-        <!-- Colonne verte : formulaire -->
-        <div class="col-lg-8 oms-green-panel">
+        <!-- Colonne colorée : formulaire -->
+        <div class="col-lg-8 oms-green-panel <?= $classeCouleur ?>">
 
-          <!-- Badge 11/20 -->
-          <span class="oms-badge">11/20</span>
+          <span class="oms-badge" aria-label="<?= $nbInscrits ?> inscrits sur <?= $nbPlaces ?> places"><?= $nbInscrits ?>/<?= $nbPlaces ?></span>
 
-          <h1 class="oms-title">PADEL</h1>
-          <p class="oms-description">
-            Le padel est un sport de raquette ludique, accessible et ultra-dynamique
-            qui se joue en double sur un court réduit entouré de vitres.
-          </p>
+          <h1 class="oms-title"><?= htmlspecialchars(strtoupper($intitule), ENT_QUOTES, 'UTF-8') ?></h1>
+          <p class="oms-description"><?= htmlspecialchars($description, ENT_QUOTES, 'UTF-8') ?></p>
 
-          <form>
+          <form action="inscription.php"  method="post" class="oms-form">
             <h2 class="oms-section-title">Informations concernant l'enfant</h2>
 
             <div class="mb-3">
-              <input type="text" class="form-control oms-input" placeholder="Nom et prénom..." minlength="2" maxlength="50" required>
+              <input type="text" class="form-control oms-input" name = "nom_enfant" placeholder="Nom..." minlength="2" maxlength="50" required>
             </div>
             <div class="mb-3">
-              <input type="text" class="form-control oms-input" placeholder="Âge ..." minlength="1" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, '')" required>
+              <input type="text" class="form-control oms-input" name = "prenom_enfant" placeholder="Prénom..." minlength="2" maxlength="50" required>
             </div>
             <div class="mb-3">
-                <select class="form-select oms-input" required>
+              <input type="text" class="form-control oms-input" name = "age" placeholder="Âge ..." minlength="1" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, '')" required>
+            </div>
+            <div class="mb-3">
+                <select class="form-select oms-input" name = "sexe" required>
                     <option value="" disabled selected>Sexe...</option>
                     <option value="M">Homme</option>
                     <option value="F">Femme</option>
                 </select>
             </div>
             <div class="mb-4">
-              <select class="form-select oms-input" required>
+              <select class="form-select oms-input" name = "niveau_d_etude" required>
                     <option value="" disabled selected>Niveau d'étude scolaire...</option>
                     <option value="P">primaire</option>
                     <option value="M">collège</option>
@@ -81,10 +131,13 @@
             <h2 class="oms-section-title">Informations concernant le/les parents</h2>
 
             <div class="mb-3">
-              <input type="text" class="form-control oms-input" placeholder="Nom et prénom..." minlength="2" maxlength="25" required>
+              <input type="text" class="form-control oms-input" name = "nom_parent" placeholder="Nom..." minlength="2" maxlength="25" required>
+            </div>
+             <div class="mb-3">
+              <input type="text" class="form-control oms-input" name = "prenom_parent" placeholder="prénom..." minlength="2" maxlength="25" required>
             </div>
             <div class="mb-3">
-                <select class="form-select oms-input" required>
+                <select class="form-select oms-input" name = "lien_parente" required>
                     <option value="" disabled selected>Lien de parenté...</option>
                     <option value="P">Père</option>
                     <option value="M">Mère</option>
@@ -92,27 +145,28 @@
                 </select>
             </div>
             <div class="mb-3">
-              <input type="text" class="form-control oms-input" inputmode="numeric" pattern="[0-9]*" title="Numéro à 10 chiffres" placeholder="Téléphone..." maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '')" required>
+              <input type="text" name = "num_tel" class="form-control oms-input" inputmode="numeric" pattern="[0-9]*" title="Numéro à 10 chiffres" placeholder="Téléphone..." maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '')" required>
             </div>
             <div class="mb-3">
-                <input type="email" class="form-control oms-input" placeholder="Mail..."id="email" maxlength="50" required />
+                <input type="email" class="form-control oms-input" placeholder="Mail..." name = "mail" maxlength="50" required />
             </div>
             <button type="submit" class="oms-submit-button"><span>Envoyer</span></button>
+            <input type="hidden" name="id_stage" value="<?= (int) $idStage ?>">
           </form>
 
         </div>
 
         <!-- Colonne image : court de padel -->
         <div class="col-lg-4 oms-image-panel">
-          <img
-            src="https://images.unsplash.com/photo-1646649853703-7645147474ba?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            alt="Court de padel"
-          >
+          <?php if ($image !== ''): ?>
+            <img src="<?= htmlspecialchars($image, ENT_QUOTES, 'UTF-8') ?>" alt="<?= htmlspecialchars($intitule, ENT_QUOTES, 'UTF-8') ?>">
+          <?php endif; ?>
         </div>
 
       </div>
     </div>
   </main>
+  <?php endif; ?>
 
   <!-- FOOTER -->
   <footer class="oms-footer py-3">
@@ -123,5 +177,15 @@
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>     // Vérifier si l'URL contient le paramètre "error"
+    const urlParams = new URLSearchParams(window.location.search);
+    const errorParam = urlParams.get('error');
+
+    if (errorParam === '1') {
+      // Afficher le message d'erreur
+      const errorMessage = document.getElementById('motdepasse-incorecrt');
+      errorMessage.textContent = "Nom d'utilisateur ou mot de passe incorrect.";
+    }
+  </script>
 </body>
 </html>
