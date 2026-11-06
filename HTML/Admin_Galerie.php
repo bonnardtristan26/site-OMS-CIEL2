@@ -1,9 +1,26 @@
 <?php
 require_once 'check_auth.php';
-$pdo = new PDO('mysql:host=localhost;dbname=omstjj;charset=utf8mb4',
-    'root', '', [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
+require_once 'galerie_outils.php';
+$pdo = galerie_pdo();
 
-$geleries = $pdo->query("SELECT * FROM galerie")->fetchAll(PDO::FETCH_ASSOC);
+// Une galerie par stage (créée avec le stage), avec son nombre de photos
+$galeries = $pdo->query(
+    "SELECT g.id_dossier, s.intitule, s.date_stage, s.heure_stage, COUNT(i.id_image) AS nb_images
+     FROM galerie g
+     JOIN stage s ON s.id_stage = g.id_stage
+     LEFT JOIN image i ON i.id_dossier = g.id_dossier
+     GROUP BY g.id_dossier, s.intitule, s.date_stage, s.heure_stage
+     ORDER BY s.date_stage DESC, s.heure_stage DESC"
+)->fetchAll(PDO::FETCH_ASSOC);
+
+function date_fr(?string $date): string
+{
+    return $date ? date('d/m/Y', strtotime($date)) : '—';
+}
+function heure_fr(?string $heure): string
+{
+    return $heure ? str_replace(':', 'h', substr($heure, 0, 5)) : '';
+}
 ?>
 <!doctype html>
 <html lang="fr">
@@ -162,42 +179,26 @@ $geleries = $pdo->query("SELECT * FROM galerie")->fetchAll(PDO::FETCH_ASSOC);
         </nav>
 
         <div class="oms-liste px-3 px-lg-4 py-2 mb-4">
+          <?php if (!$galeries): ?>
+          <div class="oms-ligne"><span class="oms-date">Aucune galerie : créez un stage pour créer sa galerie.</span></div>
+          <?php endif; ?>
+          <?php foreach ($galeries as $galerie): ?>
           <div class="oms-ligne">
-            <span class="oms-sport">Padel</span>
-            <span class="oms-date">Le 08/09/2026 A 15h</span>
+            <span class="oms-sport"><?= htmlspecialchars($galerie['intitule']) ?></span>
+            <span class="oms-date">Le <?= date_fr($galerie['date_stage']) ?> A <?= heure_fr($galerie['heure_stage']) ?> -- <?= (int) $galerie['nb_images'] ?> photo(s)</span>
             <div class="d-flex align-items-center gap-2">
-              <button type="button" class="oms-btn oms-btn--x" aria-label="Supprimer le stage Padel"><span>X</span></button>
-              <button type="button" class="oms-btn oms-btn--blanc"><span>Accéder</span></button>
-  
+              <form action="delete_image.php" method="post" class="m-0"
+                    onsubmit="return confirm('Supprimer toutes les photos de la galerie <?= htmlspecialchars(addslashes($galerie['intitule'])) ?> ?');">
+                <input type="hidden" name="id_dossier" value="<?= (int) $galerie['id_dossier'] ?>">
+                <input type="hidden" name="vider" value="1">
+                <input type="hidden" name="retour" value="liste">
+                <button type="submit" class="oms-btn oms-btn--x" aria-label="Vider la galerie <?= htmlspecialchars($galerie['intitule']) ?>"><span>X</span></button>
+              </form>
+              <a href="Admin_Galerie_detail.php?id=<?= (int) $galerie['id_dossier'] ?>" class="oms-btn oms-btn--blanc text-decoration-none"><span>Accéder</span></a>
             </div>
           </div>
-          <div class="oms-ligne">
-            <span class="oms-sport">Handball</span>
-            <span class="oms-date">Le 08/09/2026 A 15h</span>
-            <div class="d-flex align-items-center gap-2">
-              <button type="button" class="oms-btn oms-btn--x" aria-label="Supprimer le stage Handball"><span>X</span></button>
-              <button type="button" class="oms-btn oms-btn--blanc"><span>Accéder</span></button>
-            </div>
-          </div>
-          <div class="oms-ligne">
-            <span class="oms-sport">Padel</span>
-            <span class="oms-date">Le 08/09/2026 A 15h</span>
-            <div class="d-flex align-items-center gap-2">
-              <button type="button" class="oms-btn oms-btn--x" aria-label="Supprimer le stage Padel"><span>X</span></button>
-              <button type="button" class="oms-btn oms-btn--blanc"><span>Accéder</span></button>
-            </div>
-          </div>
-          <div class="oms-ligne">
-            <span class="oms-sport">Surfer</span>
-            <span class="oms-date">Le 08/09/2026 A 15h</span>
-            <div class="d-flex align-items-center gap-2">
-              <button type="button" class="oms-btn oms-btn--x" aria-label="Supprimer le stage Surfer"><span>X</span></button>
-              <button type="button" class="oms-btn oms-btn--blanc"><span>Accéder</span></button>
-            </div>
-          </div>
+          <?php endforeach; ?>
         </div>
-
-      
 
       </section>
     </div>

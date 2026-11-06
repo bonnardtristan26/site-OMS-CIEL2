@@ -108,7 +108,8 @@ CREATE TABLE Admin (
 -- « contenir » est portée par Galerie.id_image, voir table Galerie)
 -- ----------------------------------------------------------------------------
 CREATE TABLE Image (
-    id_image     INTEGER     NOT NULL,
+    id_image     INTEGER     NOT NULL AUTO_INCREMENT,
+    id_dossier   INTEGER     COMMENT 'Galerie (dossier) contenant l''image',
     chemin_image VARCHAR(255),
     PRIMARY KEY (id_image)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -134,7 +135,7 @@ CREATE TABLE Actualites (
 -- (colonnes VARCHAR élargies — modif client)
 -- ----------------------------------------------------------------------------
 CREATE TABLE Stage (
-    id_stage      INTEGER     NOT NULL,
+    id_stage      INTEGER     NOT NULL AUTO_INCREMENT,
     intitule      VARCHAR(100),
     type_activite VARCHAR(100),
     niveau_etude  VARCHAR(100),
@@ -183,18 +184,25 @@ CREATE TABLE Utilisateur (
 -- `dossier_stage` élargi — modif client)
 -- ----------------------------------------------------------------------------
 CREATE TABLE Galerie (
-    id_dossier    INTEGER     NOT NULL,
-    id_image      INTEGER,
+    id_dossier    INTEGER     NOT NULL AUTO_INCREMENT,
+    id_image      INTEGER     COMMENT 'Image de couverture (facultative)',
     id_stage      INTEGER,
     dossier_stage VARCHAR(100),
     date          DATE,
     heure         TIME,
     PRIMARY KEY (id_dossier),
+    UNIQUE KEY uq_galerie_stage (id_stage),
     CONSTRAINT fk_galerie_image
-        FOREIGN KEY (id_image) REFERENCES Image (id_image),
+        FOREIGN KEY (id_image) REFERENCES Image (id_image) ON DELETE SET NULL,
     CONSTRAINT fk_galerie_stage
-        FOREIGN KEY (id_stage) REFERENCES Stage (id_stage)
+        FOREIGN KEY (id_stage) REFERENCES Stage (id_stage) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Chaque image appartient à une galerie (1 stage = 1 galerie = N images).
+-- Ajoutée après coup car Image est créée avant Galerie.
+ALTER TABLE Image
+    ADD CONSTRAINT fk_image_galerie
+        FOREIGN KEY (id_dossier) REFERENCES Galerie (id_dossier) ON DELETE CASCADE;
 
 -- ============================================================================
 -- 2) LIAISONS (ASSOCIATIONS) DU SCHEMA : TABLES DE JOINTURE AVEC CLES
@@ -209,7 +217,7 @@ CREATE TABLE alimenter (
     id_utilisateur INTEGER NOT NULL,
     PRIMARY KEY (id_dossier, id_utilisateur),
     CONSTRAINT fk_alimenter_galerie
-        FOREIGN KEY (id_dossier) REFERENCES Galerie (id_dossier),
+        FOREIGN KEY (id_dossier) REFERENCES Galerie (id_dossier) ON DELETE CASCADE,
     CONSTRAINT fk_alimenter_admin
         FOREIGN KEY (id_utilisateur) REFERENCES Admin (id_utilisateur)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -222,7 +230,7 @@ CREATE TABLE consulter (
     id_participant INTEGER NOT NULL,
     PRIMARY KEY (id_dossier, id_participant),
     CONSTRAINT fk_consulter_galerie
-        FOREIGN KEY (id_dossier) REFERENCES Galerie (id_dossier),
+        FOREIGN KEY (id_dossier) REFERENCES Galerie (id_dossier) ON DELETE CASCADE,
     CONSTRAINT fk_consulter_utilisateur
         FOREIGN KEY (id_participant) REFERENCES Utilisateur (id_participant)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -287,6 +295,10 @@ INSERT INTO `stage` (`id_stage`, `intitule`, `type_activite`, `niveau_etude`, `d
 (4, 'Basket', 'jeu de ballon', 'college', 'Le basket-ball est un sport collectif rythmé qui se joue à cinq contre cinq, mêlant vitesse, précision et esprit d\'équipe.', 6, 20, '../Annexes/Images/basket.jpg', '2026-10-22', '14:00:00'),
 (5, 'Volley', 'jeu de ballon', 'college', 'Le volley-ball se joue à six sur un terrain séparé par un filet, avec pour objectif de faire tomber le ballon dans le camp adverse.', 17, 20, '../Annexes/Images/volley.jpg', '2026-10-23', '10:00:00');
 
+-- Une galerie (dossier Annexes/Galerie/stage_<id>) pour chaque stage
+INSERT INTO Galerie (id_stage, dossier_stage, date, heure)
+SELECT id_stage, CONCAT('stage_', id_stage), CURDATE(), CURTIME() FROM Stage;
+
 -- ----------------------------------------------------------------------------
 -- Compte administrateur exemple
 --   Mot de passe en clair : admin123
@@ -296,7 +308,7 @@ INSERT INTO `stage` (`id_stage`, `intitule`, `type_activite`, `niveau_etude`, `d
 --   hash('sha256', $_POST['mdp'])  avec la colonne `mdp`.
 -- ----------------------------------------------------------------------------
 INSERT INTO Admin (id_utilisateur, nom, prenom, mdp) VALUES
-(1, 'Dupont', 'Jean', SHA2('admin123', 256));
+(1, 'Dupont', 'Jean', SHA2('admin123', 256)),
 (2, 'admin', 'admin', SHA2('admin', 256));
 
 -- ----------------------------------------------------------------------------

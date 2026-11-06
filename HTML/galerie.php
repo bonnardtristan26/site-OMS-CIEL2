@@ -1,3 +1,31 @@
+<?php
+require_once 'galerie_outils.php';
+$pdo = galerie_pdo();
+
+// Galeries qui contiennent au moins une photo, la plus récente en premier
+$galeries = $pdo->query(
+    "SELECT g.id_dossier, s.intitule, s.date_stage
+     FROM galerie g
+     JOIN stage s ON s.id_stage = g.id_stage
+     WHERE EXISTS (SELECT 1 FROM image i WHERE i.id_dossier = g.id_dossier)
+     ORDER BY s.date_stage DESC, s.heure_stage DESC"
+)->fetchAll(PDO::FETCH_ASSOC);
+
+$indexActif = 0;
+$demande = filter_input(INPUT_GET, 'g', FILTER_VALIDATE_INT);
+foreach ($galeries as $i => $g) {
+    if ((int) $g['id_dossier'] === $demande) {
+        $indexActif = $i;
+    }
+}
+
+$images = [];
+if ($galeries) {
+    $stmt = $pdo->prepare('SELECT chemin_image FROM image WHERE id_dossier = ? ORDER BY id_image');
+    $stmt->execute([$galeries[$indexActif]['id_dossier']]);
+    $images = $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -37,62 +65,43 @@
     </div>
   </header>
 
-  <!-- FILTRE DATE -->
+  <!-- FILTRE PAR STAGE (une galerie par stage) -->
   <section class="container-fluid py-4">
     <div class="d-flex flex-wrap align-items-center gap-3">
       <span class="oms-filtre-label">FILTRE</span>
 
-      <button type="button" class="oms-date-arrow prev" aria-label="Date précédente">&#9664;</button>
+      <?php if ($galeries): ?>
+      <a class="oms-date-arrow prev text-decoration-none" aria-label="Galerie précédente"
+         href="?g=<?= (int) $galeries[max(0, $indexActif - 1)]['id_dossier'] ?>">&#9664;</a>
 
       <div class="d-flex flex-wrap">
-        <button type="button" class="oms-date-pill active">01/09/2026</button>
-        <button type="button" class="oms-date-pill">05/09/2026</button>
-        <button type="button" class="oms-date-pill">11/09/2026</button>
+        <?php foreach ($galeries as $i => $g): ?>
+        <a href="?g=<?= (int) $g['id_dossier'] ?>"
+           class="oms-date-pill text-decoration-none<?= $i === $indexActif ? ' active' : '' ?>"
+           <?= $i === $indexActif ? 'aria-current="page"' : '' ?>>
+          <?= htmlspecialchars(mb_strtoupper($g['intitule'])) ?> <?= $g['date_stage'] ? date('d/m/Y', strtotime($g['date_stage'])) : '' ?>
+        </a>
+        <?php endforeach; ?>
       </div>
 
-      <button type="button" class="oms-date-arrow next" aria-label="Date suivante">&#9654;</button>
+      <a class="oms-date-arrow next text-decoration-none" aria-label="Galerie suivante"
+         href="?g=<?= (int) $galeries[min(count($galeries) - 1, $indexActif + 1)]['id_dossier'] ?>">&#9654;</a>
+      <?php else: ?>
+      <span>Aucune photo pour le moment.</span>
+      <?php endif; ?>
     </div>
   </section>
 
   <!-- GALERIE PHOTOS -->
   <main class="container-fluid pb-4">
     <div class="oms-gallery">
-
+      <?php foreach ($images as $image): ?>
       <figure>
-        <img src="https://images.unsplash.com/photo-1526342122811-2a9c8512023d?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Surfeuse sur une vague">
+        <img src="<?= htmlspecialchars($image['chemin_image']) ?>" alt="Photo du stage <?= htmlspecialchars($galeries[$indexActif]['intitule']) ?>" loading="lazy">
       </figure>
-
-      <figure>
-        <img src="https://images.unsplash.com/photo-1622659097509-4d56de14539e?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Enfants jouant au football">
-      </figure>
-
-      <figure>
-        <img src="https://images.unsplash.com/photo-1723980856085-8f8e725329a7?q=80&w=735&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Jeune fille sur un court de tennis">
-      </figure>
-
-      <figure>
-        <img src="https://images.unsplash.com/photo-1509398484917-2a5b6439feef?q=80&w=1167&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Enfant faisant de l'escalade">
-      </figure>
-
-      <figure>
-        <img src="https://images.unsplash.com/photo-1779126304909-791eee072e42?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Jeune gymnaste">
-      </figure>
-
-      <figure>
-        <img src="https://images.unsplash.com/photo-1706841533824-996efd781591?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Enfant jouant au basket">
-      </figure>
-
-      <figure>
-        <img src="https://images.unsplash.com/photo-1619239514610-3a23138b0bf1?q=80&w=833&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Enfant sur la plage">
-      </figure>
-
-      <figure>
-        <img src="https://plus.unsplash.com/premium_photo-1726866100808-bcd735153294?q=80&w=1179&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Deux jeunes sportifs">
-      </figure>
-
+      <?php endforeach; ?>
     </div>
   </main>
-
   <!-- FOOTER -->
   <footer class="oms-footer py-3">
     <div class="container-fluid d-flex flex-wrap justify-content-between align-items-center gap-2">
@@ -104,6 +113,5 @@
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="../Javascript/galerie.js"></script>
 </body>
 </html>

@@ -7,7 +7,7 @@ require_once 'check_auth.php';
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>OMS | Admin – Galerie</title>
+    <title>OMS | Admin – Création de stage</title>
     <link rel="icon" type="image/svg+xml" href="../Annexes/Images/logo_ball_oms.svg">
 
     <!-- Bootstrap 5.3.8 (dernière version stable) -->
@@ -381,6 +381,58 @@ require_once 'check_auth.php';
             .fleche { width: 10px; }
         }
 
+        /* ---- Création : libellés, dépôt du dossier, statut ---- */
+        .oms-label {
+            display: block;
+            color: #fff;
+            font-family: 'Lalezar', sans-serif;
+            font-size: 1.2rem;
+            letter-spacing: .03em;
+            text-transform: uppercase;
+            margin-bottom: .3rem;
+        }
+
+        #places_restantes {
+            width: 70px;
+            border: 0;
+            font-weight: 700;
+            font-size: 1.25rem;
+            padding: .35rem 0;
+        }
+
+        .oms-info {
+            color: #fff;
+            font-weight: 700;
+        }
+
+        .oms-depot {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 1rem 1.5rem;
+            padding: 1.25rem 1.5rem;
+            border: 3px dashed rgba(255, 255, 255, .75);
+            transition: background .15s;
+        }
+
+        .oms-depot.survol {
+            background: var(--oms-rouge-fonce);
+            border-color: #fff;
+        }
+
+        .oms-statut {
+            background: var(--oms-rouge-fonce);
+            color: #fff;
+            font-weight: 700;
+            padding: .9rem 1.25rem;
+            white-space: pre-line;
+        }
+
+        .oms-btn:disabled {
+            opacity: .6;
+            cursor: wait;
+        }
+
         /* ---- Responsive ---- */
         @media (max-width: 991.98px) {
             .oms-logo {
@@ -469,54 +521,83 @@ require_once 'check_auth.php';
 
                 </nav>
 
+                <form id="form-stage" action="create_stage.php" method="post" enctype="multipart/form-data" novalidate>
+
                 <div class="mb-3" style="max-width:420px;">
-                    <label for="activité" class="visually-hidden">Activité... </label>
-                    <input type="text" class="form-control oms-champ" id="activité" name="activité"
-                        placeholder="Activité...">
+                    <label for="activite" class="visually-hidden">Activité</label>
+                    <input type="text" class="form-control oms-champ" id="activite" name="activite"
+                        placeholder="Activité..." maxlength="100" required>
                 </div>
 
                 <div class="div_check">
-                    <input type="checkbox" id="check_1">
+                    <input type="checkbox" id="check_1" name="type_activite[]" value="jeu de ballon">
                     <label class="label_check_1" for="check_1"></label><p>JEU DE BALLE</p>
 
-                    <input type="checkbox" id="check_2">
+                    <input type="checkbox" id="check_2" name="type_activite[]" value="jeu en mer">
                     <label class="label_check_2" for="check_2"></label><p>JEU EN MER</p>
 
-                    <input type="checkbox" id="check_3">
+                    <input type="checkbox" id="check_3" name="type_activite[]" value="jeu en plein-air">
                     <label class="label_check_3" for="check_3"></label><p>JEU EN PLEIN-AIR</p>
                 </div>
 
                 <div class="mb-4 etude_pres" style="max-width:420px;">
-                    <label for="date" class="visually-hidden">Niveau d'étude scolaire</label>
-                    <input type="text" class="form-control oms-champ" id="niv_etude" name="niv_etude" placeholder="Niveau d'étude scolaire...">
+                    <label for="niv_etude" class="visually-hidden">Niveau d'étude scolaire</label>
+                    <input type="text" class="form-control oms-champ" id="niv_etude" name="niv_etude" placeholder="Niveau d'étude scolaire..." maxlength="100">
                 </div>
 
                 <div class="mb-4 etude_pres" style="max-width:420px;">
-                    <label for="date" class="visually-hidden">Présentation</label>
-                    <input type="text" class="form-control oms-champ" id="presentation" name="presentation" placeholder="Présentation...">
+                    <label for="presentation" class="visually-hidden">Présentation</label>
+                    <input type="text" class="form-control oms-champ" id="presentation" name="presentation" placeholder="Présentation..." maxlength="255">
                 </div>
 
-                <div class="justify-content-between">
+                <div class="d-flex flex-wrap gap-3 mb-4" style="max-width:420px;">
+                    <div class="flex-fill">
+                        <label for="date_stage" class="oms-label">Date du stage</label>
+                        <input type="date" class="form-control oms-champ" id="date_stage" name="date_stage" required>
+                    </div>
+                    <div class="flex-fill">
+                        <label for="heure_stage" class="oms-label">Heure</label>
+                        <input type="time" class="form-control oms-champ" id="heure_stage" name="heure_stage" required>
+                    </div>
+                </div>
+
+                <label for="places_restantes" class="oms-label">Nombre de places</label>
+                <div class="d-flex align-items-center gap-2 mb-4">
                     <!-- Flèche précédente -->
-                    <button type="button" class="fleche fleche-gauche" aria-label="Actualité précédente">
+                    <button type="button" class="fleche fleche-gauche" aria-label="Retirer une place" data-places="-1">
                         <svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
                             <polygon points="100,0 0,50 100,100" />
                         </svg>
                     </button>
 
-                    <input type="text" id="places_restantes" value="0" style="text-align: center" class="mb-3"/>
+                    <input type="number" id="places_restantes" name="nb_places" value="20" min="1" style="text-align: center"/>
 
                     <!-- Flèche suivante -->
-                    <button type="button" class="fleche fleche-droite" aria-label="Actualité suivante">
+                    <button type="button" class="fleche fleche-droite" aria-label="Ajouter une place" data-places="1">
                         <svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
                             <polygon points="0,0 100,50 0,100" />
                         </svg>
                     </button>
                 </div>
 
-                <button type="button" class="oms-btn mb-4"><span>Importer ue photo</span></button>
+                <input type="file" id="photo_stage" name="photo" accept="image/jpeg,image/png,image/gif,image/webp" hidden>
+                <div class="d-flex flex-wrap align-items-center gap-3 mb-4">
+                    <button type="button" class="oms-btn" data-ouvrir="photo_stage"><span>Importer une photo</span></button>
+                    <span class="oms-info" id="nom_photo">Aucune photo sélectionnée</span>
+                </div>
 
-                <button type="button" class="oms-btn"><span>Téléverser un dossier</span></button>
+                <!-- Galerie du stage : créée automatiquement, on peut y déposer un dossier d'images -->
+                <input type="file" id="dossier_galerie" accept="image/*" multiple webkitdirectory hidden>
+                <div class="oms-depot mb-4" id="zone_depot">
+                    <button type="button" class="oms-btn" data-ouvrir="dossier_galerie"><span>Téléverser un dossier</span></button>
+                    <span class="oms-info" id="info_dossier">ou glissez-déposez un dossier d'images ici (galerie du stage)</span>
+                </div>
+
+                <div class="oms-statut mb-4" id="statut" role="status" aria-live="polite" hidden></div>
+
+                <button type="submit" class="oms-btn oms-btn--valider" id="btn_creer"><span>Créer le stage</span></button>
+
+                </form>
 
             </section>
         </div>
@@ -534,6 +615,99 @@ require_once 'check_auth.php';
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../Javascript/upload_galerie.js"></script>
+    <script>
+        (function () {
+            const form = document.getElementById('form-stage');
+            const places = document.getElementById('places_restantes');
+            const photo = document.getElementById('photo_stage');
+            const statut = document.getElementById('statut');
+            const bouton = document.getElementById('btn_creer');
+            const infoDossier = document.getElementById('info_dossier');
+            let imagesGalerie = [];
+
+            // Boutons "Importer une photo" / "Téléverser un dossier"
+            document.querySelectorAll('[data-ouvrir]').forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    document.getElementById(btn.dataset.ouvrir).click();
+                });
+            });
+
+            // Flèches du nombre de places
+            document.querySelectorAll('[data-places]').forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    const valeur = (parseInt(places.value, 10) || 0) + parseInt(btn.dataset.places, 10);
+                    places.value = Math.max(1, valeur);
+                });
+            });
+
+            photo.addEventListener('change', function () {
+                document.getElementById('nom_photo').textContent =
+                    photo.files.length ? photo.files[0].name : 'Aucune photo sélectionnée';
+            });
+
+            OMSGalerie.initZone(
+                document.getElementById('zone_depot'),
+                document.getElementById('dossier_galerie'),
+                function (fichiers) {
+                    imagesGalerie = fichiers;
+                    infoDossier.textContent = fichiers.length
+                        ? fichiers.length + ' image(s) prête(s) pour la galerie du stage'
+                        : 'Aucune image trouvée dans ce dossier';
+                }
+            );
+
+            function afficher(message) {
+                statut.hidden = false;
+                statut.textContent = message;
+            }
+
+            form.addEventListener('submit', async function (e) {
+                e.preventDefault();
+                if (!form.reportValidity()) return;
+                bouton.disabled = true;
+                afficher('Création du stage…');
+
+                const donnees = new FormData(form);
+                donnees.delete('photo');
+                if (photo.files.length) {
+                    donnees.append('photo', await OMSGalerie.redimensionner(photo.files[0]));
+                }
+
+                let resultat;
+                try {
+                    const reponse = await fetch(form.action, { method: 'POST', body: donnees });
+                    resultat = await reponse.json();
+                } catch (err) {
+                    resultat = { ok: false, erreur: 'Réponse inattendue du serveur.' };
+                }
+                if (!resultat.ok) {
+                    afficher(resultat.erreur);
+                    bouton.disabled = false;
+                    return;
+                }
+
+                let bilan = { reussies: 0, erreurs: [] };
+                if (imagesGalerie.length) {
+                    bilan = await OMSGalerie.televerser(resultat.id_dossier, imagesGalerie, function (fait, total) {
+                        afficher('Stage créé. Envoi des images de la galerie : ' + fait + ' / ' + total);
+                    });
+                }
+
+                if (bilan.erreurs.length) {
+                    afficher('Stage créé, ' + bilan.reussies + ' image(s) ajoutée(s) à la galerie.\n'
+                        + bilan.erreurs.length + ' image(s) refusée(s) :\n' + bilan.erreurs.join('\n'));
+                    const lien = document.createElement('a');
+                    lien.href = 'Admin_Galerie_detail.php?id=' + resultat.id_dossier;
+                    lien.className = 'd-block mt-2 text-white';
+                    lien.textContent = 'Ouvrir la galerie du stage';
+                    statut.appendChild(lien);
+                    return;
+                }
+                window.location.href = 'Admin_Stage.php?cree=' + resultat.id_stage;
+            });
+        })();
+    </script>
 </body>
 
 </html>
