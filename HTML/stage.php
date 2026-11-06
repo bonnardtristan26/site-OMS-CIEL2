@@ -68,12 +68,14 @@ try {
         <?php foreach ($stages as $stage): ?>
           <?php
           $intitule = (string) ($stage['intitule'] ?? 'Stage');
-          $activite = strtolower((string) ($stage['type_activite'] ?? ''));
-          $classeCouleur = strtolower($intitule) === 'padel'
-            ? 'stage-green'
-            : (str_contains($activite, 'mer')
-              ? 'stage-blue'
-              : (str_contains($activite, 'plein air') ? 'stage-green' : 'stage-red'));
+          $activite = str_replace('-', ' ', strtolower((string) ($stage['type_activite'] ?? '')));
+          if (strtolower($intitule) === 'padel' || str_contains($activite, 'plein air')) {
+            $classeCouleur = 'stage-green';
+          } elseif (str_contains($activite, 'mer')) {
+            $classeCouleur = 'stage-blue';
+          } else {
+            $classeCouleur = 'stage-red';
+          }
           $image = (string) ($stage['image_path'] ?? '');
           
           ?>

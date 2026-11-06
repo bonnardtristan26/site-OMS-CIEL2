@@ -419,6 +419,15 @@ require_once 'check_auth.php';
             font-weight: 700;
         }
 
+        .oms-photo-apercu {
+            display: block;
+            max-width: min(100%, 320px);
+            max-height: 220px;
+            object-fit: contain;
+            margin-top: .75rem;
+            background: #fff;
+        }
+
         .oms-depot {
             display: flex;
             flex-wrap: wrap;
@@ -585,7 +594,8 @@ require_once 'check_auth.php';
                             </svg>
                         </button>
 
-                        <input type="text" id="places_restantes" value="0" style="text-align: center" class="mb-3"/>
+                        <input type="number" id="places_restantes" name="nb_places" value="1" min="1" required
+                            style="text-align: center" class="mb-3"/>
 
                         <!-- Flèche suivante -->
                         <button type="button" class="fleche fleche-droite" aria-label="Ajouter une place" data-places="1">
@@ -596,10 +606,21 @@ require_once 'check_auth.php';
                     </div>
                 </div>
 
-                <button type="button" class="oms-btn mb-4"><span>Importer ue photo</span></button>
+                <div class="mb-4">
+                    <label for="photo_stage" class="oms-label">Photo d’illustration du stage</label>
+                    <input type="file" id="photo_stage" name="photo" accept="image/jpeg,image/png,image/gif,image/webp"
+                        class="visually-hidden">
+                    <button type="button" class="oms-btn oms-btn--blanc mb-2" data-ouvrir="photo_stage">
+                        <span>Importer une photo</span>
+                    </button>
+                    <p class="oms-info mb-0" id="nom_photo">Aucune photo sélectionnée</p>
+                    <img id="apercu_photo" class="oms-photo-apercu" alt="Aperçu de la photo d’illustration du stage" hidden>
+                </div>
 
-                <button type="button" class="oms-btn"><span>Téléverser un dossier</span></button>
+                <p class="oms-statut mb-4" id="statut" role="status" aria-live="polite" hidden></p>
+                <button type="submit" class="oms-btn" id="btn_ajouter"><span>Ajouter le stage</span></button>
 
+                </form>
             </section>
         </div>
     </main>
@@ -623,9 +644,9 @@ require_once 'check_auth.php';
             const places = document.getElementById('places_restantes');
             const photo = document.getElementById('photo_stage');
             const statut = document.getElementById('statut');
-            const bouton = document.getElementById('btn_creer');
-            const infoDossier = document.getElementById('info_dossier');
-            let imagesGalerie = [];
+            const bouton = document.getElementById('btn_ajouter');
+            const apercuPhoto = document.getElementById('apercu_photo');
+            let urlApercuPhoto = null;
 
             // Boutons "Importer une photo" / "Téléverser un dossier"
             document.querySelectorAll('[data-ouvrir]').forEach(function (btn) {
@@ -645,18 +666,11 @@ require_once 'check_auth.php';
             photo.addEventListener('change', function () {
                 document.getElementById('nom_photo').textContent =
                     photo.files.length ? photo.files[0].name : 'Aucune photo sélectionnée';
+                if (urlApercuPhoto) URL.revokeObjectURL(urlApercuPhoto);
+                urlApercuPhoto = photo.files.length ? URL.createObjectURL(photo.files[0]) : null;
+                apercuPhoto.src = urlApercuPhoto || '';
+                apercuPhoto.hidden = !urlApercuPhoto;
             });
-
-            OMSGalerie.initZone(
-                document.getElementById('zone_depot'),
-                document.getElementById('dossier_galerie'),
-                function (fichiers) {
-                    imagesGalerie = fichiers;
-                    infoDossier.textContent = fichiers.length
-                        ? fichiers.length + ' image(s) prête(s) pour la galerie du stage'
-                        : 'Aucune image trouvée dans ce dossier';
-                }
-            );
 
             function afficher(message) {
                 statut.hidden = false;
@@ -667,20 +681,19 @@ require_once 'check_auth.php';
                 e.preventDefault();
                 if (!form.reportValidity()) return;
                 bouton.disabled = true;
-                afficher('Création du stage…');
-
-                const donnees = new FormData(form);
-                donnees.delete('photo');
-                if (photo.files.length) {
-                    donnees.append('photo', await OMSGalerie.redimensionner(photo.files[0]));
-                }
+                afficher('Ajout du stage…');
 
                 let resultat;
                 try {
+                    const donnees = new FormData(form);
+                    donnees.delete('photo');
+                    if (photo.files.length) {
+                        donnees.append('photo', await OMSGalerie.redimensionner(photo.files[0]));
+                    }
                     const reponse = await fetch(form.action, { method: 'POST', body: donnees });
                     resultat = await reponse.json();
                 } catch (err) {
-                    resultat = { ok: false, erreur: 'Réponse inattendue du serveur.' };
+                    resultat = { ok: false, erreur: 'Impossible d’ajouter le stage. Vérifiez la connexion puis réessayez.' };
                 }
                 if (!resultat.ok) {
                     afficher(resultat.erreur);
@@ -688,23 +701,6 @@ require_once 'check_auth.php';
                     return;
                 }
 
-                let bilan = { reussies: 0, erreurs: [] };
-                if (imagesGalerie.length) {
-                    bilan = await OMSGalerie.televerser(resultat.id_dossier, imagesGalerie, function (fait, total) {
-                        afficher('Stage créé. Envoi des images de la galerie : ' + fait + ' / ' + total);
-                    });
-                }
-
-                if (bilan.erreurs.length) {
-                    afficher('Stage créé, ' + bilan.reussies + ' image(s) ajoutée(s) à la galerie.\n'
-                        + bilan.erreurs.length + ' image(s) refusée(s) :\n' + bilan.erreurs.join('\n'));
-                    const lien = document.createElement('a');
-                    lien.href = 'Admin_Galerie_detail.php?id=' + resultat.id_dossier;
-                    lien.className = 'd-block mt-2 text-white';
-                    lien.textContent = 'Ouvrir la galerie du stage';
-                    statut.appendChild(lien);
-                    return;
-                }
                 window.location.href = 'Admin_Stage.php?cree=' + resultat.id_stage;
             });
         })();
