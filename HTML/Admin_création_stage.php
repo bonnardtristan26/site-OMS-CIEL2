@@ -389,8 +389,6 @@ require_once 'check_auth.php';
             border-bottom: 0.3rem solid transparent;
             transition: all 0.3s;
         }
-
-
         
         /* Mobile : flèches plus petites */
         @media (max-width: 576px) {
@@ -579,21 +577,23 @@ require_once 'check_auth.php';
 
                 <label for="places_restantes" class="oms-label">Nombre de places</label>
                 <div class="d-flex align-items-center gap-2 mb-4">
+                    <div class="recenter">
                     <!-- Flèche précédente -->
-                    <button type="button" class="fleche fleche-gauche" aria-label="Retirer une place" data-places="-1">
-                        <svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-                            <polygon points="100,0 0,50 100,100" />
-                        </svg>
-                    </button>
+                        <button type="button" class="fleche fleche-gauche" aria-label="Retirer une place" data-places="-1">
+                            <svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+                                <polygon points="100,0 0,50 100,100" />
+                            </svg>
+                        </button>
 
-                    <input type="text" id="places_restantes" value="0" style="text-align: center" class="mb-3"/>
+                        <input type="text" id="places_restantes" value="0" style="text-align: center" class="mb-3"/>
 
-                    <!-- Flèche suivante -->
-                    <button type="button" class="fleche fleche-droite" aria-label="Ajouter une place" data-places="1">
-                        <svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-                            <polygon points="0,0 100,50 0,100" />
-                        </svg>
-                    </button>
+                        <!-- Flèche suivante -->
+                        <button type="button" class="fleche fleche-droite" aria-label="Ajouter une place" data-places="1">
+                            <svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+                                <polygon points="0,0 100,50 0,100" />
+                            </svg>
+                        </button>
+                    </div>
                 </div>
 
                 <button type="button" class="oms-btn mb-4"><span>Importer ue photo</span></button>
