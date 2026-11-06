@@ -67,6 +67,10 @@ body {
   padding: 0 6px;
 }
 .oms-date-arrow:hover { color: #555; }
+.oms-date-arrow:disabled {
+  color: #aaa;
+  cursor: default;
+}
 
 .oms-date-pill {
   font-family: "Lalezar", sans-serif;
@@ -87,6 +91,12 @@ body {
   background-color: #cfd6c6;
 }
 
+.oms-date-pill:focus-visible,
+.oms-date-arrow:focus-visible {
+  outline: 3px solid #008f3f;
+  outline-offset: 2px;
+}
+
 /* ---------- GALERIE (mise en page façon "mur de photos") ---------- */
 .oms-gallery {
   column-count: 4;
@@ -98,10 +108,25 @@ body {
   break-inside: avoid;
 }
 
+.oms-gallery figure[hidden] {
+  display: none;
+}
+
 .oms-gallery img {
   display: block;
   width: 100%;
   height: auto;
+}
+
+.oms-gallery-message {
+  column-span: all;
+  font-weight: 700;
+  padding: 1rem 0;
+}
+
+.oms-gallery-count {
+  margin: 1rem 0 0;
+  font-weight: 700;
 }
 
 @media (max-width: 991.98px) {

@@ -229,16 +229,15 @@ main {
     background: #008f3f;
     color: #fff;
     padding: 1.2% 1.2% 0;
-    clip-path: polygon(2.2% 0, 100% 0, 97.8% 100%, 0 100%);
 }
 
 .actu-img {
     display: block;
     width: 100%;
-    height: clamp(180px, 30vw, 360px);
+    height: auto;
+    max-height: clamp(180px, 30vw, 360px);
     object-fit: contain;
     background-color: #f5f5f5;
-	clip-path: polygon(2.2% 0, 100% 0, 97.8% 100%, 0 100%);
 }
 
 .box_text {

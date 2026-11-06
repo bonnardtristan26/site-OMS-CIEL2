@@ -23,10 +23,9 @@
 --   3. Table Image : suppression de la contrainte FOREIGN KEY cassée
 --      (virgule manquante après la clé primaire, colonne `id_dossier`
 --      inexistante, et table Galerie référencée avant d'être créée).
---   4. Table Galerie : la contrainte vers Stage référençait une colonne
---      `id_stage` inexistante -> colonne ajoutée. La liaison « contenir »
---      avec Image est désormais portée par la colonne `id_image` de Galerie
---      (FK Galerie.id_image -> Image.id_image).
+--   4. Tables Galerie et Image : ajout de `id_stage` dans Galerie et de
+--      `Image.id_dossier` pour rattacher plusieurs photos à une galerie.
+--      `Galerie.id_image` reste une image de couverture facultative.
 --   5. Ordre de création réorganisé : les tables référencées (Admin,
 --      Image, Actualites, Stage, Utilisateur) sont créées AVANT Galerie et
 --      les tables de jonction, sinon MySQL refuse les FOREIGN KEY.
@@ -104,8 +103,7 @@ CREATE TABLE Admin (
 
 -- ----------------------------------------------------------------------------
 -- Table Image
--- (corrigée : la FOREIGN KEY cassée vers Galerie a été retirée ; la liaison
--- « contenir » est portée par Galerie.id_image, voir table Galerie)
+-- `id_dossier` rattache chaque photo à sa galerie (plusieurs images par galerie).
 -- ----------------------------------------------------------------------------
 CREATE TABLE Image (
     id_image     INTEGER     NOT NULL AUTO_INCREMENT,
@@ -178,10 +176,9 @@ CREATE TABLE Utilisateur (
 
 -- ----------------------------------------------------------------------------
 -- Table Galerie
--- JONCTION « contenir » : Galerie (0,n) ---- (1,1) Image
--- (corrigée : colonne `id_stage` ajoutée pour la FK vers Stage, et la FK
--- vers Image porte sur la colonne `id_image` existante ;
--- `dossier_stage` élargi — modif client)
+-- Une ligne par galerie de stage ou dossier de photos daté.
+-- `id_image` est une couverture facultative ; les photos sont liées via
+-- Image.id_dossier. `dossier_stage` élargi — modif client.
 -- ----------------------------------------------------------------------------
 CREATE TABLE Galerie (
     id_dossier    INTEGER     NOT NULL AUTO_INCREMENT,
@@ -198,7 +195,6 @@ CREATE TABLE Galerie (
         FOREIGN KEY (id_stage) REFERENCES Stage (id_stage) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Chaque image appartient à une galerie (1 stage = 1 galerie = N images).
 -- Ajoutée après coup car Image est créée avant Galerie.
 ALTER TABLE Image
     ADD CONSTRAINT fk_image_galerie
@@ -295,9 +291,17 @@ INSERT INTO `stage` (`id_stage`, `intitule`, `type_activite`, `niveau_etude`, `d
 (4, 'Basket', 'jeu de ballon', 'college', 'Le basket-ball est un sport collectif rythmé qui se joue à cinq contre cinq, mêlant vitesse, précision et esprit d\'équipe.', 6, 20, '../Annexes/Images/basket.jpg', '2026-10-22', '14:00:00'),
 (5, 'Volley', 'jeu de ballon', 'college', 'Le volley-ball se joue à six sur un terrain séparé par un filet, avec pour objectif de faire tomber le ballon dans le camp adverse.', 17, 20, '../Annexes/Images/volley.jpg', '2026-10-23', '10:00:00');
 
+-- ----------------------------------------------------------------------------
+-- Trois actualités par défaut affichées sur la page d'accueil.
+-- ----------------------------------------------------------------------------
+INSERT INTO Actualites (id_actu, chemin_image, intitule, description) VALUES
+(1, '../Annexes/Images/1.webp', 'Des dinosaures aperçus sur la plage', 'Sur les plages de Miami, de jeunes dinosaures auraient été aperçus. Une découverte insolite qui fait parler les amateurs de paléontologie.'),
+(2, '../Annexes/Images/2.jpg', 'Les Bronzés font du ski', 'Dans les montagnes du Honduras, une sortie ski pleine de surprises a réuni les amateurs de sport et de bonne humeur.'),
+(3, '../Annexes/Images/3.webp', 'Rencontre insolite entre dirigeants', 'Une rencontre inattendue entre deux dirigeants a fait réagir. L’OMS rappelle que le sport reste avant tout un espace de dialogue et de partage.');
+
 -- Une galerie (dossier Annexes/Galerie/stage_<id>) pour chaque stage
 INSERT INTO Galerie (id_stage, dossier_stage, date, heure)
-SELECT id_stage, CONCAT('stage_', id_stage), CURDATE(), CURTIME() FROM Stage;
+SELECT id_stage, CONCAT('stage_', id_stage), date_stage, heure_stage FROM Stage;
 
 -- ----------------------------------------------------------------------------
 -- Compte administrateur exemple

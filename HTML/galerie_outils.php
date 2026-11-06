@@ -29,9 +29,14 @@ function galerie_creer(PDO $pdo, int $idStage): int
     $dossier = 'stage_' . $idStage;
     $stmt = $pdo->prepare(
         'INSERT INTO galerie (id_stage, dossier_stage, date, heure)
-         VALUES (?, ?, CURDATE(), CURTIME())'
+         SELECT id_stage, ?, date_stage, heure_stage
+         FROM stage
+         WHERE id_stage = ?'
     );
-    $stmt->execute([$idStage, $dossier]);
+    $stmt->execute([$dossier, $idStage]);
+    if ($stmt->rowCount() !== 1) {
+        throw new RuntimeException('impossible de créer la galerie : stage introuvable');
+    }
 
     $chemin = galerie_chemin_disque($dossier);
     if (!is_dir($chemin)) {

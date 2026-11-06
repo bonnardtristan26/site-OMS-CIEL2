@@ -1,30 +1,48 @@
 <?php
-require_once 'galerie_outils.php';
-$pdo = galerie_pdo();
+$photosParDate = [];
+$erreurChargement = false;
 
-// Galeries qui contiennent au moins une photo, la plus récente en premier
-$galeries = $pdo->query(
-    "SELECT g.id_dossier, s.intitule, s.date_stage
-     FROM galerie g
-     JOIN stage s ON s.id_stage = g.id_stage
-     WHERE EXISTS (SELECT 1 FROM image i WHERE i.id_dossier = g.id_dossier)
-     ORDER BY s.date_stage DESC, s.heure_stage DESC"
-)->fetchAll(PDO::FETCH_ASSOC);
+try {
+  $pdo = new PDO(
+    'mysql:host=localhost;dbname=omstjj;charset=utf8mb4',
+    'root',
+    '',
+    [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
+  );
+  $requete = $pdo->query(
+    "SELECT COALESCE(stage.date_stage, galerie.date) AS date_galerie, image.chemin_image
+     FROM galerie
+     INNER JOIN image ON image.id_dossier = galerie.id_dossier
+     LEFT JOIN stage ON stage.id_stage = galerie.id_stage
+     WHERE COALESCE(stage.date_stage, galerie.date) IS NOT NULL
+       AND image.chemin_image IS NOT NULL
+       AND image.chemin_image <> ''
+     ORDER BY date_galerie ASC, galerie.id_dossier ASC, image.id_image ASC"
+  );
 
-$indexActif = 0;
-$demande = filter_input(INPUT_GET, 'g', FILTER_VALIDATE_INT);
-foreach ($galeries as $i => $g) {
-    if ((int) $g['id_dossier'] === $demande) {
-        $indexActif = $i;
-    }
+  foreach ($requete->fetchAll(PDO::FETCH_ASSOC) as $photo) {
+    $date = (string) $photo['date_galerie'];
+    $photosParDate[$date][] = (string) $photo['chemin_image'];
+  }
+} catch (PDOException $e) {
+  $erreurChargement = true;
+  error_log($e->getMessage());
 }
 
-$images = [];
-if ($galeries) {
-    $stmt = $pdo->prepare('SELECT chemin_image FROM image WHERE id_dossier = ? ORDER BY id_image');
-    $stmt->execute([$galeries[$indexActif]['id_dossier']]);
-    $images = $stmt->fetchAll(PDO::FETCH_ASSOC);
-}
+ksort($photosParDate, SORT_STRING);
+$datesGalerie = array_keys($photosParDate);
+$dateDemandee = (string) ($_GET['date'] ?? '');
+$dateActive = in_array($dateDemandee, $datesGalerie, true)
+  ? $dateDemandee
+  : ($datesGalerie[0] ?? '');
+$indexDateActive = array_search($dateActive, $datesGalerie, true);
+$indexDatePrecedente = $datesGalerie
+  ? ($indexDateActive - 1 + count($datesGalerie)) % count($datesGalerie)
+  : null;
+$indexDateSuivante = $datesGalerie
+  ? ($indexDateActive + 1) % count($datesGalerie)
+  : null;
+$photosDateActive = $photosParDate[$dateActive] ?? [];
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -65,42 +83,72 @@ if ($galeries) {
     </div>
   </header>
 
-  <!-- FILTRE PAR STAGE (une galerie par stage) -->
+  <!-- Photos regroupées par date de galerie -->
   <section class="container-fluid py-4">
     <div class="d-flex flex-wrap align-items-center gap-3">
       <span class="oms-filtre-label">FILTRE</span>
 
-      <?php if ($galeries): ?>
-      <a class="oms-date-arrow prev text-decoration-none" aria-label="Galerie précédente"
-         href="?g=<?= (int) $galeries[max(0, $indexActif - 1)]['id_dossier'] ?>">&#9664;</a>
+      <?php if ($datesGalerie): ?>
+        <a
+          class="oms-date-arrow prev"
+          href="?date=<?= urlencode($datesGalerie[$indexDatePrecedente]) ?>"
+          aria-label="Date précédente"
+          data-date-prev
+        >&#9664;</a>
+      <?php else: ?>
+        <button type="button" class="oms-date-arrow prev" aria-label="Date précédente" disabled>&#9664;</button>
+      <?php endif; ?>
 
-      <div class="d-flex flex-wrap">
-        <?php foreach ($galeries as $i => $g): ?>
-        <a href="?g=<?= (int) $g['id_dossier'] ?>"
-           class="oms-date-pill text-decoration-none<?= $i === $indexActif ? ' active' : '' ?>"
-           <?= $i === $indexActif ? 'aria-current="page"' : '' ?>>
-          <?= htmlspecialchars(mb_strtoupper($g['intitule'])) ?> <?= $g['date_stage'] ? date('d/m/Y', strtotime($g['date_stage'])) : '' ?>
-        </a>
+      <div class="d-flex flex-wrap" id="galerie-dates" aria-label="Dates des photos">
+        <?php foreach ($datesGalerie as $index => $date): ?>
+          <a
+            class="oms-date-pill text-decoration-none<?= $date === $dateActive ? ' active' : '' ?>"
+            href="?date=<?= urlencode($date) ?>"
+            data-gallery-date="<?= htmlspecialchars($date, ENT_QUOTES, 'UTF-8') ?>"
+            <?= $date === $dateActive ? 'aria-current="date"' : '' ?>
+          ><?= htmlspecialchars(date('d/m/Y', strtotime($date)), ENT_QUOTES, 'UTF-8') ?></a>
         <?php endforeach; ?>
       </div>
 
-      <a class="oms-date-arrow next text-decoration-none" aria-label="Galerie suivante"
-         href="?g=<?= (int) $galeries[min(count($galeries) - 1, $indexActif + 1)]['id_dossier'] ?>">&#9654;</a>
+      <?php if ($datesGalerie): ?>
+        <a
+          class="oms-date-arrow next"
+          href="?date=<?= urlencode($datesGalerie[$indexDateSuivante]) ?>"
+          aria-label="Date suivante"
+          data-date-next
+        >&#9654;</a>
       <?php else: ?>
-      <span>Aucune photo pour le moment.</span>
+        <button type="button" class="oms-date-arrow next" aria-label="Date suivante" disabled>&#9654;</button>
       <?php endif; ?>
     </div>
   </section>
 
   <!-- GALERIE PHOTOS -->
   <main class="container-fluid pb-4">
-    <div class="oms-gallery">
-      <?php foreach ($images as $image): ?>
-      <figure>
-        <img src="<?= htmlspecialchars($image['chemin_image']) ?>" alt="Photo du stage <?= htmlspecialchars($galeries[$indexActif]['intitule']) ?>" loading="lazy">
-      </figure>
-      <?php endforeach; ?>
+    <div class="oms-gallery" id="galerie-photos" aria-live="polite">
+      <?php if ($erreurChargement): ?>
+        <p class="oms-gallery-message" role="alert">Impossible de charger la galerie pour le moment.</p>
+      <?php elseif (!$photosParDate): ?>
+        <p class="oms-gallery-message">Aucune photo n'est disponible pour le moment.</p>
+      <?php else: ?>
+        <?php foreach ($photosParDate as $date => $photos): ?>
+          <?php foreach ($photos as $index => $cheminImage): ?>
+            <figure data-photo-date="<?= htmlspecialchars($date, ENT_QUOTES, 'UTF-8') ?>" <?= $date !== $dateActive ? 'hidden' : '' ?>>
+              <img
+                src="<?= htmlspecialchars($cheminImage, ENT_QUOTES, 'UTF-8') ?>"
+                alt="Photo de la galerie du <?= htmlspecialchars(date('d/m/Y', strtotime($date)), ENT_QUOTES, 'UTF-8') ?>, image <?= $index + 1 ?>"
+                loading="lazy"
+              >
+            </figure>
+          <?php endforeach; ?>
+        <?php endforeach; ?>
+      <?php endif; ?>
     </div>
+    <?php if ($photosParDate): ?>
+      <p class="oms-gallery-count" id="galerie-compteur" aria-live="polite">
+        <?= count($photosDateActive) ?> <?= count($photosDateActive) > 1 ? 'photos' : 'photo' ?>
+      </p>
+    <?php endif; ?>
   </main>
   <!-- FOOTER -->
   <footer class="oms-footer py-3">
@@ -113,5 +161,6 @@ if ($galeries) {
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../Javascript/galerie.js"></script>
 </body>
 </html>
