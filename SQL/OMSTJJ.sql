@@ -297,6 +297,7 @@ INSERT INTO `stage` (`id_stage`, `intitule`, `type_activite`, `niveau_etude`, `d
 -- ----------------------------------------------------------------------------
 INSERT INTO Admin (id_utilisateur, nom, prenom, mdp) VALUES
 (1, 'Dupont', 'Jean', SHA2('admin123', 256));
+(2, 'admin', 'admin', SHA2('admin', 256));
 
 -- ----------------------------------------------------------------------------
 -- Exemple d'utilisation (commenté — à adapter) : inscrire un utilisateur

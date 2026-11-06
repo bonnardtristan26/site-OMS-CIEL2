@@ -370,48 +370,48 @@ require_once 'check_auth.php';
         
           <form action="add_actualite.php?actu=1" method="post" enctype="multipart/form-data">
             <div>
-              <input type="file" id="explorateur" name="monImage" accept="image/*" style="display: none;">
+              <input type="file" id="explorateur1" name="monImage" accept="image/*" style="display: none;">
               <h2 class="titre oms-actu-titre text-white mb-3">Actualité 1</h2>
               <label for="actualite1" class="visually-hidden">Actualité 1</label>
               <div class = " " >
                 <input class="form-control  oms-champ  mb-4" name="titre" placeholder="Titre...">
-                <textarea class="form-control oms-champ oms-champ--actu mb-4" id="actualite" name="actualite" rows="5" placeholder="Actualité..."></textarea>
+                <textarea class="form-control oms-champ oms-champ--actu mb-4" id="actualite1" name="actualite" rows="5" placeholder="Actualité..."></textarea>
               <div class="d-flex justify-content-between gap-3 mb-5">
                 <button type="submit" class="oms-btn"><span>Publier actualité 1</span></button>
-                <p type="text" class="text-white  fw-bold text-uppercase mb-0 text-align-center" id="nom-fichier" style="font-size: 1rem;">Aucune image sélectionnée</p>
-                <button type="button" class="oms-btn oms-btn--blanc"onclick="document.getElementById('explorateur').click();" ><span>Importer image</span></button>
+                <p class="nom-fichier text-white fw-bold text-uppercase mb-0" style="font-size: 1rem;">Aucune image sélectionnée</p>
+                <button type="button" class="oms-btn oms-btn--blanc" data-image-picker><span>Importer image</span></button>
               </div>
             </div>
           </form>
 
            <form action="add_actualite.php?actu=2" method="post" enctype="multipart/form-data">
             <div>
-              <input type="file" id="explorateur" name="monImage" accept="image/*" style="display: none;">
+              <input type="file" id="explorateur2" name="monImage" accept="image/*" style="display: none;">
               <h2 class="titre oms-actu-titre text-white mb-3">Actualité 2</h2>
               <label for="actualite2" class="visually-hidden">Actualité 2 </label>
               <div class = " " >
                 <input class="form-control  oms-champ  mb-4" name="titre" placeholder="Titre...">
-                <textarea class="form-control oms-champ oms-champ--actu mb-4" id="actualite" name="actualite" rows="5" placeholder="Actualité..."></textarea>
+                <textarea class="form-control oms-champ oms-champ--actu mb-4" id="actualite2" name="actualite" rows="5" placeholder="Actualité..."></textarea>
               <div class="d-flex justify-content-between gap-3 mb-5">
                 <button type="submit" class="oms-btn"><span>Publier actualité 2</span></button>
-                <p type="text" class="text-white  fw-bold text-uppercase mb-0 text-align-center" id="nom-fichier" style="font-size: 1rem;">Aucune image sélectionnée</p>
-                <button type="button" class="oms-btn oms-btn--blanc"onclick="document.getElementById('explorateur').click();" ><span>Importer image</span></button>
+                <p class="nom-fichier text-white fw-bold text-uppercase mb-0" style="font-size: 1rem;">Aucune image sélectionnée</p>
+                <button type="button" class="oms-btn oms-btn--blanc" data-image-picker><span>Importer image</span></button>
               </div>
             </div>
           </form>
 
            <form action="add_actualite.php?actu=3" method="post" enctype="multipart/form-data">
             <div>
-              <input type="file" id="explorateur" name="monImage" accept="image/*" style="display: none;">
+              <input type="file" id="explorateur3" name="monImage" accept="image/*" style="display: none;">
               <h2 class="titre oms-actu-titre text-white mb-3">Actualité 3</h2>
               <label for="actualite3" class="visually-hidden">Actualité 3</label>
               <div class = " " >
                 <input class="form-control  oms-champ  mb-4" name="titre" placeholder="Titre...">
-                <textarea class="form-control oms-champ oms-champ--actu mb-4" id="actualite1" name="actualite" rows="5" placeholder="Actualité..."></textarea>
+                <textarea class="form-control oms-champ oms-champ--actu mb-4" id="actualite3" name="actualite" rows="5" placeholder="Actualité..."></textarea>
               <div class="d-flex justify-content-between gap-3 mb-5">
                 <button type="submit" class="oms-btn"><span>Publier actualité 3</span></button>
-                <p type="text" class="text-white  fw-bold text-uppercase mb-0 text-align-center" id="nom-fichier" style="font-size: 1rem;">Aucune image sélectionnée</p>
-                <button type="button" class="oms-btn oms-btn--blanc"onclick="document.getElementById('explorateur').click();" ><span>Importer image</span></button>
+                <p class="nom-fichier text-white fw-bold text-uppercase mb-0" style="font-size: 1rem;">Aucune image sélectionnée</p>
+                <button type="button" class="oms-btn oms-btn--blanc" data-image-picker><span>Importer image</span></button>
               </div>
             </div>
           </form>
@@ -434,13 +434,22 @@ require_once 'check_auth.php';
     </div>
   </footer>
   <script>
-// Petit bonus JS pour afficher le nom du fichier choisi dans le span
-document.getElementById('explorateur').addEventListener('change', function(e) {
-    if (e.target.files.length > 0) {
-        document.getElementById('nom-fichier').textContent = e.target.files[0].name;
-    }
-});
-</script>
+    document.querySelectorAll('form[action^="add_actualite.php"]').forEach(function (form) {
+      const fileInput = form.querySelector('input[name="monImage"]');
+      const fileName = form.querySelector('.nom-fichier');
+      const pickerButton = form.querySelector('[data-image-picker]');
+
+      pickerButton.addEventListener('click', function () {
+        fileInput.click();
+      });
+
+      fileInput.addEventListener('change', function () {
+        fileName.textContent = fileInput.files.length
+          ? fileInput.files[0].name
+          : 'Aucune image sélectionnée';
+      });
+    });
+  </script>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
