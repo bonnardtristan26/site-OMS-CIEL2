@@ -63,6 +63,9 @@ try {
     $pepparticiper = $pdo->prepare('INSERT INTO participer (id_participant, id_stage) VALUES (?, ?)');
     $pepparticiper->execute([$id_participant, $id_stage]);
 
+    $compteur = $pdo->prepare('UPDATE stage SET nb_inscrits = COALESCE(nb_inscrits, 0) + 1 WHERE id_stage = ?');
+    $compteur->execute([$id_stage]);
+
     $pdo->commit();
 } catch (Throwable $e) {
     if ($pdo->inTransaction()) {

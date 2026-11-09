@@ -35,12 +35,10 @@ $description = (string) ($stage['description'] ?? '');
 $image = (string) ($stage['image_path'] ?? '');
 $nbInscrits = max(0, (int) ($stage['nb_inscrits'] ?? 0));
 $nbPlaces = max(0, (int) ($stage['nb_places'] ?? 0));
-$typeActivite = strtolower((string) ($stage['type_activite'] ?? ''));
-$classeCouleur = strtolower($intitule) === 'padel'
-  ? 'oms-theme-green'
-  : (str_contains($typeActivite, 'mer')
-    ? 'oms-theme-blue'
-    : (str_contains($typeActivite, 'plein air') ? 'oms-theme-green' : 'oms-theme-red'));
+$typeActivite = str_replace('-', ' ', strtolower((string) ($stage['type_activite'] ?? '')));
+$classeCouleur = str_contains($typeActivite, 'mer')
+  ? 'oms-theme-blue'
+  : (str_contains($typeActivite, 'plein air') ? 'oms-theme-green' : 'oms-theme-red');
 ?>
 <html lang="fr">
 <head>

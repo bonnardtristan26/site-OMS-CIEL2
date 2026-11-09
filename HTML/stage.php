@@ -69,10 +69,10 @@ try {
           <?php
           $intitule = (string) ($stage['intitule'] ?? 'Stage');
           $activite = str_replace('-', ' ', strtolower((string) ($stage['type_activite'] ?? '')));
-          if (strtolower($intitule) === 'padel' || str_contains($activite, 'plein air')) {
-            $classeCouleur = 'stage-green';
-          } elseif (str_contains($activite, 'mer')) {
+          if (str_contains($activite, 'mer')) {
             $classeCouleur = 'stage-blue';
+          } elseif (str_contains($activite, 'plein air')) {
+            $classeCouleur = 'stage-green';
           } else {
             $classeCouleur = 'stage-red';
           }
