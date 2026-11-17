@@ -219,7 +219,7 @@ CREATE TABLE participer (
 -- ----------------------------------------------------------------------------
 INSERT INTO `stage` (`id_stage`, `intitule`, `type_activite`, `niveau_etude`, `description`, `nb_inscrits`, `nb_places`, `image_path`, `date_stage`, `heure_stage`) VALUES
 (1, 'padel', 'jeu de ballon', 'college', 'Le padel est un sport de raquette ludique, accessible et ultra-dynamique qui se joue en double sur un court réduit entouré de vitres.', 13, 20, '../Annexes/Images/padel.jpg', '2026-10-19', '09:00:00'),
-(2, 'Foot', 'jeu de ballon', 'college', 'Le football est un sport collectif stratégique, intense et populaire qui se joue à onze sur un grand terrain herbé encadré de cages.', 20, 20, '../Annexes/Images/football.jpg', '2026-10-20', '14:00:00'),
+(2, 'Foot', 'jeu de ballon', 'college', 'Le football est un sport collectif stratégique, intense et populaire qui se joue à onze sur un grand terrain herbé encadré de cages.', 20, 20, '../Annexes/Images/foot.jpg', '2026-10-20', '14:00:00'),
 (3, 'surf', 'jeu en mer', 'college', 'Le surf est un sport de glisse exigeant qui se pratique sur les vagues, alliant équilibre, lecture de l\'océan et sensations fortes.', 15, 20, '../Annexes/Images/surf.jpg', '2026-10-21', '09:30:00'),
 (4, 'Basket', 'jeu de ballon', 'college', 'Le basket-ball est un sport collectif rythmé qui se joue à cinq contre cinq, mêlant vitesse, précision et esprit d\'équipe.', 6, 20, '../Annexes/Images/basket.jpg', '2026-10-22', '14:00:00'),
 (5, 'Volley', 'jeu de ballon', 'college', 'Le volley-ball se joue à six sur un terrain séparé par un filet, avec pour objectif de faire tomber le ballon dans le camp adverse.', 17, 20, '../Annexes/Images/volley.jpg', '2026-10-23', '10:00:00');
