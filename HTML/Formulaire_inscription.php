@@ -35,6 +35,13 @@ $description = (string) ($stage['description'] ?? '');
 $image = (string) ($stage['image_path'] ?? '');
 $nbInscrits = max(0, (int) ($stage['nb_inscrits'] ?? 0));
 $nbPlaces = max(0, (int) ($stage['nb_places'] ?? 0));
+$dateStage = DateTimeImmutable::createFromFormat('!Y-m-d', (string) ($stage['date_stage'] ?? ''));
+$dateAffichee = $dateStage ? $dateStage->format('d/m/Y') : '';
+$heureAffichee = substr((string) ($stage['heure_stage'] ?? ''), 0, 5);
+$horaire = $dateAffichee !== '' ? 'Le ' . $dateAffichee : '';
+if ($heureAffichee !== '') {
+  $horaire .= ($horaire !== '' ? ' à ' : 'À ') . $heureAffichee;
+}
 $typeActivite = str_replace('-', ' ', strtolower((string) ($stage['type_activite'] ?? '')));
 $classeCouleur = str_contains($typeActivite, 'mer')
   ? 'oms-theme-blue'
@@ -96,6 +103,9 @@ $classeCouleur = str_contains($typeActivite, 'mer')
           <span class="oms-badge" aria-label="<?= $nbInscrits ?> inscrits sur <?= $nbPlaces ?> places"><?= $nbInscrits ?>/<?= $nbPlaces ?></span>
 
           <h1 class="oms-title"><?= htmlspecialchars(strtoupper($intitule), ENT_QUOTES, 'UTF-8') ?></h1>
+          <?php if ($horaire !== ''): ?>
+            <p class="oms-schedule"><i class="bi bi-calendar-event" aria-hidden="true"></i> <?= htmlspecialchars($horaire, ENT_QUOTES, 'UTF-8') ?></p>
+          <?php endif; ?>
           <p class="oms-description"><?= htmlspecialchars($description, ENT_QUOTES, 'UTF-8') ?></p>
 
           <form action="inscription.php"  method="post" class="oms-form">
@@ -169,7 +179,7 @@ $classeCouleur = str_contains($typeActivite, 'mer')
   <!-- FOOTER -->
   <footer class="oms-footer py-3">
     <div class="container-fluid d-flex flex-wrap justify-content-between align-items-center gap-2">
-      <p>Dernière mise à jour 15/09/2026&nbsp;&nbsp;-&nbsp;&nbsp;Adresse&nbsp;: 25 Rue de Strasbourg 44000 NANTES - <a href="FAQ.php">FAQ</a></p>
+      <p>Dernière mise à jour 17/11/2026&nbsp;&nbsp;-&nbsp;&nbsp;Adresse&nbsp;: 25 Rue de Strasbourg 44000 NANTES - <a href="FAQ.php">FAQ</a></p>
       <img src="../Annexes/Images/logo_ball_oms.svg" alt="" class="ball-icon">
     </div>
   </footer>

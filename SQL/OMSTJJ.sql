@@ -1,68 +1,4 @@
--- ============================================================================
---  SCRIPT DE CREATION DE LA BASE DE DONNEES — VERSION CORRIGEE ET FUSIONNEE
---  (corrections du script original + modifications du client conservées)
---  Généré d'après le schéma (MCD) fourni : toutes les tables et toutes
---  liaisons (associations) du schéma sont reprises ci-dessous.
---
---  SGBD cible : MySQL / MariaDB
---  IMPORTANT : ENGINE=InnoDB est imposé sur chaque table, car c'est le seul
---  moteur qui crée réellement les clés étrangères (les jonctions). Avec le
---  moteur MyISAM, les FOREIGN KEY seraient ignorées silencieusement et les
---  tables resteraient indépendantes.
---
---  Remarque : les accents et apostrophes ont été retirés des identifiants
---  pour garantir la compatibilité (prénom -> prenom, intitulé -> intitule,
---  niveau_d'étude -> niveau_d_etude, lien_parenté -> lien_parente, ...).
---
---  CORRECTIONS APPORTEES PAR RAPPORT AU SCRIPT ORIGINAL :
---   1. Table Admin : ajout de la colonne `mdp` VARCHAR(64) NOT NULL pour
---      stocker le hash SHA-256 du mot de passe (toujours 64 caractères
---      hexadécimaux).
---   2. Table Stage : ajout de la colonne `image_path` VARCHAR(255) —
---      colonne simple, PAS une clé étrangère vers la table Image.
---   3. Table Image : suppression de la contrainte FOREIGN KEY cassée
---      (virgule manquante après la clé primaire, colonne `id_dossier`
---      inexistante, et table Galerie référencée avant d'être créée).
---   4. Tables Galerie et Image : ajout de `id_stage` dans Galerie et de
---      `Image.id_dossier` pour rattacher plusieurs photos à une galerie.
---      `Galerie.id_image` reste une image de couverture facultative.
---   5. Ordre de création réorganisé : les tables référencées (Admin,
---      Image, Actualites, Stage, Utilisateur) sont créées AVANT Galerie et
---      les tables de jonction, sinon MySQL refuse les FOREIGN KEY.
---   6. Faute de frappe `Gallerie` corrigée en `Galerie` partout (DROP et
---      clés étrangères des tables alimenter / consulter).
---   7. Ajout des données : INSERT des 5 stages + 1 compte admin exemple.
---   8. Ajout de `SET NAMES utf8mb4;` en en-tête : sans cette ligne, un client
---      configuré en latin1 interprète mal les accents à l'import (le `é`
---      compte double -> erreur « Data too long for column 'description' »).
---   9. Table Stage : ajout des colonnes `date_stage` (DATE) et
---      `heure_stage` (TIME), utilisées par l'affichage PHP
---      (« Le {date_stage} A {heure_stage} »), avec des valeurs dans les INSERT.
---
---  MODIFICATIONS DU CLIENT (conservées telles quelles) :
---   10. Élargissement des colonnes VARCHAR pour stocker les textes complets :
---       - Utilisateur : niveau_d_etude, sexe, nom_enfant, prenom_enfant,
---         nom_parent, prenom_parent, lien_parente -> VARCHAR(100),
---         mail, mail_secours -> VARCHAR(200)
---       - Actualites : intitule -> VARCHAR(100)
---       - Stage : intitule, type_activite, niveau_etude -> VARCHAR(100),
---         description -> VARCHAR(255)
---       - Galerie : dossier_stage -> VARCHAR(100)
---   11. Descriptions des 5 stages en texte intégral dans les INSERT
---       (apostrophes échappées : l\'océan, l\'équipe).
---
---  AJOUT SUPPLÉMENTAIRE (demande du client) :
---   12. Table Utilisateur : ajout de la colonne `id_stage` (nullable) avec
---       la clé étrangère nommée `fk_utilisateur_stage` vers Stage(id_stage),
---       pour indiquer à quel stage l'utilisateur est inscrit
---       (NULL = pas encore inscrit). À noter : la table de jonction
---       `participer` (0,n)----(0,n) modélise déjà ce lien en version N:N.
--- ============================================================================
-
 SET NAMES utf8mb4;
-
-
-
 
 -- ----------------------------------------------------------------------------
 -- Suppression préalable (permet de ré-exécuter le script sans erreur,
@@ -90,7 +26,7 @@ DROP TABLE IF EXISTS Admin;
 -- hexadécimaux. Génération : SHA2('motdepasse', 256) en MySQL/MariaDB,
 -- ou hash('sha256', $motDePasse) côté PHP.
 -- ----------------------------------------------------------------------------
-CREATE TABLE Admin (
+CREATE TABLE admin (
     id_utilisateur INTEGER     NOT NULL AUTO_INCREMENT,
     nom            VARCHAR(50),
     prenom         VARCHAR(50),
@@ -102,7 +38,7 @@ CREATE TABLE Admin (
 -- Table Image
 -- `id_dossier` rattache chaque photo à sa galerie (plusieurs images par galerie).
 -- ----------------------------------------------------------------------------
-CREATE TABLE Image (
+CREATE TABLE image (
     id_image     INTEGER     NOT NULL AUTO_INCREMENT,
     id_dossier   INTEGER     COMMENT 'Galerie (dossier) contenant l''image',
     chemin_image VARCHAR(255),
@@ -113,7 +49,7 @@ CREATE TABLE Image (
 -- Table Actualites  (« Actualités » sur le schéma)
 -- (intitule élargi — modif client)
 -- ----------------------------------------------------------------------------
-CREATE TABLE Actualites (
+CREATE TABLE actualites (
     id_actu      INTEGER     NOT NULL,
     chemin_image VARCHAR(255),
     intitule     VARCHAR(100),
@@ -129,7 +65,7 @@ CREATE TABLE Actualites (
 -- (« Le {date_stage} A {heure_stage} -- Il reste X place(s) »)
 -- (colonnes VARCHAR élargies — modif client)
 -- ----------------------------------------------------------------------------
-CREATE TABLE Stage (
+CREATE TABLE stage (
     id_stage      INTEGER     NOT NULL AUTO_INCREMENT,
     intitule      VARCHAR(100),
     type_activite VARCHAR(100),
@@ -150,7 +86,7 @@ CREATE TABLE Stage (
 -- inscrit (NULL = pas encore inscrit). La jonction N:N `participer`
 -- permet en outre d'inscrire un utilisateur à plusieurs stages.
 -- ----------------------------------------------------------------------------
-CREATE TABLE Utilisateur (
+CREATE TABLE utilisateur (
     id_participant        INTEGER     NOT NULL  AUTO_INCREMENT,
     age                   SMALLINT,
     niveau_d_etude        VARCHAR(100),
@@ -177,7 +113,7 @@ CREATE TABLE Utilisateur (
 -- `id_image` est une couverture facultative ; les photos sont liées via
 -- Image.id_dossier. `dossier_stage` élargi — modif client.
 -- ----------------------------------------------------------------------------
-CREATE TABLE Galerie (
+CREATE TABLE galerie (
     id_dossier    INTEGER     NOT NULL AUTO_INCREMENT,
     id_image      INTEGER     COMMENT 'Image de couverture (facultative)',
     id_stage      INTEGER,

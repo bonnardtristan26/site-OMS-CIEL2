@@ -190,6 +190,15 @@ body {
   color: #eafff0;
 }
 
+.oms-schedule {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  max-width: 620px;
+  margin: -0.25rem 0 1.25rem;
+  font-weight: 700;
+}
+
 .oms-section-title {
   font-weight: 800;
   font-size: 1.15rem;

@@ -222,8 +222,14 @@ main {
 
 .stage-text h2 {
   font-size: clamp(1.4rem, 2.5vw, 2.4rem);
-  margin: 0 0 16px 0;
+  margin: 0 0 8px 0;
   line-height: 1;
+}
+
+.stage-schedule {
+  font-weight: 700;
+  margin: 0 0 6px 0;
+  font-size: 0.95rem;
 }
 
 .stage-level {
@@ -266,7 +272,8 @@ main {
 @media (max-width: 767.98px) {
   .stage-banner { height: 230px; max-height: 230px; --lean: 8px; --panel-w: 70%; }
   .stage-text { padding: 42px 40px 16px 24px; }
-  .stage-text h2 { font-size: 1.4rem; margin-bottom: 8px; }
+  .stage-text h2 { font-size: 1.4rem; margin-bottom: 5px; }
+  .stage-schedule { font-size: 0.8rem; margin-bottom: 4px; }
   .stage-desc { font-size: 0.85rem; }
   .stage-badge {
     top: 0;
@@ -282,6 +289,7 @@ main {
   .stage-banner { height: 190px; max-height: 190px; --lean: 6px; --panel-w: 66%; }
   .stage-text { padding: 34px 24px 12px 18px; }
   .stage-text h2 { font-size: 1.05rem; }
+  .stage-schedule { font-size: 0.68rem; }
   .stage-level { font-size: 0.75rem; }
   .stage-desc { font-size: 0.72rem; }
   .stage-badge {
