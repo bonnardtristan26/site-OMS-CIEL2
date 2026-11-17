@@ -44,12 +44,19 @@ if ($id_stage === false || $id_stage === null || $id_stage < 1) {
 $pdo->beginTransaction();
 
 try {
-    $stage = $pdo->prepare('SELECT id_stage FROM stage WHERE id_stage = ?');
+    $stage = $pdo->prepare('SELECT id_stage, nb_inscrits, nb_places FROM stage WHERE id_stage = ? FOR UPDATE');
     $stage->execute([$id_stage]);
-    if (!$stage->fetchColumn()) {
+    $stageData = $stage->fetch(PDO::FETCH_ASSOC);
+    if (!$stageData) {
         $pdo->rollBack();
         http_response_code(400);
         exit('Le stage demandé n’existe pas.');
+    }
+
+    if ((int) $stageData['nb_inscrits'] >= (int) $stageData['nb_places']) {
+        $pdo->rollBack();
+        header('Location: Formulaire_inscription.php?id_stage=' . $id_stage . '&complet=1');
+        exit;
     }
 
     $stmt = $pdo->prepare("INSERT INTO utilisateur (nom_enfant, prenom_enfant, age, sexe, niveau_d_etude, nom_parent, prenom_parent, lien_parente, num_tel, mail, num_tel_secours, mail_secours) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");

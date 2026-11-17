@@ -35,6 +35,7 @@ $description = (string) ($stage['description'] ?? '');
 $image = (string) ($stage['image_path'] ?? '');
 $nbInscrits = max(0, (int) ($stage['nb_inscrits'] ?? 0));
 $nbPlaces = max(0, (int) ($stage['nb_places'] ?? 0));
+$stageComplet = $nbInscrits >= $nbPlaces;
 $dateStage = DateTimeImmutable::createFromFormat('!Y-m-d', (string) ($stage['date_stage'] ?? ''));
 $dateAffichee = $dateStage ? $dateStage->format('d/m/Y') : '';
 $heureAffichee = substr((string) ($stage['heure_stage'] ?? ''), 0, 5);
@@ -108,6 +109,9 @@ $classeCouleur = str_contains($typeActivite, 'mer')
           <?php endif; ?>
           <p class="oms-description"><?= htmlspecialchars($description, ENT_QUOTES, 'UTF-8') ?></p>
 
+          <?php if ($stageComplet): ?>
+            <p class="alert alert-light" role="status">Ce stage est complet, les inscriptions sont fermées.</p>
+          <?php else: ?>
           <form action="inscription.php"  method="post" class="oms-form">
             <h2 class="oms-section-title">Informations concernant l'enfant</h2>
 
@@ -161,6 +165,7 @@ $classeCouleur = str_contains($typeActivite, 'mer')
             <button type="submit" class="oms-submit-button"><span>Envoyer</span></button>
             <input type="hidden" name="id_stage" value="<?= (int) $idStage ?>">
           </form>
+          <?php endif; ?>
 
         </div>
 
