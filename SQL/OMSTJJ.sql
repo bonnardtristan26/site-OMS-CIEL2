@@ -258,7 +258,7 @@ INSERT INTO Admin (id_utilisateur, nom, prenom, mdp) VALUES
 -- ----------------------------------------------------------------------------
 
 -- ============================================================================
--- Fin du script corrigé et fusionné : 11 tables, 13 clés étrangères nommées
+-- Fin du script corrigé et fusionné : 11 tables, 14 clés étrangères nommées
 -- (10 dans les 5 tables de jonction + 2 dans Galerie : image et stage
---  + 1 dans Utilisateur : inscription à un stage)
+--  + 1 dans Image : galerie + 1 dans Utilisateur : inscription à un stage)
 -- ============================================================================
