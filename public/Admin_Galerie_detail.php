@@ -246,7 +246,7 @@ $dateStage = $galerie['date_stage'] ? date('d/m/Y', strtotime($galerie['date_sta
   <footer class="oms-footer">
     <div class="container-fluid px-4 px-lg-5 d-flex align-items-center justify-content-between py-3">
       <p class="mb-0 fw-bold" style="font-size:1rem;">
-        Dernière mise à jour 07/09/2026 - Adresse : 25 Rue de Strasbourg 44000 NANTES -
+        Dernière mise à jour 17/11/2026 - Adresse : 25 Rue de Strasbourg 44000 NANTES -
         <a href="#" class="text-white text-decoration-none">FAQ</a>
       </p>
       <img src="../Annexes/Images/logo_ball_oms.svg" alt="" class="ballon" aria-hidden="true">

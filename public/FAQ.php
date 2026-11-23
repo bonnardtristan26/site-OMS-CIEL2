@@ -86,7 +86,7 @@
         <!-- container-fluid : pleine largeur ; d-flex : Flexbox ; flex-wrap : retour à la ligne sur petit écran -->
         <!-- justify-content-between : éloigne le texte du logo ; align-items-center : centre verticalement ; gap-2 : espace entre les éléments -->
         <div class="container-fluid d-flex flex-wrap justify-content-between align-items-center gap-2">
-            <p>Dernière mise à jour 15/09/2026&nbsp;&nbsp;-&nbsp;&nbsp;Adresse&nbsp;: 25 Rue de Strasbourg 44000 NANTES - <a href="FAQ.php">FAQ</a></p>
+            <p>Dernière mise à jour 17/11/2026&nbsp;&nbsp;-&nbsp;&nbsp;Adresse&nbsp;: 25 Rue de Strasbourg 44000 NANTES - <a href="FAQ.php">FAQ</a></p>
             <img src="../Annexes/Images/logo_ball_oms.svg" alt="" class="ball-icon">
         </div>
     </footer>

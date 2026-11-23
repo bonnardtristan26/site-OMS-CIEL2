@@ -76,7 +76,13 @@ try {
             $classeCouleur = 'stage-red';
           }
           $image = (string) ($stage['image_path'] ?? '');
-          
+          $dateStage = DateTimeImmutable::createFromFormat('!Y-m-d', (string) ($stage['date_stage'] ?? ''));
+          $dateAffichee = $dateStage ? $dateStage->format('d/m/Y') : '';
+          $heureAffichee = substr((string) ($stage['heure_stage'] ?? ''), 0, 5);
+          $horaire = $dateAffichee !== '' ? 'Le ' . $dateAffichee : '';
+          if ($heureAffichee !== '') {
+            $horaire .= ($horaire !== '' ? ' à ' : 'À ') . $heureAffichee;
+          }
           ?>
           <a class="stage-link" href="Formulaire_inscription.php<?= '?id_stage=' . urlencode((string) ($stage['id_stage'] ?? '')) ?>">
             <article class="stage-banner <?= $classeCouleur ?>">
@@ -86,6 +92,9 @@ try {
               <div class="stage-text">
                 <span class="stage-badge"><?= (int) ($stage['nb_inscrits'] ?? 0) ?><span>/<?= (int) ($stage['nb_places'] ?? 0) ?></span></span>
                 <h2 class="font-title"><?= htmlspecialchars(strtoupper($intitule), ENT_QUOTES, 'UTF-8') ?></h2>
+                <?php if ($horaire !== ''): ?>
+                  <p class="stage-schedule"><?= htmlspecialchars($horaire, ENT_QUOTES, 'UTF-8') ?></p>
+                <?php endif; ?>
                 <p class="stage-level">Niveaux : <?= htmlspecialchars((string) ($stage['niveau_etude'] ?? ''), ENT_QUOTES, 'UTF-8') ?></p>
                 <p class="stage-desc"><?= htmlspecialchars((string) ($stage['description'] ?? ''), ENT_QUOTES, 'UTF-8') ?></p>
               </div>
@@ -100,7 +109,7 @@ try {
   <!-- FOOTER -->
   <footer class="oms-footer py-3">
     <div class="container-fluid d-flex flex-wrap justify-content-between align-items-center gap-2">
-      <p>Dernière mise à jour 07/09/2026&nbsp;&nbsp;-&nbsp;&nbsp;Adresse&nbsp;: 25 Rue de Strasbourg 44000 NANTES - <a href="FAQ.php">FAQ</a></p>
+      <p>Dernière mise à jour 17/11/2026&nbsp;&nbsp;-&nbsp;&nbsp;Adresse&nbsp;: 25 Rue de Strasbourg 44000 NANTES - <a href="FAQ.php">FAQ</a></p>
       <a href="Admin_login.php" aria-label="Accéder à la connexion administrateur">
         <img src="../Annexes/Images/logo_ball_oms.svg" alt="" class="ball-icon" style="height:34px;width:auto;">
       </a>
