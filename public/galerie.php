@@ -4,9 +4,8 @@ $erreurChargement = false;
 
 try {
   $pdo = new PDO(
-    'mysql:host=localhost;dbname=omstjj;charset=utf8mb4',
-    'root',
-    '',
+    'mysql:host=localhost;dbname=ciel2627-b2;charset=utf8mb4',
+    'ciel2627-b2', 'jtWccys1j0%l$6NJ', 
     [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
   );
   $requete = $pdo->query(

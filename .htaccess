@@ -1,0 +1,6 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Redirection visible vers https://ciel.campus-sfls.fr/public/
+    RewriteRule ^(.*)$ https://ciel.campus-sfls.fr/public/ [R=302,L]
+</IfModule>

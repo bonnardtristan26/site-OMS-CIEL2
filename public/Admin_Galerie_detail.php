@@ -40,7 +40,7 @@ $dateStage = $galerie['date_stage'] ? date('d/m/Y', strtotime($galerie['date_sta
 
   <style>
     /* ============ OMS – Thème administration ============ */
-    :root{
+    :ciel2627-b2{
       --oms-rouge:#ff0000;
       --oms-rouge-fonce:#b00000;
       --oms-sombre:#101b17;

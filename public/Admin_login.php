@@ -1,15 +1,16 @@
 <?php
-require_once 'check_auth.php';
-$pdo = new PDO('mysql:host=localhost;dbname=omstjj;charset=utf8mb4',
-    'root', '', [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
-$stages = $pdo->query("SELECT * FROM stage")->fetchAll(PDO::FETCH_ASSOC);
+session_start();
+try {
+ $pdo = new PDO('mysql:host=localhost;dbname=ciel2627-b2;charset=utf8mb4',
+ 'ciel2627-b2', 'jtWccys1j0%l$6NJ',  [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
+} catch (PDOException $e) { $releve = false; }
 ?>
 <!doctype html>
 <html lang="fr">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>OMS | Admin – Stage</title>
+  <title>OMS | Connexion Admin</title>
   <link rel="icon" type="image/svg+xml" href="../Annexes/Images/logo_ball_oms.svg">
 
   <!-- Bootstrap 5.3.8 (dernière version stable) -->
@@ -48,11 +49,6 @@ $stages = $pdo->query("SELECT * FROM stage")->fetchAll(PDO::FETCH_ASSOC);
     /* ---- Bandeau rouge ---- */
     .oms-rouge{background:var(--oms-rouge);}
 
-    /* Le bandeau rouge remplit la hauteur jusqu'au pied de page */
-    .oms-main{display:flex;flex-direction:column;}
-    .oms-main>.container{display:flex;flex-direction:column;flex:1 1 auto;}
-    .oms-main>.container>section{flex:1 1 auto;display:flex;flex-direction:column;}
-
     /* ---- Onglets de navigation admin ---- */
     .oms-tabs{display:flex;align-items:stretch;}
     .oms-tab{
@@ -70,8 +66,8 @@ $stages = $pdo->query("SELECT * FROM stage")->fetchAll(PDO::FETCH_ASSOC);
     .oms-ligne{display:flex;align-items:center;gap:1rem;padding:.95rem 1.5rem;}
     .oms-ligne + .oms-ligne{border-top:2px solid #fff;}
     .oms-sport{font-family:'Lalezar',sans-serif;font-size:1.75rem;color:#fff;letter-spacing:.04em;min-width:230px;}
-    .oms-date{flex:1 1 auto;color:#fff;font-weight:700;font-size:auto rem;}
-   
+    .oms-date{flex:1 1 auto;color:#fff;font-weight:700;font-size:1.45rem;}
+
     /* ---- Boutons "parallelogramme" ---- */
     .oms-btn{
       display:inline-block;border:0;border-radius:0;cursor:pointer;
@@ -142,41 +138,31 @@ $stages = $pdo->query("SELECT * FROM stage")->fetchAll(PDO::FETCH_ASSOC);
     </div>
   </header>
 
-  <!-- ===================== GESTION DES STAGES ===================== -->
-  <main class="oms-main pt-4 pb-0">
-    <div class="container">
-      <section class="oms-rouge p-4 p-lg-4">
+  <!-- ===================== CONNEXION ===================== -->
+  <main class="py-4 py-md-5">
+    <div class="container" style="max-width:790px;">
+      <section class="oms-rouge p-4 p-lg-5 text-center">
+        <h1 class="titre oms-h1 text-white mb-4" style="font-size:4rem;">Connexion Admin</h1>
 
-        <nav class="oms-tabs mb-4 mb-lg-5" aria-label="Navigation administration">
-          <span class="oms-sep" aria-hidden="true"></span>
-          <a class="oms-tab actif" href="Admin_Stage.php" aria-current="page">Stage</a>
-          <span class="oms-sep" aria-hidden="true"></span>
-          <a class="oms-tab" href="Admin_Galerie.php">Galerie</a>
-          <span class="oms-sep" aria-hidden="true"></span>
-          <a class="oms-tab" href="Admin_Accueil.php">Accueil</a>
-          <span class="oms-sep" aria-hidden="true"></span>
-          <a class="oms-tab" href="Admin_Utilisateur.php">Utilisateur</a>
-          <span class="oms-sep" aria-hidden="true"></span>
+        <p class="text-white fw-bold text-uppercase mb-4" style="font-size:1.6rem;">Informations de connexion</p>
 
+        <form action="login.php" method="post" class="row justify-content-center g-0">
+          <input type="hidden" name="hash" id="hash">
+          <div class="col-12 col-md-10">
+            <div class="mb-3">
+              <label for="identifiant" class="visually-hidden">Identifiant</label>
+              <input type="text" class="form-control oms-champ" id="identifiant" name="identifiant" placeholder="Identifiant...">
+            </div>
+            <div class="mb-4">
+              <label for="motdepasse" class="visually-hidden">Mot de passe</label>
+              <input type="password" class="form-control oms-champ" id="motdepasse" name="motdepasse" placeholder="Mot de passe...">
+            </div>
+              <button type="submit" class="oms-btn"><span>Se connecter</span></button>
 
-        </nav>
-
-        <div class="oms-liste px-3 px-lg-4 py-2 mb-4">
-        <?php foreach ($stages as $stage): ?>
-        <form class="oms-ligne " action="delete_stage.php" method="post">
-            <span class="oms-sport"><?php echo htmlspecialchars($stage['intitule']); ?></span>
-            <span class="oms-date">Le <?php echo htmlspecialchars($stage['date_stage']); ?> A <?php echo htmlspecialchars($stage['heure_stage']); ?> -- Il reste <?php echo htmlspecialchars($stage['nb_places'] - $stage['nb_inscrits']); ?> place(s)</span>
-            <input type="hidden" name="stage_id" value="<?php echo htmlspecialchars($stage['id_stage']); ?>">
-            <button type="submit" class="oms-btn oms-btn--x" aria-label="Supprimer le stage <?php echo htmlspecialchars($stage['intitule']); ?>"><span>X</span></button>
-            <button type="button" class="oms-btn oms-btn--blanc"><span>Télécharger la liste d'appelle</span></button>
+          </div>
         </form>
-        <?php endforeach; ?>
-        </div>
-
-        <div>
-          <a href="Admin_création_stage.php" type="button" class="oms-btn" ><span>Créer un stage</span></a>
-        </div>
-
+         <p id="motdepasse-incorecrt" class="text-white fw-bold text-uppercase mt-4" style="font-size: 0.6em;"> </p>
+        </a>
       </section>
     </div>
   </main>
@@ -191,7 +177,17 @@ $stages = $pdo->query("SELECT * FROM stage")->fetchAll(PDO::FETCH_ASSOC);
       <img src="../Annexes/Images/logo_ball_oms.svg" alt="" class="ballon" aria-hidden="true">
     </div>
   </footer>
-
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Vérifier si l'URL contient le paramètre "error"
+    const urlParams = new URLSearchParams(window.location.search);
+    const errorParam = urlParams.get('error');
+
+    if (errorParam === '1') {
+      // Afficher le message d'erreur
+      const errorMessage = document.getElementById('motdepasse-incorecrt');
+      errorMessage.textContent = "Nom d'utilisateur ou mot de passe incorrect.";
+    }
+  </script>
 </body>
 </html>

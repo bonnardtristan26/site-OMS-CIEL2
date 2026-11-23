@@ -4,13 +4,12 @@ $erreurActualites = false;
 
 try {
     $pdo = new PDO(
-        'mysql:host=localhost;dbname=omstjj;charset=utf8mb4',
-        'root',
-        '',
+        'mysql:host=localhost;dbname=ciel2627-b2;charset=utf8mb4',
+        'ciel2627-b2', 'jtWccys1j0%l$6NJ', 
         [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
     );
     $actualites = $pdo->query(
-        'SELECT id_actu, intitule, description, chemin_image FROM Actualites ORDER BY id_actu DESC'
+        'SELECT id_actu, intitule, description, chemin_image FROM actualites ORDER BY id_actu DESC'
     )->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
     $erreurActualites = true;

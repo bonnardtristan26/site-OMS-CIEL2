@@ -316,7 +316,7 @@ require_once 'check_auth.php';
             font-size : 1.2rem;
         }
 
-        input[type="checkbox"] {
+        input[type="radio"] {
             display : none;
         }
 
@@ -417,15 +417,6 @@ require_once 'check_auth.php';
         .oms-info {
             color: #fff;
             font-weight: 700;
-        }
-
-        .oms-photo-apercu {
-            display: block;
-            max-width: min(100%, 320px);
-            max-height: 220px;
-            object-fit: contain;
-            margin-top: .75rem;
-            background: #fff;
         }
 
         .oms-depot {
@@ -553,13 +544,13 @@ require_once 'check_auth.php';
                 </div>
 
                 <div class="div_check">
-                    <input type="checkbox" id="check_1" name="type_activite[]" value="jeu de ballon">
+                    <input type="radio" id="check_1" name="type_activite" value="jeu de ballon">
                     <label class="label_check_1" for="check_1"></label><p>JEU DE BALLE</p>
 
-                    <input type="checkbox" id="check_2" name="type_activite[]" value="jeu en mer">
+                    <input type="radio" id="check_2" name="type_activite" value="jeu en mer">
                     <label class="label_check_2" for="check_2"></label><p>JEU EN MER</p>
 
-                    <input type="checkbox" id="check_3" name="type_activite[]" value="jeu en plein-air">
+                    <input type="radio" id="check_3" name="type_activite" value="jeu en plein-air">
                     <label class="label_check_3" for="check_3"></label><p>JEU EN PLEIN-AIR</p>
                 </div>
 
@@ -586,41 +577,27 @@ require_once 'check_auth.php';
 
                 <label for="places_restantes" class="oms-label">Nombre de places</label>
                 <div class="d-flex align-items-center gap-2 mb-4">
-                    <div class="recenter">
                     <!-- Flèche précédente -->
-                        <button type="button" class="fleche fleche-gauche" aria-label="Retirer une place" data-places="-1">
-                            <svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-                                <polygon points="100,0 0,50 100,100" />
-                            </svg>
-                        </button>
-
-                        <input type="number" id="places_restantes" name="nb_places" value="1" min="1" required
-                            style="text-align: center" class="mb-3"/>
-
-                        <!-- Flèche suivante -->
-                        <button type="button" class="fleche fleche-droite" aria-label="Ajouter une place" data-places="1">
-                            <svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-                                <polygon points="0,0 100,50 0,100" />
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-
-                <div class="mb-4">
-                    <label for="photo_stage" class="oms-label">Photo d’illustration du stage</label>
-                    <input type="file" id="photo_stage" name="photo" accept="image/jpeg,image/png,image/gif,image/webp"
-                        class="visually-hidden">
-                    <button type="button" class="oms-btn oms-btn--blanc mb-2" data-ouvrir="photo_stage">
-                        <span>Importer une photo</span>
+                    <button type="button" class="fleche fleche-gauche" aria-label="Retirer une place" data-places="-1">
+                        <svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+                            <polygon points="100,0 0,50 100,100" />
+                        </svg>
                     </button>
-                    <p class="oms-info mb-0" id="nom_photo">Aucune photo sélectionnée</p>
-                    <img id="apercu_photo" class="oms-photo-apercu" alt="Aperçu de la photo d’illustration du stage" hidden>
+
+                    <input type="text" id="places_restantes" value="0" style="text-align: center" class="mb-3"/>
+
+                    <!-- Flèche suivante -->
+                    <button type="button" class="fleche fleche-droite" aria-label="Ajouter une place" data-places="1">
+                        <svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+                            <polygon points="0,0 100,50 0,100" />
+                        </svg>
+                    </button>
                 </div>
 
-                <p class="oms-statut mb-4" id="statut" role="status" aria-live="polite" hidden></p>
-                <button type="submit" class="oms-btn" id="btn_ajouter"><span>Ajouter le stage</span></button>
+                <button type="button" class="oms-btn mb-4"><span>Importer ue photo</span></button>
 
-                </form>
+                <button type="button" class="oms-btn"><span>Téléverser un dossier</span></button>
+
             </section>
         </div>
     </main>
@@ -644,9 +621,9 @@ require_once 'check_auth.php';
             const places = document.getElementById('places_restantes');
             const photo = document.getElementById('photo_stage');
             const statut = document.getElementById('statut');
-            const bouton = document.getElementById('btn_ajouter');
-            const apercuPhoto = document.getElementById('apercu_photo');
-            let urlApercuPhoto = null;
+            const bouton = document.getElementById('btn_creer');
+            const infoDossier = document.getElementById('info_dossier');
+            let imagesGalerie = [];
 
             // Boutons "Importer une photo" / "Téléverser un dossier"
             document.querySelectorAll('[data-ouvrir]').forEach(function (btn) {
@@ -666,11 +643,18 @@ require_once 'check_auth.php';
             photo.addEventListener('change', function () {
                 document.getElementById('nom_photo').textContent =
                     photo.files.length ? photo.files[0].name : 'Aucune photo sélectionnée';
-                if (urlApercuPhoto) URL.revokeObjectURL(urlApercuPhoto);
-                urlApercuPhoto = photo.files.length ? URL.createObjectURL(photo.files[0]) : null;
-                apercuPhoto.src = urlApercuPhoto || '';
-                apercuPhoto.hidden = !urlApercuPhoto;
             });
+
+            OMSGalerie.initZone(
+                document.getElementById('zone_depot'),
+                document.getElementById('dossier_galerie'),
+                function (fichiers) {
+                    imagesGalerie = fichiers;
+                    infoDossier.textContent = fichiers.length
+                        ? fichiers.length + ' image(s) prête(s) pour la galerie du stage'
+                        : 'Aucune image trouvée dans ce dossier';
+                }
+            );
 
             function afficher(message) {
                 statut.hidden = false;
@@ -681,19 +665,20 @@ require_once 'check_auth.php';
                 e.preventDefault();
                 if (!form.reportValidity()) return;
                 bouton.disabled = true;
-                afficher('Ajout du stage…');
+                afficher('Création du stage…');
+
+                const donnees = new FormData(form);
+                donnees.delete('photo');
+                if (photo.files.length) {
+                    donnees.append('photo', await OMSGalerie.redimensionner(photo.files[0]));
+                }
 
                 let resultat;
                 try {
-                    const donnees = new FormData(form);
-                    donnees.delete('photo');
-                    if (photo.files.length) {
-                        donnees.append('photo', await OMSGalerie.redimensionner(photo.files[0]));
-                    }
                     const reponse = await fetch(form.action, { method: 'POST', body: donnees });
                     resultat = await reponse.json();
                 } catch (err) {
-                    resultat = { ok: false, erreur: 'Impossible d’ajouter le stage. Vérifiez la connexion puis réessayez.' };
+                    resultat = { ok: false, erreur: 'Réponse inattendue du serveur.' };
                 }
                 if (!resultat.ok) {
                     afficher(resultat.erreur);
@@ -701,6 +686,23 @@ require_once 'check_auth.php';
                     return;
                 }
 
+                let bilan = { reussies: 0, erreurs: [] };
+                if (imagesGalerie.length) {
+                    bilan = await OMSGalerie.televerser(resultat.id_dossier, imagesGalerie, function (fait, total) {
+                        afficher('Stage créé. Envoi des images de la galerie : ' + fait + ' / ' + total);
+                    });
+                }
+
+                if (bilan.erreurs.length) {
+                    afficher('Stage créé, ' + bilan.reussies + ' image(s) ajoutée(s) à la galerie.\n'
+                        + bilan.erreurs.length + ' image(s) refusée(s) :\n' + bilan.erreurs.join('\n'));
+                    const lien = document.createElement('a');
+                    lien.href = 'Admin_Galerie_detail.php?id=' + resultat.id_dossier;
+                    lien.className = 'd-block mt-2 text-white';
+                    lien.textContent = 'Ouvrir la galerie du stage';
+                    statut.appendChild(lien);
+                    return;
+                }
                 window.location.href = 'Admin_Stage.php?cree=' + resultat.id_stage;
             });
         })();
